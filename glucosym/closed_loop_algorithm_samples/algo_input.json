@@ -1,5 +1,5 @@
 {
-    "index": 192, 
+    "index": 0, 
     "Vg": 253.0, 
     "BGTarget": 95, 
     "bioavail": 6.0, 
@@ -12,9 +12,9 @@
     "events": {
         "basal": [
             {
-                "start": 915, 
+                "start": 0, 
                 "length": 90, 
-                "amt": 0
+                "amt": 0.12
             }
         ], 
         "carb": [
