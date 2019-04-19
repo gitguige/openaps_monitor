@@ -39,7 +39,7 @@ suggested_data_to_dump = {}
 list_suggested_data_to_dump = []
 
 #iteration_num = 5
-iteration_num =1#int(sys.argv[1])
+iteration_num =200#int(sys.argv[1])
 
 #record the time 5 minutes ago, we need this time to attach with the recent glucose value
 #time_5_minutes_back = ((time.time())*1000)-3000
