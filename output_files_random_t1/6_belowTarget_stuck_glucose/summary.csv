@@ -1,0 +1,24 @@
+Scenario#,Fault#,Fault-line,Alerts,Hazards,T1,T2,T3
+6,1,"if _>=103:||data_to_prepend["glucose"]=125",Comma unavailable,N/A,N/A,0.0,N/A
+6,2,"if _>=143:||data_to_prepend["glucose"]=131",Comma unavailable,N/A,N/A,0.0,N/A
+6,3,"if _>=125:||data_to_prepend["glucose"]=149",Comma unavailable,N/A,N/A,0.0,N/A
+6,4,"if _>=163:||data_to_prepend["glucose"]=150",Comma unavailable,N/A,N/A,0.0,N/A
+6,5,"if _>=184:||data_to_prepend["glucose"]=168",Comma unavailable,N/A,N/A,0.0,N/A
+6,6,"if _>=91:||data_to_prepend["glucose"]=179",Comma unavailable,N/A,N/A,0.0,N/A
+6,7,"if _>=116:||data_to_prepend["glucose"]=186",Comma unavailable,N/A,N/A,0.0,N/A
+6,8,"if _>=143:||data_to_prepend["glucose"]=197",Comma unavailable,N/A,N/A,0.0,N/A
+6,9,"if _>=140:||data_to_prepend["glucose"]=207",Comma unavailable,N/A,N/A,0.0,N/A
+6,10,"if _>=95:||data_to_prepend["glucose"]=213",Comma unavailable,N/A,N/A,0.0,N/A
+6,11,"if _>=153:||data_to_prepend["glucose"]=228",Comma unavailable,N/A,N/A,0.0,N/A
+6,12,"if _>=149:||data_to_prepend["glucose"]=231",Comma unavailable,N/A,N/A,0.0,N/A
+6,13,"if _>=52:||data_to_prepend["glucose"]=247",Comma unavailable,N/A,N/A,0.0,N/A
+6,14,"if _>=163:||data_to_prepend["glucose"]=251",Comma unavailable,N/A,N/A,0.0,N/A
+6,15,"if _>=138:||data_to_prepend["glucose"]=266",Comma unavailable,N/A,N/A,0.0,N/A
+6,16,"if _>=119:||data_to_prepend["glucose"]=271",Comma unavailable,N/A,N/A,0.0,N/A
+6,17,"if _>=55:||data_to_prepend["glucose"]=285",Comma unavailable,N/A,N/A,0.0,N/A
+6,18,"if _>=146:||data_to_prepend["glucose"]=293",Comma unavailable,N/A,N/A,0.0,N/A
+6,19,"if _>=195:||data_to_prepend["glucose"]=307",Comma unavailable,N/A,N/A,0.0,N/A
+6,20,"if _>=11:||data_to_prepend["glucose"]=318",Comma unavailable,N/A,N/A,0.0,N/A
+6,21,"if _>=47:||data_to_prepend["glucose"]=320",Comma unavailable,N/A,N/A,0.0,N/A
+6,22,"if _>=185:||data_to_prepend["glucose"]=334",Comma unavailable,N/A,N/A,0.0,N/A
+6,23,"if _>=190:||data_to_prepend["glucose"]=342",Comma unavailable,N/A,N/A,0.0,N/A

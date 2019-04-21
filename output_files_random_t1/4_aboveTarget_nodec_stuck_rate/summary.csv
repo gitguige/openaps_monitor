@@ -1,0 +1,21 @@
+Scenario#,Fault#,Fault-line,Alerts,Hazards,T1,T2,T3
+4,1,"if _>=83:||loaded_suggested_data["rate"]=0.006",Comma unavailable,N/A,N/A,0.0,N/A
+4,2,"if _>=198:||loaded_suggested_data["rate"]=0.014",Comma unavailable,N/A,N/A,0.0,N/A
+4,3,"if _>=173:||loaded_suggested_data["rate"]=0.027",Comma unavailable,N/A,N/A,0.0,N/A
+4,4,"if _>=113:||loaded_suggested_data["rate"]=0.035",Comma unavailable,N/A,N/A,0.0,N/A
+4,5,"if _>=91:||loaded_suggested_data["rate"]=0.045",Comma unavailable,N/A,N/A,0.0,N/A
+4,6,"if _>=123:||loaded_suggested_data["rate"]=0.055",Comma unavailable,N/A,N/A,0.0,N/A
+4,7,"if _>=73:||loaded_suggested_data["rate"]=0.063",Comma unavailable,N/A,N/A,0.0,N/A
+4,8,"if _>=55:||loaded_suggested_data["rate"]=0.071",Comma unavailable,N/A,N/A,0.0,N/A
+4,9,"if _>=42:||loaded_suggested_data["rate"]=0.087",Comma unavailable,N/A,N/A,0.0,N/A
+4,10,"if _>=190:||loaded_suggested_data["rate"]=0.098",Comma unavailable,N/A,N/A,0.0,N/A
+4,11,"if _>=120:||loaded_suggested_data["rate"]=0.102",Comma unavailable,N/A,N/A,0.0,N/A
+4,12,"if _>=180:||loaded_suggested_data["rate"]=0.114",Comma unavailable,N/A,N/A,0.0,N/A
+4,13,"if _>=111:||loaded_suggested_data["rate"]=0.121",Comma unavailable,N/A,N/A,0.0,N/A
+4,14,"if _>=121:||loaded_suggested_data["rate"]=0.136",Comma unavailable,N/A,N/A,0.0,N/A
+4,15,"if _>=187:||loaded_suggested_data["rate"]=0.14",Comma unavailable,N/A,N/A,0.0,N/A
+4,16,"if _>=35:||loaded_suggested_data["rate"]=0.159",Comma unavailable,N/A,N/A,0.0,N/A
+4,17,"if _>=158:||loaded_suggested_data["rate"]=0.165",Comma unavailable,N/A,N/A,0.0,N/A
+4,18,"if _>=28:||loaded_suggested_data["rate"]=0.172",Comma unavailable,N/A,N/A,0.0,N/A
+4,19,"if _>=30:||loaded_suggested_data["rate"]=0.189",Comma unavailable,N/A,N/A,0.0,N/A
+4,20,"if _>=88:||loaded_suggested_data["rate"]=0.192",Comma unavailable,N/A,N/A,0.0,N/A

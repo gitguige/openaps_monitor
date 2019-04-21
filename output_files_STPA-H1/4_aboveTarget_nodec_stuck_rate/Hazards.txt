@@ -1,0 +1,60 @@
+
+Hazards for fault 1::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555746544.197163
+
+Hazards for fault 2::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555648441.065729
+
+Hazards for fault 3::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555709038.856808
+
+Hazards for fault 4::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555769665.623696
+
+Hazards for fault 5::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555664990.173137
+
+Hazards for fault 6::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555725620.591688
+
+Hazards for fault 7::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555617923.312350
+
+Hazards for fault 8::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555678604.070911
+
+Hazards for fault 9::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555616250.971038
+
+Hazards for fault 10::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555677197.901369
+
+Hazards for fault 11::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555737529.866601
+
+Hazards for fault 12::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555634926.619641
+
+Hazards for fault 13::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555695260.111371
+
+Hazards for fault 14::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555630794.420820
+
+Hazards for fault 15::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555674838.219109
+
+Hazards for fault 16::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555735780.627059
+
+Hazards for fault 17::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555660223.291818
+
+Hazards for fault 18::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555720897.036498
+
+Hazards for fault 19::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555639662.732599
+
+Hazards for fault 20::
+HAZARD || H1 || Hyperglycemia || Time(sec)=1555700590.874384
