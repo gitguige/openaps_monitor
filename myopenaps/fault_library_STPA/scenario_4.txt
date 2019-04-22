@@ -1,0 +1,23 @@
+title:4_aboveTarget_nodec_stuck_rate
+location//updated_ct_script_iob_based.py//#rate:HOOK#
+fault 1//if glucose > bg_target://loaded_suggested_data["rate"]=0.008
+fault 2//if glucose > bg_target://loaded_suggested_data["rate"]=0.013
+fault 3//if glucose > bg_target://loaded_suggested_data["rate"]=0.028
+fault 4//if glucose > bg_target://loaded_suggested_data["rate"]=0.039
+fault 5//if glucose > bg_target://loaded_suggested_data["rate"]=0.042
+fault 6//if glucose > bg_target://loaded_suggested_data["rate"]=0.056
+fault 7//if glucose > bg_target://loaded_suggested_data["rate"]=0.06
+fault 8//if glucose > bg_target://loaded_suggested_data["rate"]=0.074
+fault 9//if glucose > bg_target://loaded_suggested_data["rate"]=0.08
+fault 10//if glucose > bg_target://loaded_suggested_data["rate"]=0.097
+fault 11//if glucose > bg_target://loaded_suggested_data["rate"]=0.102
+fault 12//if glucose > bg_target://loaded_suggested_data["rate"]=0.113
+fault 13//if glucose > bg_target://loaded_suggested_data["rate"]=0.124
+fault 14//if glucose > bg_target://loaded_suggested_data["rate"]=0.136
+fault 15//if glucose > bg_target://loaded_suggested_data["rate"]=0.145
+fault 16//if glucose > bg_target://loaded_suggested_data["rate"]=0.157
+fault 17//if glucose > bg_target://loaded_suggested_data["rate"]=0.163
+fault 18//if glucose > bg_target://loaded_suggested_data["rate"]=0.171
+fault 19//if glucose > bg_target://loaded_suggested_data["rate"]=0.182
+fault 20//if glucose > bg_target://loaded_suggested_data["rate"]=0.199
+Total number of fault cases: 20

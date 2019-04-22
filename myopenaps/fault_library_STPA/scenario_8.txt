@@ -1,0 +1,7 @@
+title:8_aboveTarget_stuck_glucose
+location//updated_ct_script_iob_based.py//#glucose:HOOK#
+fault 1//if loaded_glucose > 120://data_to_prepend["glucose"]=31
+fault 2//if loaded_glucose > 120://data_to_prepend["glucose"]=43
+fault 3//if loaded_glucose > 120://data_to_prepend["glucose"]=55
+fault 4//if loaded_glucose > 120://data_to_prepend["glucose"]=67
+Total number of fault cases: 4
