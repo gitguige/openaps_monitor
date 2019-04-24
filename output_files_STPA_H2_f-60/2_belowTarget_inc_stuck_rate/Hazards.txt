@@ -1,0 +1,75 @@
+
+Hazards for fault 1::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555761070.527239
+
+Hazards for fault 2::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555820154.099330
+
+Hazards for fault 3::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555879841.965946
+
+Hazards for fault 4::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555758632.725081
+
+Hazards for fault 5::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555818321.242874
+
+Hazards for fault 6::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555878309.155097
+
+Hazards for fault 7::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555760695.236158
+
+Hazards for fault 8::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555820684.920422
+
+Hazards for fault 9::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555728574.903177
+
+Hazards for fault 10::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555788562.937238
+
+Hazards for fault 11::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555848852.988351
+
+Hazards for fault 12::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555731543.891767
+
+Hazards for fault 13::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555748122.225168
+
+Hazards for fault 14::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555808112.736345
+
+Hazards for fault 15::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555868403.348461
+
+Hazards for fault 16::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555734810.826953
+
+Hazards for fault 17::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555794798.447998
+
+Hazards for fault 18::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555743188.372893
+
+Hazards for fault 19::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555743479.446308
+
+Hazards for fault 20::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555803769.491077
+
+Hazards for fault 21::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555864059.284887
+
+Hazards for fault 22::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555775850.367290
+
+Hazards for fault 23::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555836139.465976
+
+Hazards for fault 24::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555750932.634097
+
+Hazards for fault 25::
+HAZARD || H2 || Hypoglysimia || Time(sec)=1555811224.058350

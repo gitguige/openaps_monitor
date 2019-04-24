@@ -1,0 +1,24 @@
+Scenario#,Fault#,Fault-line,Alerts,Hazards,T1,T2,T3
+6,1,"if loaded_glucose < 110:||data_to_prepend["glucose"]=121",Comma unavailable,N/A,N/A,0.0,N/A
+6,2,"if loaded_glucose < 110:||data_to_prepend["glucose"]=135",Comma unavailable,N/A,N/A,0.0,N/A
+6,3,"if loaded_glucose < 110:||data_to_prepend["glucose"]=148",Comma unavailable,N/A,N/A,0.0,N/A
+6,4,"if loaded_glucose < 110:||data_to_prepend["glucose"]=151",Comma unavailable,N/A,N/A,0.0,N/A
+6,5,"if loaded_glucose < 110:||data_to_prepend["glucose"]=163",Comma unavailable,N/A,N/A,0.0,N/A
+6,6,"if loaded_glucose < 110:||data_to_prepend["glucose"]=171",Comma unavailable,N/A,N/A,0.0,N/A
+6,7,"if loaded_glucose < 110:||data_to_prepend["glucose"]=188",Comma unavailable,N/A,N/A,0.0,N/A
+6,8,"if loaded_glucose < 110:||data_to_prepend["glucose"]=198",Comma unavailable,N/A,N/A,0.0,N/A
+6,9,"if loaded_glucose < 110:||data_to_prepend["glucose"]=203",Comma unavailable,N/A,N/A,0.0,N/A
+6,10,"if loaded_glucose < 110:||data_to_prepend["glucose"]=210",Comma unavailable,N/A,N/A,0.0,N/A
+6,11,"if loaded_glucose < 110:||data_to_prepend["glucose"]=228",Comma unavailable,N/A,N/A,0.0,N/A
+6,12,"if loaded_glucose < 110:||data_to_prepend["glucose"]=235",Comma unavailable,N/A,N/A,0.0,N/A
+6,13,"if loaded_glucose < 110:||data_to_prepend["glucose"]=244",Comma unavailable,N/A,N/A,0.0,N/A
+6,14,"if loaded_glucose < 110:||data_to_prepend["glucose"]=253",Comma unavailable,N/A,N/A,0.0,N/A
+6,15,"if loaded_glucose < 110:||data_to_prepend["glucose"]=265",Comma unavailable,N/A,N/A,0.0,N/A
+6,16,"if loaded_glucose < 110:||data_to_prepend["glucose"]=279",Comma unavailable,N/A,N/A,0.0,N/A
+6,17,"if loaded_glucose < 110:||data_to_prepend["glucose"]=288",Comma unavailable,N/A,N/A,0.0,N/A
+6,18,"if loaded_glucose < 110:||data_to_prepend["glucose"]=296",Comma unavailable,N/A,N/A,0.0,N/A
+6,19,"if loaded_glucose < 110:||data_to_prepend["glucose"]=306",Comma unavailable,N/A,N/A,0.0,N/A
+6,20,"if loaded_glucose < 110:||data_to_prepend["glucose"]=311",Comma unavailable,N/A,N/A,0.0,N/A
+6,21,"if loaded_glucose < 110:||data_to_prepend["glucose"]=328",Comma unavailable,N/A,N/A,0.0,N/A
+6,22,"if loaded_glucose < 110:||data_to_prepend["glucose"]=338",Comma unavailable,N/A,N/A,0.0,N/A
+6,23,"if loaded_glucose < 110:||data_to_prepend["glucose"]=340",Comma unavailable,N/A,N/A,0.0,N/A

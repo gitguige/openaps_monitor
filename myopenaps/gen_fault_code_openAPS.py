@@ -31,7 +31,34 @@ def gen_stuck_code(trigger_code,trigger, trigger_time, variable, stuck_value):
 	l = '//%s=%s' % (variable,stuck_value)
 	code = code + l
 	return code
+######################################################################
+def gen_add_glucose_code(trigger_code,trigger, trigger_time, variable, stuck_value):
+	if trigger_code:
+		code = trigger_code
+	else:
+		code = 'if %s>=%s:'%(trigger,trigger_time)
+	l = '//%s=str(float(loaded_glucose)+%s)' % (variable,stuck_value)
+	code = code + l
+	return code
+
+def gen_sub_glucose_code(trigger_code,trigger, trigger_time, variable, stuck_value,additional_code=''):
+	if trigger_code:
+		code = trigger_code
+	else:
+		code = 'if %s>=%s:'%(trigger,trigger_time)
+	l = '//%s=str(float(loaded_glucose)-%s)' % (variable,stuck_value)
+	code = code + l
+	return code + additional_code
+
 	
+def gen_stuck_glucose_code(trigger_code,trigger, trigger_time, variable, stuck_value):
+	if trigger_code:
+		code = trigger_code
+	else:
+		code = 'if %s>=%s:'%(trigger,trigger_time)
+	l = '//%s=str(%s)' % (variable,stuck_value)
+	code = code + l
+	return code
 # def gen_intermittent_code(variable, trigger, trigger_prob, random_value):
 # 	#code = 'fault_prob = random.randint(1,100)'
 # 	code = 'if %s<=%s:'%(trigger,trigger_prob)
@@ -122,7 +149,6 @@ def gen_belowTarget_inc_stuck_rate(sceneNum):
 	for i in deltaRange:
 		delta = random.randint(i,i+9)
 		trigger_time = random.randint(10,200)
-		#code.append(gen_add_code(trigger_code, trigger, t1, t2, variable, [delta], '//if '+variable[0]+'>=255:'+'//  '+variable[0]+'= 254'))
 		code.append(gen_stuck_code('',trigger, trigger_time, variable, delta/100.0))
 		code_STPA.append(gen_stuck_code(trigger_code,trigger, trigger_time, variable, delta/100.0))
 		#param.append(','.join(['relative distance',str(t1),str(dt),str(delta)]))
@@ -187,7 +213,7 @@ def gen_belowTarget_add_glucose(sceneNum):
 	faultLoc = '#glucose:HOOK#'
 	trigger = '_'
 	# trigger_time = 10 # 10 is an arbitrary number, I want the fault be injected after 10th iteration
-	trigger_code = 'if loaded_glucose < 110:'
+	trigger_code = 'if float(loaded_glucose) < 110:'
 	code = []
 	code_STPA=[]
 	#param = []
@@ -197,9 +223,8 @@ def gen_belowTarget_add_glucose(sceneNum):
 		# for j in range(10):
 		delta = random.randint(i,i+9)
 		trigger_time = random.randint(10,200)
-		#code.append(gen_add_code(trigger_code, trigger, t1, t2, variable, [delta], '//if '+variable[0]+'>=255:'+'//  '+variable[0]+'= 254'))
-		code.append(gen_add_code('',trigger, trigger_time, variable, delta))
-		code_STPA.append(gen_add_code(trigger_code,trigger, trigger_time, variable, delta))
+		code.append(gen_add_glucose_code('',trigger, trigger_time, variable, delta))
+		code_STPA.append(gen_add_glucose_code(trigger_code,trigger, trigger_time, variable, delta))
 		#param.append(','.join(['relative distance',str(t1),str(dt),str(delta)]))
 
 	write_to_file(code, title, fileLoc, faultLoc)
@@ -212,7 +237,7 @@ def gen_belowTarget_stuck_glucose(sceneNum):
 	faultLoc = '#glucose:HOOK#'
 	trigger = '_'
 	# trigger_time = 10 # 10 is an arbitrary number, I want the fault be injected after 10th iteration
-	trigger_code = 'if loaded_glucose < 110:'
+	trigger_code = 'if float(loaded_glucose) < 110:'
 	code = []
 	code_STPA=[]
 	#param = []
@@ -221,9 +246,8 @@ def gen_belowTarget_stuck_glucose(sceneNum):
 	for i in deltaRange:
 		delta = random.randint(i,i+9)
 		trigger_time = random.randint(10,200)
-		#code.append(gen_add_code(trigger_code, trigger, t1, t2, variable, [delta], '//if '+variable[0]+'>=255:'+'//  '+variable[0]+'= 254'))
-		code.append(gen_stuck_code('',trigger, trigger_time, variable, delta))
-		code_STPA.append(gen_stuck_code(trigger_code,trigger, trigger_time, variable, delta))
+		code.append(gen_stuck_glucose_code('',trigger, trigger_time, variable, delta))
+		code_STPA.append(gen_stuck_glucose_code(trigger_code,trigger, trigger_time, variable, delta))
 		#param.append(','.join(['relative distance',str(t1),str(dt),str(delta)]))
 
 	write_to_file(code, title, fileLoc, faultLoc)
@@ -236,7 +260,7 @@ def gen_aboveTarget_sub_glucose(sceneNum):
 	faultLoc = '#glucose:HOOK#'
 	trigger = '_'
 	# trigger_time = 10 # 10 is an arbitrary number, I want the fault be injected after 10th iteration
-	trigger_code = 'if loaded_glucose > 120:'
+	trigger_code = 'if float(loaded_glucose) > 120:'
 	code = []
 	code_STPA=[]
 	#param = []
@@ -247,8 +271,8 @@ def gen_aboveTarget_sub_glucose(sceneNum):
 		delta = random.randint(i,i+9)
 		trigger_time = random.randint(10,200)
 		#code.append(gen_add_code(trigger_code, trigger, t1, t2, variable, [delta], '//if '+variable[0]+'>=255:'+'//  '+variable[0]+'= 254'))
-		code.append(gen_sub_code('',trigger, trigger_time, variable, delta,'//if '+variable+'<0:'+'//  '+variable+'= 0'))
-		code_STPA.append(gen_sub_code(trigger_code,trigger, trigger_time, variable, delta,'//if '+variable+'<0:'+'//  '+variable+'= 0'))
+		code.append(gen_sub_glucose_code('',trigger, trigger_time, variable, delta,'//if float('+variable+')<0:'+'//  '+variable+"='0'"))
+		code_STPA.append(gen_sub_glucose_code(trigger_code,trigger, trigger_time, variable, delta,'//if float('+variable+')<0:'+'//  '+variable+"='0'"))
 		#param.append(','.join(['relative distance',str(t1),str(dt),str(delta)]))
 
 	write_to_file(code, title, fileLoc, faultLoc)
@@ -261,7 +285,7 @@ def gen_aboveTarget_stuck_glucose(sceneNum):
 	faultLoc = '#glucose:HOOK#'
 	trigger = '_'
 	# trigger_time = 10 # 10 is an arbitrary number, I want the fault be injected after 10th iteration
-	trigger_code = 'if loaded_glucose > 120:'
+	trigger_code = 'if float(loaded_glucose) > 120:'
 	code = []
 	code_STPA=[]
 	#param = []
@@ -270,9 +294,8 @@ def gen_aboveTarget_stuck_glucose(sceneNum):
 	for i in deltaRange:
 		delta = random.randint(i,i+9)
 		trigger_time = random.randint(10,200)
-		#code.append(gen_add_code(trigger_code, trigger, t1, t2, variable, [delta], '//if '+variable[0]+'>=255:'+'//  '+variable[0]+'= 254'))
-		code.append(gen_stuck_code('',trigger, trigger_time, variable, delta))
-		code_STPA.append(gen_stuck_code(trigger_code,trigger, trigger_time, variable, delta))
+		code.append(gen_stuck_glucose_code('',trigger, trigger_time, variable, delta))
+		code_STPA.append(gen_stuck_glucose_code(trigger_code,trigger, trigger_time, variable, delta))
 		#param.append(','.join(['relative distance',str(t1),str(dt),str(delta)]))
 
 	write_to_file(code, title, fileLoc, faultLoc)
@@ -297,6 +320,6 @@ scenarios = {
 8 : gen_aboveTarget_stuck_glucose,
 }
 
-for sceneNum in [1,2,3,4,5,6,7,8]:
+for sceneNum in [5,6,7,8]:
 	scenarios[sceneNum](sceneNum)
 

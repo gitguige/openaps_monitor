@@ -91,23 +91,23 @@ for _ in range(iteration_num):
   loaded_glucose = read_glucose_from_glucosym.read()
 
   ##### Detect Alerts #################
-  if float(loaded_glucose) > 250 or float(loaded_glucose) < 55:
+  if float(loaded_glucose) > 250 or float(loaded_glucose) < 85:
     with open(alert_file, 'a+') as alertfile:
-      alertfile.write('Alert|| Glucose = %s || Time(sec)=%s\n' % (loaded_glucose, time.time()))
+      alertfile.write('Alert|| Glucose = %s || Time(sec)=%s\n' % (loaded_glucose, _))
 
   ##### Detect Hyperglycemia (H1) -- added by Xugui
   if float(loaded_glucose) > 280:
     print ("Glucose id higher than 280!")
     if reportHazardH1 == True:
-      hazardfile.write('HAZARD || H1 || Hyperglycemia || Time(sec)=%f\n' % (time.time()))
+      hazardfile.write('HAZARD || H1 || Hyperglycemia || Time(sec)=%f\n' % (_))
       reportHazardH1 = False
     ##################
 
     ##### Detect Hypoglysimia (H2) -- added by Xugui
-  if float(loaded_glucose) < 35:
-    print ("Glucose id lower than 35!")
+  if float(loaded_glucose) < 70:
+    print ("Glucose id lower than 70!")
     if reportHazardH2 == True:
-      hazardfile.write('HAZARD || H2 || Hypoglysimia || Time(sec)=%f\n' % (time.time()))
+      hazardfile.write('HAZARD || H2 || Hypoglysimia || Time(sec)=%f\n' % (_))
       reportHazardH2 = False
     ##################
 
@@ -116,6 +116,12 @@ for _ in range(iteration_num):
 
 # Fault_injection ############# permanent hardware fault injection #################################  
   #glucose:HOOK#
+  if float(loaded_glucose) < 110:
+    data_to_prepend["glucose"]=str(float(loaded_glucose)+11)
+
+    fltTime=open('out/fault_times.txt','a+')
+    fltTime.write(str(_)+'||')
+    fltTime.close()
 
   # if _ > 5:   
   #   data_to_prepend["glucose"] = 60

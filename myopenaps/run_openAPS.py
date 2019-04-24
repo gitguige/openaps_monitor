@@ -52,13 +52,14 @@ def insert_fault_code(fileLoc, faultLoc, codeline):
   bkup_fp.close()
 
 def inject_fault(fileName):
-  global start_time_0
+  # global start_time_0
   in_file = fileName+'.txt'
   outfile_path = 'out/'
   sceneLine  = fileName.split('_')
   sceneNum = sceneLine[len(sceneLine)-1]
 
-  recFaultTime="//fltTime=open(\'out/fault_times.txt\',\'a+\')//fltTime.write(str(time.time())+\'||\')//fltTime.close()"
+  # recFaultTime="//fltTime=open(\'out/fault_times.txt\',\'a+\')//fltTime.write(str(time.time())+\'||\')//fltTime.close()"
+  recFaultTime="//fltTime=open(\'out/fault_times.txt\',\'a+\')//fltTime.write(str(_)+\'||\')//fltTime.close()"
 
   name_end = 0
   name_id = []
@@ -137,7 +138,7 @@ def inject_fault(fileName):
         '''Write all alerts in single file '''
         alertMsg = 'N/A'
         alertTime = 'N/A'
-        startTime = 0.0
+        startTime = 0
         with open(output_dir+'/alerts.txt') as alFile:
           alLine = alFile.readline()  # first line
           alertFile.write('\nAlerts for fault '+startWord[1]+'::\n')
@@ -145,9 +146,9 @@ def inject_fault(fileName):
             alertFile.write(alLine)
             if alLine.find('Glucose') >= 0:
               if tm >=0:
-                strTime = alLine.split('=')
-                startTime = start_time_0 #float(strTime[len(strTime)-1])
-              if startTime > 0.0:
+                # strTime = alLine.split('=')
+              #   startTime = 0#start_time_0 #float(strTime[len(strTime)-1])
+              # if startTime > 0.0:
                 strTime = alLine.split('=')
                 strAlert = alLine.split('||')
                 if 1:
@@ -157,9 +158,9 @@ def inject_fault(fileName):
                   else:
                     alertMsg = alertMsg +'||'+ strAlert[1]
                     alertTime = alertTime+'||'+ str(float(strTime[len(strTime)-1])-startTime)
-        if startTime==0.0:
-          alertMsg = 'Comma unavailable'
-          alertTime = str(startTime)
+        # if startTime==0.0:
+        #   alertMsg = 'Comma unavailable'
+        #   alertTime = str(startTime)
 
 
         '''Write all hazards in single file '''
@@ -235,5 +236,5 @@ if len(argv)>1:
 else:
   print('Fault library filename is missing, pass the filename as argument')
 
-print('\n\n Total runtime: %f seconds',(time.time()-start_time_0))
+print('\n\n Total runtime: %f seconds' %(time.time()-start_time_0))
 

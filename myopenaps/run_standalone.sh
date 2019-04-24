@@ -3,6 +3,6 @@
 #pip2 install -r requirements_openpilot.txt
 
 export PYTHONPATH="$PWD":$PYTHONPATH
-python initialize.py 60
+python initialize.py 90
 python updated_ct_script_iob_based.py
 # /bin/sh -c './updated_ct_script_iob_based.py'

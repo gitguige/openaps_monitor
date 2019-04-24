@@ -1,37 +1,37 @@
 title:7_aboveTarget_sub_glucose
 location//updated_ct_script_iob_based.py//#glucose:HOOK#
-fault 1//if loaded_glucose > 120://data_to_prepend["glucose"]-=13//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 2//if loaded_glucose > 120://data_to_prepend["glucose"]-=26//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 3//if loaded_glucose > 120://data_to_prepend["glucose"]-=30//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 4//if loaded_glucose > 120://data_to_prepend["glucose"]-=47//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 5//if loaded_glucose > 120://data_to_prepend["glucose"]-=58//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 6//if loaded_glucose > 120://data_to_prepend["glucose"]-=66//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 7//if loaded_glucose > 120://data_to_prepend["glucose"]-=73//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 8//if loaded_glucose > 120://data_to_prepend["glucose"]-=82//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 9//if loaded_glucose > 120://data_to_prepend["glucose"]-=93//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 10//if loaded_glucose > 120://data_to_prepend["glucose"]-=103//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 11//if loaded_glucose > 120://data_to_prepend["glucose"]-=118//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 12//if loaded_glucose > 120://data_to_prepend["glucose"]-=126//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 13//if loaded_glucose > 120://data_to_prepend["glucose"]-=137//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 14//if loaded_glucose > 120://data_to_prepend["glucose"]-=146//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 15//if loaded_glucose > 120://data_to_prepend["glucose"]-=159//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 16//if loaded_glucose > 120://data_to_prepend["glucose"]-=162//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 17//if loaded_glucose > 120://data_to_prepend["glucose"]-=171//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 18//if loaded_glucose > 120://data_to_prepend["glucose"]-=183//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 19//if loaded_glucose > 120://data_to_prepend["glucose"]-=198//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 20//if loaded_glucose > 120://data_to_prepend["glucose"]-=208//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 21//if loaded_glucose > 120://data_to_prepend["glucose"]-=215//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 22//if loaded_glucose > 120://data_to_prepend["glucose"]-=224//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 23//if loaded_glucose > 120://data_to_prepend["glucose"]-=238//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 24//if loaded_glucose > 120://data_to_prepend["glucose"]-=248//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 25//if loaded_glucose > 120://data_to_prepend["glucose"]-=258//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 26//if loaded_glucose > 120://data_to_prepend["glucose"]-=263//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 27//if loaded_glucose > 120://data_to_prepend["glucose"]-=278//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 28//if loaded_glucose > 120://data_to_prepend["glucose"]-=282//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 29//if loaded_glucose > 120://data_to_prepend["glucose"]-=293//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 30//if loaded_glucose > 120://data_to_prepend["glucose"]-=301//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 31//if loaded_glucose > 120://data_to_prepend["glucose"]-=316//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 32//if loaded_glucose > 120://data_to_prepend["glucose"]-=327//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 33//if loaded_glucose > 120://data_to_prepend["glucose"]-=339//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 34//if loaded_glucose > 120://data_to_prepend["glucose"]-=342//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
+fault 1//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-16)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 2//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-24)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 3//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-30)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 4//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-44)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 5//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-55)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 6//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-60)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 7//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-75)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 8//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-84)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 9//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-95)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 10//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-104)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 11//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-110)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 12//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-123)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 13//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-139)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 14//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-149)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 15//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-150)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 16//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-164)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 17//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-176)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 18//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-184)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 19//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-190)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 20//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-202)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 21//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-216)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 22//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-228)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 23//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-238)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 24//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-240)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 25//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-252)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 26//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-268)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 27//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-275)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 28//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-282)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 29//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-291)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 30//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-300)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 31//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-313)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 32//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-321)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 33//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-332)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
+fault 34//if float(loaded_glucose) > 120://data_to_prepend["glucose"]=str(float(loaded_glucose)-341)//if float(data_to_prepend["glucose"])<0://  data_to_prepend["glucose"]='0'
 Total number of fault cases: 34
