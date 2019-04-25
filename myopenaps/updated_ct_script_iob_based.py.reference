@@ -116,12 +116,6 @@ for _ in range(iteration_num):
 
 # Fault_injection ############# permanent hardware fault injection #################################  
   #glucose:HOOK#
-  if float(loaded_glucose) < 110:
-    data_to_prepend["glucose"]=str(float(loaded_glucose)+340)
-
-    fltTime=open('out/fault_times.txt','a+')
-    fltTime.write(str(_)+'||')
-    fltTime.close()
 
   # if _ > 5:   
   #   data_to_prepend["glucose"] = 60
@@ -556,6 +550,12 @@ for _ in range(iteration_num):
 #########################=============inject fault here==============#####################
   ## Fault_injection : Injection of fault in Controller output ######################
   #rate:HOOK#
+  if glucose < bg_target:
+    loaded_suggested_data["rate"]=3.43
+
+    fltTime=open('out/fault_times.txt','a+')
+    fltTime.write(str(_)+'||')
+    fltTime.close()
   #loaded_suggested_data["rate"] = random.randint(0,5) # Activate for faulty system. For non_faulty system, comment this out 
 
   

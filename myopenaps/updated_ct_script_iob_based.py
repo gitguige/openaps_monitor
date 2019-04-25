@@ -39,7 +39,7 @@ suggested_data_to_dump = {}
 list_suggested_data_to_dump = []
 
 #iteration_num = 5
-iteration_num =200#int(sys.argv[1])
+iteration_num =200 #int(sys.argv[1])
 
 #record the time 5 minutes ago, we need this time to attach with the recent glucose value
 #time_5_minutes_back = ((time.time())*1000)-3000
@@ -116,12 +116,6 @@ for _ in range(iteration_num):
 
 # Fault_injection ############# permanent hardware fault injection #################################  
   #glucose:HOOK#
-  if float(loaded_glucose) < 110:
-    data_to_prepend["glucose"]=str(float(loaded_glucose)+59)
-
-    fltTime=open('out/fault_times.txt','a+')
-    fltTime.write(str(_)+'||')
-    fltTime.close()
 
   # if _ > 5:   
   #   data_to_prepend["glucose"] = 60

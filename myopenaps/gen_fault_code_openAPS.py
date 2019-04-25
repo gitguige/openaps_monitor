@@ -109,7 +109,7 @@ def write_to_file_STPA(code, exp_name, target_file, faultLoc):
 		
 
 def gen_belowTarget_noinc_add_rate(sceneNum):
-	title = str(sceneNum)+'_belowTarget_noinc_add_rate'
+	title = str(sceneNum)+'_belowTarget_add_rate_H2'
 	#faultLibFile = 'fault_library/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#rate:HOOK#'
@@ -120,10 +120,10 @@ def gen_belowTarget_noinc_add_rate(sceneNum):
 	code_STPA=[]
 	#param = []
 	variable = 'loaded_suggested_data["rate"]'
-	deltaRange = np.arange(10,350,10)
+	deltaRange = np.arange(10,350,2)
 	for i in deltaRange:
-		# for j in range(10):
-		delta = random.randint(i,i+9)
+		# for j in range(5):
+		delta = random.randint(i,i+1)
 		trigger_time = random.randint(10,200)
 		#code.append(gen_add_code(trigger_code, trigger, t1, t2, variable, [delta], '//if '+variable[0]+'>=255:'+'//  '+variable[0]+'= 254'))
 		code.append(gen_add_code('',trigger, trigger_time, variable, delta/100.0))
@@ -134,7 +134,7 @@ def gen_belowTarget_noinc_add_rate(sceneNum):
 	write_to_file_STPA(code_STPA, title, fileLoc, faultLoc)
 
 def gen_belowTarget_inc_stuck_rate(sceneNum):
-	title = str(sceneNum)+'_belowTarget_inc_stuck_rate'
+	title = str(sceneNum)+'_belowTarget_stuck_rate_H2'
 	#faultLibFile = 'fault_library/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#rate:HOOK#'
@@ -145,9 +145,10 @@ def gen_belowTarget_inc_stuck_rate(sceneNum):
 	code_STPA=[]
 	#param = []
 	variable = 'loaded_suggested_data["rate"]'
-	deltaRange = np.arange(100,350,10)
+	deltaRange = np.arange(100,350,2)
 	for i in deltaRange:
-		delta = random.randint(i,i+9)
+		# for j in range(5):
+		delta = random.randint(i,i+1)
 		trigger_time = random.randint(10,200)
 		code.append(gen_stuck_code('',trigger, trigger_time, variable, delta/100.0))
 		code_STPA.append(gen_stuck_code(trigger_code,trigger, trigger_time, variable, delta/100.0))
@@ -157,7 +158,7 @@ def gen_belowTarget_inc_stuck_rate(sceneNum):
 	write_to_file_STPA(code_STPA, title, fileLoc, faultLoc)
 
 def gen_aboveTarget_nodec_sub_rate(sceneNum):
-	title = str(sceneNum)+'_aboveTarget_nodec_sub_rate'
+	title = str(sceneNum)+'_aboveTarget_sub_rate_H1'
 	#faultLibFile = 'fault_library/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#rate:HOOK#'
@@ -168,10 +169,10 @@ def gen_aboveTarget_nodec_sub_rate(sceneNum):
 	code_STPA=[]
 	#param = []
 	variable = 'loaded_suggested_data["rate"]'
-	deltaRange = np.arange(10,350,10)
+	deltaRange = np.arange(10,350,2)
 	for i in deltaRange:
-		# for j in range(10):
-		delta = random.randint(i,i+9)
+		# for j in range(5):
+		delta = random.randint(i,i+1)
 		trigger_time = random.randint(10,200)
 		#code.append(gen_add_code(trigger_code, trigger, t1, t2, variable, [delta], '//if '+variable[0]+'>=255:'+'//  '+variable[0]+'= 254'))
 		code.append(gen_sub_code('',trigger, trigger_time, variable, delta/100.0,'//if '+variable+'<0:'+'//  '+variable+'= 0'))
@@ -182,7 +183,7 @@ def gen_aboveTarget_nodec_sub_rate(sceneNum):
 	write_to_file_STPA(code_STPA, title, fileLoc, faultLoc)
 
 def gen_aboveTarget_nodec_stuck_rate(sceneNum):
-	title = str(sceneNum)+'_aboveTarget_nodec_stuck_rate'
+	title = str(sceneNum)+'_aboveTarget_stuck_rate_H1'
 	#faultLibFile = 'fault_library/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#rate:HOOK#'
@@ -193,9 +194,10 @@ def gen_aboveTarget_nodec_stuck_rate(sceneNum):
 	code_STPA=[]
 	#param = []
 	variable = 'loaded_suggested_data["rate"]'
-	deltaRange = np.arange(0,200,10)
+	deltaRange = np.arange(0,200,2)
 	for i in deltaRange:
-		delta = random.randint(i,i+9)
+		# for j in range(5):
+		delta = random.randint(i,i+1)
 		trigger_time = random.randint(10,200)
 		#code.append(gen_add_code(trigger_code, trigger, t1, t2, variable, [delta], '//if '+variable[0]+'>=255:'+'//  '+variable[0]+'= 254'))
 		code.append(gen_stuck_code('',trigger, trigger_time, variable, delta/1000.0))
@@ -207,7 +209,7 @@ def gen_aboveTarget_nodec_stuck_rate(sceneNum):
 
 ###############glucose:HOOK#############
 def gen_belowTarget_add_glucose(sceneNum):
-	title = str(sceneNum)+'_belowTarget_add_glucose'
+	title = str(sceneNum)+'_belowTarget_add_glucose_H2'
 	#faultLibFile = 'fault_library/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#glucose:HOOK#'
@@ -218,10 +220,10 @@ def gen_belowTarget_add_glucose(sceneNum):
 	code_STPA=[]
 	#param = []
 	variable = 'data_to_prepend["glucose"]'
-	deltaRange = np.arange(10,350,10)
+	deltaRange = np.arange(10,200,2)
 	for i in deltaRange:
-		# for j in range(10):
-		delta = random.randint(i,i+9)
+		# for j in range(5):
+		delta = random.randint(i,i+1)
 		trigger_time = random.randint(10,200)
 		code.append(gen_add_glucose_code('',trigger, trigger_time, variable, delta))
 		code_STPA.append(gen_add_glucose_code(trigger_code,trigger, trigger_time, variable, delta))
@@ -231,7 +233,7 @@ def gen_belowTarget_add_glucose(sceneNum):
 	write_to_file_STPA(code_STPA, title, fileLoc, faultLoc)
 
 def gen_belowTarget_stuck_glucose(sceneNum):
-	title = str(sceneNum)+'_belowTarget_stuck_glucose'
+	title = str(sceneNum)+'_belowTarget_stuck_glucose_H2'
 	#faultLibFile = 'fault_library/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#glucose:HOOK#'
@@ -242,9 +244,10 @@ def gen_belowTarget_stuck_glucose(sceneNum):
 	code_STPA=[]
 	#param = []
 	variable = 'data_to_prepend["glucose"]'
-	deltaRange = np.arange(120,350,10)
+	deltaRange = np.arange(120,300,2)
 	for i in deltaRange:
-		delta = random.randint(i,i+9)
+		# for j in range(5):
+		delta = random.randint(i,i+1)
 		trigger_time = random.randint(10,200)
 		code.append(gen_stuck_glucose_code('',trigger, trigger_time, variable, delta))
 		code_STPA.append(gen_stuck_glucose_code(trigger_code,trigger, trigger_time, variable, delta))
@@ -254,7 +257,7 @@ def gen_belowTarget_stuck_glucose(sceneNum):
 	write_to_file_STPA(code_STPA, title, fileLoc, faultLoc)
 
 def gen_aboveTarget_sub_glucose(sceneNum):
-	title = str(sceneNum)+'_aboveTarget_sub_glucose'
+	title = str(sceneNum)+'_aboveTarget_sub_glucose_H1'
 	#faultLibFile = 'fault_library/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#glucose:HOOK#'
@@ -265,10 +268,10 @@ def gen_aboveTarget_sub_glucose(sceneNum):
 	code_STPA=[]
 	#param = []
 	variable = 'data_to_prepend["glucose"]'
-	deltaRange = np.arange(10,350,10)
+	deltaRange = np.arange(10,300,2)
 	for i in deltaRange:
-		# for j in range(10):
-		delta = random.randint(i,i+9)
+		# for j in range(5):
+		delta = random.randint(i,i+1)
 		trigger_time = random.randint(10,200)
 		#code.append(gen_add_code(trigger_code, trigger, t1, t2, variable, [delta], '//if '+variable[0]+'>=255:'+'//  '+variable[0]+'= 254'))
 		code.append(gen_sub_glucose_code('',trigger, trigger_time, variable, delta,'//if float('+variable+')<0:'+'//  '+variable+"='0'"))
@@ -279,7 +282,7 @@ def gen_aboveTarget_sub_glucose(sceneNum):
 	write_to_file_STPA(code_STPA, title, fileLoc, faultLoc)
 
 def gen_aboveTarget_stuck_glucose(sceneNum):
-	title = str(sceneNum)+'_aboveTarget_stuck_glucose'
+	title = str(sceneNum)+'_aboveTarget_stuck_glucose_H1'
 	#faultLibFile = 'fault_library/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#glucose:HOOK#'
@@ -290,9 +293,10 @@ def gen_aboveTarget_stuck_glucose(sceneNum):
 	code_STPA=[]
 	#param = []
 	variable = 'data_to_prepend["glucose"]'
-	deltaRange = np.arange(30,70,10)
+	deltaRange = np.arange(30,70,2)
 	for i in deltaRange:
-		delta = random.randint(i,i+9)
+		# for j in range(5):
+		delta = random.randint(i,i+1)
 		trigger_time = random.randint(10,200)
 		code.append(gen_stuck_glucose_code('',trigger, trigger_time, variable, delta))
 		code_STPA.append(gen_stuck_glucose_code(trigger_code,trigger, trigger_time, variable, delta))
@@ -320,6 +324,6 @@ scenarios = {
 8 : gen_aboveTarget_stuck_glucose,
 }
 
-for sceneNum in [5,6,7,8]:
+for sceneNum in [1,2,3,4,5,6,7,8]:
 	scenarios[sceneNum](sceneNum)
 
