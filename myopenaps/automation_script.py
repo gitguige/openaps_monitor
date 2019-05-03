@@ -84,4 +84,5 @@ for i in browser.find_elements_by_xpath("//*[@type='radio']"):
 
 	patient_id = patient_id+1	
 
+browser.close()
 #**************************************************************
