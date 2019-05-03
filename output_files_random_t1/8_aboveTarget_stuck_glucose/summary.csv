@@ -1,5 +1,0 @@
-Scenario#,Fault#,Fault-line,Alerts,Hazards,T1,T2,T3
-8,1,"if _>=199:||data_to_prepend["glucose"]=35",Comma unavailable,N/A,N/A,0.0,N/A
-8,2,"if _>=25:||data_to_prepend["glucose"]=47",Comma unavailable,N/A,N/A,0.0,N/A
-8,3,"if _>=94:||data_to_prepend["glucose"]=52",Comma unavailable,N/A,N/A,0.0,N/A
-8,4,"if _>=169:||data_to_prepend["glucose"]=69",Comma unavailable,N/A,N/A,0.0,N/A

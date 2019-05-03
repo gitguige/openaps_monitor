@@ -1,2 +1,0 @@
-*********Hazards generated in this test run**********
-HAZARD || H1 || Hyperglycemia || Time(sec)=1555616250.971038

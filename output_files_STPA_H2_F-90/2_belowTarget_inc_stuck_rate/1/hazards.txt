@@ -1,2 +1,0 @@
-*********Hazards generated in this test run**********
-HAZARD || H2 || Hypoglysimia || Time(sec)=42.000000

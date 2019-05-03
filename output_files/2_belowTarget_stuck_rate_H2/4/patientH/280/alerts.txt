@@ -1,0 +1,10 @@
+*********Alerts generated in this test run**********
+Alert|| Glucose = 79.7507272288106 || Time(sec)=51
+Alert|| Glucose = 79.24063072462796 || Time(sec)=52
+Alert|| Glucose = 78.90330974834792 || Time(sec)=53
+Alert|| Glucose = 78.72561233007848 || Time(sec)=54
+Alert|| Glucose = 78.6946871792392 || Time(sec)=55
+Alert|| Glucose = 78.79819727496506 || Time(sec)=56
+Alert|| Glucose = 79.02390396147975 || Time(sec)=57
+Alert|| Glucose = 79.36007845367139 || Time(sec)=58
+Alert|| Glucose = 79.79559162923667 || Time(sec)=59
