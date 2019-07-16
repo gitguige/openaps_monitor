@@ -67,6 +67,9 @@ faultfile.close()
 
 for _ in range(iteration_num):
 
+  glucose_refresh = True 
+  rate_refresh = True # update the glucose reading and rate output command
+
   print("faultIteration: ", faultIteration)
 
   fault_prob = random.randint(1,100)
@@ -111,8 +114,8 @@ for _ in range(iteration_num):
       reportHazardH2 = False
     ##################
 
-
-  data_to_prepend["glucose"] = loaded_glucose 
+  if glucose_refresh == True:
+    data_to_prepend["glucose"] = loaded_glucose 
 
 # Fault_injection ############# permanent hardware fault injection #################################  
   #glucose:HOOK#
@@ -552,7 +555,9 @@ for _ in range(iteration_num):
   #rate:HOOK#
   #loaded_suggested_data["rate"] = random.randint(0,5) # Activate for faulty system. For non_faulty system, comment this out 
 
-  
+  if rate_refresh != True:
+    loaded_suggested_data["rate"] = prev_rate #only update rate output when rate_refresh equals to True
+
   prev_rate = loaded_suggested_data["rate"]  
 
   list_suggested_data_to_dump.insert(0,loaded_suggested_data)

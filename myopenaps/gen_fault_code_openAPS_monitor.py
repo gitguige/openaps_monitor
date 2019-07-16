@@ -3,7 +3,7 @@ import numpy as np
 import random
 
 	
-def gen_add_code(trigger_code,trigger, trigger_time,stop_time, variable, stuck_value):
+def gen_add_code(trigger_code,trigger, trigger_time,stop_time, variable, stuck_value, additional_code=''):
 	if trigger_code:
 		code = trigger_code
 	else:
@@ -105,8 +105,10 @@ def write_to_file_STPA(code, exp_name, target_file, faultLoc):
 	with open('run_fault_inject_STPA_campaign.sh', 'a+') as runFile:
 		runFile.write('python run_openAPS.py '+fileName+'\n')
 
-
-		
+def write_both_to_file(code,code_STPA, title, fileLoc, faultLoc):
+	write_to_file(code, title, fileLoc, faultLoc)
+	write_to_file_STPA(code_STPA, title, fileLoc, faultLoc)	
+#################################################################################3
 
 def gen_belowTarget_noinc_add_rate(sceneNum):
 	title = str(sceneNum)+'_belowTarget_add_rate_H2'
@@ -183,6 +185,159 @@ def gen_aboveTarget_nodec_sub_rate(sceneNum):
 	write_to_file(code, title, fileLoc, faultLoc)
 	write_to_file_STPA(code_STPA, title, fileLoc, faultLoc)
 
+##########################################################################################################
+def gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,newvalue):
+		
+	trigger = '_'
+	# trigger_time = 10 # 10 is an arbitrary number, I want the fault be injected after 10th iteration
+	trigger_code = 'if xxxxx:' #wait to change to 27 rules in the context table
+	code = []
+	code_STPA=[]
+	#param = []
+
+	trigger_time = random.randint(10,190)
+	duration = int((199 - trigger_time)/4) #divided into four parts
+	for i in np.arange(trigger_time,199,duration):
+		if i+duration <= 199: #make sure the stop time is no more than 199
+			stop_time = random.randint(i,i+duration) #hong long fault will last
+			code.append(gen_stuck_code('',trigger, trigger_time,stop_time, variable, newvalue))
+			code_STPA.append(gen_stuck_code(trigger_code,trigger, trigger_time,stop_time, variable, newvalue))
+			#param.append(','.join(['relative distance',str(t1),str(dt),str(delta)]))
+
+	write_both_to_file(code,code_STPA, title, fileLoc, faultLoc)
+
+def gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,direction): #direction: 0-decreade, 1-increase
+		
+	trigger = '_'
+	# trigger_time = 10 # 10 is an arbitrary number, I want the fault be injected after 10th iteration
+	trigger_code = 'if xxxxx:' #wait to change to 27 rules in the context table
+	code = []
+	code_STPA=[]
+	#param = []
+
+
+	additional_code=''
+	if direction == True:
+		func = gen_add_code
+	else:
+		func = gen_sub_code
+		additional_code='//if '+variable+'<0:'+'//  '+variable+'= 0'
+
+	if 'rate' in variable:
+		daterange=[0.125,0.25,0.5,1,1.5,2,2.5,3,3.5,4]
+	else:
+		daterange=[0.5,1,2,4,8,16,32,64,128,256]
+	
+	for gain in daterange: #single or multiple bitflips
+		trigger_time = random.randint(10,190)
+		duration = int((199 - trigger_time)/4) #divided into four parts
+		for i in np.arange(trigger_time,199,duration):
+			if i+duration <= 199: #make sure the stop time is no more than 199
+				stop_time = random.randint(i,i+duration) #hong long fault will last
+				code.append(func('',trigger, trigger_time,stop_time, variable, gain,additional_code))
+				code_STPA.append(func(trigger_code,trigger, trigger_time,stop_time, variable, gain,additional_code))
+				#param.append(','.join(['relative distance',str(t1),str(dt),str(delta)]))
+
+	write_both_to_file(code,code_STPA, title, fileLoc, faultLoc)
+
+
+def gen_lostconnection_hold_rate(sceneNum): #S9
+	title = str(sceneNum)+'_lostconnection_hold_rate'
+	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
+	fileLoc = 'updated_ct_script_iob_based.py'
+	faultLoc = '#rate:HOOK#'
+	variable = 'rate_refresh'
+	newvalue = 0
+
+	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,newvalue)
+
+def gen_bitflip_double_rate(sceneNum): #S10
+	title = str(sceneNum)+'_bitflip_double_rate'
+	
+	fileLoc = 'updated_ct_script_iob_based.py'
+	faultLoc = '#rate:HOOK#'
+	variable = 'loaded_suggested_data["rate"]'
+	newvalue = '2*loaded_suggested_data["rate"]'
+
+	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, newvalue)
+
+def gen_bitflip_half_rate(sceneNum): #S11
+	title = str(sceneNum)+'_bitflip_half_rate'
+	
+	fileLoc = 'updated_ct_script_iob_based.py'
+	faultLoc = '#rate:HOOK#'
+	variable = 'loaded_suggested_data["rate"]'
+	newvalue = '0.5*loaded_suggested_data["rate"]'
+
+	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, newvalue)
+
+	
+def gen_bitflip_add_rate(sceneNum): #S12
+	title = str(sceneNum)+'_bitflip_add_rate'
+	
+	fileLoc = 'updated_ct_script_iob_based.py'
+	faultLoc = '#rate:HOOK#'
+	variable = 'loaded_suggested_data["rate"]'
+
+	gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, True)
+
+def gen_bitflip_sub_rate(sceneNum): #S13
+	title = str(sceneNum)+'_bitflip_sub_rate'
+	
+	fileLoc = 'updated_ct_script_iob_based.py'
+	faultLoc = '#rate:HOOK#'
+	variable = 'loaded_suggested_data["rate"]'
+
+	gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, False)
+############========================#########################
+def gen_lostconnection_hold_glucose(sceneNum):#S14
+	title = str(sceneNum)+'_lostconnection_hold_glucose'
+	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
+	fileLoc = 'updated_ct_script_iob_based.py'
+	faultLoc = '#glucose:HOOK#'
+	variable = 'glucose_refresh'
+	newvalue = 0
+
+	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,newvalue)
+
+def gen_bitflip_double_glucose(sceneNum): #S15
+	title = str(sceneNum)+'_bitflip_double_glucose'
+	
+	fileLoc = 'updated_ct_script_iob_based.py'
+	faultLoc = '#glucose:HOOK#'
+	variable = 'data_to_prepend["glucose"]'
+	newvalue = '2*data_to_prepend["glucose"]'
+
+	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, newvalue)
+
+def gen_bitflip_half_glucose(sceneNum): #S16
+	title = str(sceneNum)+'_bitflip_half_glucose'
+	
+	fileLoc = 'updated_ct_script_iob_based.py'
+	faultLoc = '#glucose:HOOK#'
+	variable = 'data_to_prepend["glucose"]'
+	newvalue = '0.5*data_to_prepend["glucose"]'
+
+	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, newvalue)
+
+def gen_bitflip_add_glucose(sceneNum): #S17
+	title = str(sceneNum)+'_bitflip_add_glucose'
+	
+	fileLoc = 'updated_ct_script_iob_based.py'
+	faultLoc = '#glucose:HOOK#'
+	variable = 'data_to_prepend["glucose"]'
+
+	gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, True)
+
+def gen_bitflip_sub_glucose(sceneNum): #S17
+	title = str(sceneNum)+'_bitflip_sub_glucose'
+	
+	fileLoc = 'updated_ct_script_iob_based.py'
+	faultLoc = '#glucose:HOOK#'
+	variable = 'data_to_prepend["glucose"]'
+
+	gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, False)
+##########################################################################################
 def gen_aboveTarget_nodec_stuck_rate(sceneNum):
 	title = str(sceneNum)+'_aboveTarget_stuck_rate_H1'
 	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
@@ -326,8 +481,19 @@ scenarios = {
 6 : gen_belowTarget_stuck_glucose,
 7 : gen_aboveTarget_sub_glucose,
 8 : gen_aboveTarget_stuck_glucose,
+9 : gen_lostconnection_hold_rate, #hardware error
+10 : gen_bitflip_double_rate,
+11 : gen_bitflip_half_rate,
+12 : gen_bitflip_add_rate,
+13 : gen_bitflip_sub_rate,
+14 : gen_lostconnection_hold_glucose, #hardware error
+15 : gen_bitflip_double_glucose,
+16 : gen_bitflip_half_glucose,
+17 : gen_bitflip_add_glucose,
+18 : gen_bitflip_sub_glucose,
+
 }
 
-for sceneNum in [1,2,3,4,5,6,7,8]:
+for sceneNum in [9,10,11,12,13,14,15,16,17,18]:
 	scenarios[sceneNum](sceneNum)
 
