@@ -8,7 +8,7 @@ fault 5//if _>=129 and _<134://data_to_prepend["glucose"]+=1
 fault 6//if _>=129 and _<154://data_to_prepend["glucose"]+=1
 fault 7//if _>=129 and _<163://data_to_prepend["glucose"]+=1
 fault 8//if _>=129 and _<188://data_to_prepend["glucose"]+=1
-fault 9//if _>=163 and _<163://data_to_prepend["glucose"]+=2
+fault 9//if _>=163 and _<167://data_to_prepend["glucose"]+=2
 fault 10//if _>=163 and _<178://data_to_prepend["glucose"]+=2
 fault 11//if _>=163 and _<188://data_to_prepend["glucose"]+=2
 fault 12//if _>=163 and _<192://data_to_prepend["glucose"]+=2

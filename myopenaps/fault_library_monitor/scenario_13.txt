@@ -1,6 +1,6 @@
 title:13_bitflip_sub_rate
 location//updated_ct_script_iob_based.py//#rate:HOOK#
-fault 1//if _>=186 and _<186://loaded_suggested_data["rate"]-=0.125//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0
+fault 1//if _>=186 and _<188://loaded_suggested_data["rate"]-=0.125//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0
 fault 2//if _>=186 and _<192://loaded_suggested_data["rate"]-=0.125//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0
 fault 3//if _>=186 and _<194://loaded_suggested_data["rate"]-=0.125//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0
 fault 4//if _>=186 and _<197://loaded_suggested_data["rate"]-=0.125//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0
@@ -28,7 +28,7 @@ fault 25//if _>=42 and _<65://loaded_suggested_data["rate"]-=2.5//if loaded_sugg
 fault 26//if _>=42 and _<93://loaded_suggested_data["rate"]-=2.5//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0
 fault 27//if _>=42 and _<154://loaded_suggested_data["rate"]-=2.5//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0
 fault 28//if _>=42 and _<184://loaded_suggested_data["rate"]-=2.5//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0
-fault 29//if _>=50 and _<50://loaded_suggested_data["rate"]-=3//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0
+fault 29//if _>=50 and _<70://loaded_suggested_data["rate"]-=3//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0
 fault 30//if _>=50 and _<113://loaded_suggested_data["rate"]-=3//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0
 fault 31//if _>=50 and _<139://loaded_suggested_data["rate"]-=3//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0
 fault 32//if _>=50 and _<194://loaded_suggested_data["rate"]-=3//if loaded_suggested_data["rate"]<0://  loaded_suggested_data["rate"]= 0

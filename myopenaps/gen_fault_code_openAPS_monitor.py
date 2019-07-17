@@ -199,7 +199,7 @@ def gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,newvalue):
 	duration = int((199 - trigger_time)/4) #divided into four parts
 	for i in np.arange(trigger_time,199,duration):
 		if i+duration <= 199: #make sure the stop time is no more than 199
-			stop_time = random.randint(i,i+duration) #hong long fault will last
+			stop_time = random.randint(i+1,i+duration) #hong long fault will last, at least one iteration
 			code.append(gen_stuck_code('',trigger, trigger_time,stop_time, variable, newvalue))
 			code_STPA.append(gen_stuck_code(trigger_code,trigger, trigger_time,stop_time, variable, newvalue))
 			#param.append(','.join(['relative distance',str(t1),str(dt),str(delta)]))
@@ -233,7 +233,7 @@ def gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,directi
 		duration = int((199 - trigger_time)/4) #divided into four parts
 		for i in np.arange(trigger_time,199,duration):
 			if i+duration <= 199: #make sure the stop time is no more than 199
-				stop_time = random.randint(i,i+duration) #hong long fault will last
+				stop_time = random.randint(i+1,i+duration) #hong long fault will last, at least one iteration
 				code.append(func('',trigger, trigger_time,stop_time, variable, gain,additional_code))
 				code_STPA.append(func(trigger_code,trigger, trigger_time,stop_time, variable, gain,additional_code))
 				#param.append(','.join(['relative distance',str(t1),str(dt),str(delta)]))

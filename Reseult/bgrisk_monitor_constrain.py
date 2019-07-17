@@ -33,6 +33,19 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
         lib_s6 = []
         lib_s7 = []
         lib_s8 = []
+        lib_s9 = []
+        lib_s10 = []
+        lib_s11 = []
+        lib_s12 = []
+        lib_s13 = []
+        lib_s14 = []
+        lib_s15 = []
+        lib_s16 = []       
+        lib_s17 = []
+        lib_s18 = []    
+
+        lib_scenario = [0,lib_s1, lib_s2,lib_s3, lib_s4,lib_s5, lib_s6, lib_s7, lib_s8, lib_s9, lib_s10, \
+                lib_s11, lib_s12, lib_s13, lib_s14, lib_s15, lib_s16, lib_s17, lib_s18]   
 
         alert_num = 0
         hazard_num = 0
@@ -57,13 +70,16 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
         f1_macro_avg =0
         f1_weighted_avg =0
 
-        s1_8_total = [0,0,0,0,0,0,0,0,0]#total num of fault in each scenarios, index0 is just for empty place
-        s1_8_hazard = [0,0,0,0,0,0,0,0,0]#hazard num of fault in each scenarios, index0 is just for empty place
+        s1_8_total = [0]#total num of fault in each scenarios, index0 is just for empty place
+        s1_8_hazard = [0]#hazard num of fault in each scenarios, index0 is just for empty place
 
         Faulttype = ["","addRate","stuckhighrate","decrate","stucklowrate","addBG","stuckhighBG","decBG","stucklowBG"]
 
         # fault_lib_path = "/home/gui/Documents/OpenAPS/openaps_monitor/myopenaps/fault_library_monitor/scenario_"
-        for i in range(1,9):
+        for i in range(1,19):
+                s1_8_total.append(0)
+                s1_8_hazard.append(0)
+
                 fault_file = fault_lib_path + str(i) + '.txt'
                 # print fault_file
                 fp_fault = open(fault_file,'r')
@@ -76,30 +92,32 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                 del lineSeg[0]
                                 faultLine = '||'.join(lineSeg)
                                 faultLine = faultLine.replace('\n','')
-                                if i == 1:
-                                        lib_s1.append(faultLine)
-                                        # s1_8_total[1] += 1
-                                elif i == 2:
-                                        lib_s2.append(faultLine)
-                                        # s1_8_total[2] += 1
-                                elif i == 3:
-                                        lib_s3.append(faultLine)
-                                        # s1_8_total[3] += 1
-                                elif i == 4:
-                                        lib_s4.append(faultLine)
-                                        # s1_8_total[4] += 1
-                                elif i == 5:
-                                        lib_s5.append(faultLine)
-                                        # s1_8_total[5] += 1
-                                elif i == 6:
-                                        lib_s6.append(faultLine)
-                                        # s1_8_total[6] += 1
-                                elif i == 7:
-                                        lib_s7.append(faultLine)
-                                        # s1_8_total[7] += 1
-                                elif i == 8:
-                                        lib_s8.append(faultLine)
-                                        # s1_8_total[8] += 1
+
+                                lib_scenario[i].append(faultLine)
+                                # if i == 1:
+                                #         lib_s1.append(faultLine)
+                                #         # s1_8_total[1] += 1
+                                # elif i == 2:
+                                #         lib_s2.append(faultLine)
+                                #         # s1_8_total[2] += 1
+                                # elif i == 3:
+                                #         lib_s3.append(faultLine)
+                                #         # s1_8_total[3] += 1
+                                # elif i == 4:
+                                #         lib_s4.append(faultLine)
+                                #         # s1_8_total[4] += 1
+                                # elif i == 5:
+                                #         lib_s5.append(faultLine)
+                                #         # s1_8_total[5] += 1
+                                # elif i == 6:
+                                #         lib_s6.append(faultLine)
+                                #         # s1_8_total[6] += 1
+                                # elif i == 7:
+                                #         lib_s7.append(faultLine)
+                                #         # s1_8_total[7] += 1
+                                # elif i == 8:
+                                #         lib_s8.append(faultLine)
+                                #         # s1_8_total[8] += 1
 
         # for i in range(1,9):
         #         print(s1_8_total[i])
@@ -145,23 +163,25 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                 init_bg = result1[0]
 
                 faultinf ="N/A"
-                if scenario ==1:
-                        faultinf = lib_s1[int(fault)-1]
-                        # print "faultinf=%s" %faultinf
-                elif scenario ==2:
-                        faultinf = lib_s2[int(fault)-1]
-                elif scenario ==3:
-                        faultinf = lib_s3[int(fault)-1]
-                elif scenario ==4:
-                        faultinf = lib_s4[int(fault)-1]
-                elif scenario ==5:
-                        faultinf = lib_s5[int(fault)-1]
-                elif scenario ==6:
-                        faultinf = lib_s6[int(fault)-1]
-                elif scenario ==7:
-                        faultinf = lib_s7[int(fault)-1]
-                elif scenario ==8:
-                        faultinf = lib_s8[int(fault)-1]
+                faultinf = lib_scenario[scenario][int(fault)-1]
+
+                # if scenario ==1:
+                #         faultinf = lib_s1[int(fault)-1]
+                #         # print "faultinf=%s" %faultinf
+                # elif scenario ==2:
+                #         faultinf = lib_s2[int(fault)-1]
+                # elif scenario ==3:
+                #         faultinf = lib_s3[int(fault)-1]
+                # elif scenario ==4:
+                #         faultinf = lib_s4[int(fault)-1]
+                # elif scenario ==5:
+                #         faultinf = lib_s5[int(fault)-1]
+                # elif scenario ==6:
+                #         faultinf = lib_s6[int(fault)-1]
+                # elif scenario ==7:
+                #         faultinf = lib_s7[int(fault)-1]
+                # elif scenario ==8:
+                #         faultinf = lib_s8[int(fault)-1]
 
                 faulttime= float(pattern.findall(faultinf)[0])
 
@@ -474,7 +494,8 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                         if float(alert_time) >= faulttime: #hazard should happen after alert
                                                 sub_rectime = float(hazard_time)-float(alert_time)
                                         else :
-                                                sub_rectime = float(hazard_time)-float(faulttime)
+                                                sub_rectime = float(hazard_time)-float(faulttime) #
+
                                         rectime += sub_rectime
                                         TP += 1
                                 else:
@@ -538,7 +559,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                 
 
         summLine = "Fault num = %s, alert_num = %s, Hazard num =%s, mttf =%.2f, lantecy =%.2f, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f , f1_weighted_avg=%.2f\n" \
-                %(total_num,alert_num,hazard_num,5*mttf/hazard_num, latency*5/alert_num, rectime*5/ TP, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num, f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num)
+                %(total_num,alert_num,hazard_num,5*mttf/hazard_num if hazard_num else 0, latency*5/alert_num if alert_num else 0, rectime*5/ TP if TP else 0, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num, f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num)
         summFile.write(summLine) 
         print (summLine)
         summFile.close()

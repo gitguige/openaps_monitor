@@ -1,6 +1,6 @@
 title:18_bitflip_sub_glucose
 location//updated_ct_script_iob_based.py//#glucose:HOOK#
-fault 1//if _>=90 and _<90://data_to_prepend["glucose"]-=0.5//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
+fault 1//if _>=90 and _<98://data_to_prepend["glucose"]-=0.5//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
 fault 2//if _>=90 and _<130://data_to_prepend["glucose"]-=0.5//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
 fault 3//if _>=90 and _<153://data_to_prepend["glucose"]-=0.5//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
 fault 4//if _>=90 and _<196://data_to_prepend["glucose"]-=0.5//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
@@ -32,7 +32,7 @@ fault 29//if _>=118 and _<120://data_to_prepend["glucose"]-=64//if data_to_prepe
 fault 30//if _>=118 and _<158://data_to_prepend["glucose"]-=64//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
 fault 31//if _>=118 and _<176://data_to_prepend["glucose"]-=64//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
 fault 32//if _>=118 and _<185://data_to_prepend["glucose"]-=64//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
-fault 33//if _>=82 and _<82://data_to_prepend["glucose"]-=128//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
+fault 33//if _>=82 and _<92://data_to_prepend["glucose"]-=128//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
 fault 34//if _>=82 and _<129://data_to_prepend["glucose"]-=128//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
 fault 35//if _>=82 and _<154://data_to_prepend["glucose"]-=128//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
 fault 36//if _>=82 and _<196://data_to_prepend["glucose"]-=128//if data_to_prepend["glucose"]<0://  data_to_prepend["glucose"]= 0
