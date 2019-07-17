@@ -73,7 +73,9 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
         s1_8_total = [0]#total num of fault in each scenarios, index0 is just for empty place
         s1_8_hazard = [0]#hazard num of fault in each scenarios, index0 is just for empty place
 
-        Faulttype = ["","addRate","stuckhighrate","decrate","stucklowrate","addBG","stuckhighBG","decBG","stucklowBG"]
+        Faulttype = ["","addRate","stuckhighrate","decrate","stucklowrate","addBG","stuckhighBG","decBG","stucklowBG",\
+                "holdrate","doublerate","halfrate","bitflip_addrate","bitflip_decrate",\
+                        "holdglucose","doubleglucose","halfglucose","bitflip_addglucose","bitflip_decglucose"]
 
         # fault_lib_path = "/home/gui/Documents/OpenAPS/openaps_monitor/myopenaps/fault_library_monitor/scenario_"
         for i in range(1,19):
@@ -577,7 +579,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
         resname += '_faultype.csv'
         fp_res = open(resname,'w')
         fp_res.write("Scenario, Faulttype,Total num, Hazard coverage\n")
-        for i in range(1,9):
+        for i in range(1,19):
                 if s1_8_total[i]:
                         resline = "%s,%s,%s,%.2f%%\n"%(i,Faulttype[i],s1_8_total[i],s1_8_hazard[i]*100.0/s1_8_total[i])
                         fp_res.write(resline)
