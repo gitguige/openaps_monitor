@@ -20,7 +20,7 @@ from sklearn.metrics import f1_score
 #        print(os.path.join("/mydir", file))
 
 
-def calculate_risk(pathwork, summary_file="summary"):
+def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
         # if not pathwork:
         #         print "path is illeagel, exit."
         #         return
@@ -57,40 +57,40 @@ def calculate_risk(pathwork, summary_file="summary"):
         f1_weighted_avg =0
 
         # fault_lib_path = "/home/gui/Documents/OpenAPS/openaps_monitor/myopenaps/fault_library_monitor/scenario_"
-        # for i in range(1,9):
-        #         fault_file = fault_lib_path + str(i) + '.txt'
-        #         # print fault_file
-        #         fp_fault = open(fault_file,'r')
-        #         # print fp_fault.readline()
-        #         fp_fault.readline()
-        #         for line in fp_fault:
-        #                 # print line
-        #                 if "fault" in line:
-        #                         lineSeg = line.split('//')
-        #                         del lineSeg[0]
-        #                         faultLine = '||'.join(lineSeg)
-        #                         faultLine = faultLine.replace('\n','')
-        #                         if i == 1:
-        #                                 lib_s1.append(faultLine)
-        #                         elif i == 2:
-        #                                 lib_s2.append(faultLine)
-        #                         elif i == 3:
-        #                                 lib_s3.append(faultLine)
-        #                         elif i == 4:
-        #                                 lib_s4.append(faultLine)
-        #                         elif i == 5:
-        #                                 lib_s5.append(faultLine)
-        #                         elif i == 6:
-        #                                 lib_s6.append(faultLine)
-        #                         elif i == 7:
-        #                                 lib_s7.append(faultLine)
-        #                         elif i == 8:
-        #                                 lib_s8.append(faultLine)
+        for i in range(1,9):
+                fault_file = fault_lib_path + str(i) + '.txt'
+                # print fault_file
+                fp_fault = open(fault_file,'r')
+                # print fp_fault.readline()
+                fp_fault.readline()
+                for line in fp_fault:
+                        # print line
+                        if "fault" in line:
+                                lineSeg = line.split('//')
+                                del lineSeg[0]
+                                faultLine = '||'.join(lineSeg)
+                                faultLine = faultLine.replace('\n','')
+                                if i == 1:
+                                        lib_s1.append(faultLine)
+                                elif i == 2:
+                                        lib_s2.append(faultLine)
+                                elif i == 3:
+                                        lib_s3.append(faultLine)
+                                elif i == 4:
+                                        lib_s4.append(faultLine)
+                                elif i == 5:
+                                        lib_s5.append(faultLine)
+                                elif i == 6:
+                                        lib_s6.append(faultLine)
+                                elif i == 7:
+                                        lib_s7.append(faultLine)
+                                elif i == 8:
+                                        lib_s8.append(faultLine)
 
         
         # summFile = open("../summary.csv",'w')
         summFile = open(summary_file,'w')
-        summLine = "Scenario,fault,faultinf,Patient,init_bg,alert,alert_num,hazard_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_TPR, sub_FPR,T2,T3,Reaction time(T3-t2),f1_micro,f1_macro,f1_weighted,Iteration_number\n"
+        summLine = "Scenario,fault,faultinf,Patient,init_bg,alert,alert_num,hazard_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_TPR, sub_FPR,T1,T2,T3,Latency(T2-T1),Reaction time(T3-t2),mttf(T3-T1),f1_micro,f1_macro,f1_weighted,Iteration_number\n"
         summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
         # summFile = open(savefile,'w')
         # summLine = 'Directory#,Filename#,Filetype#,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,Total#\n' %(wordlist[0],wordlist[1],wordlist[2],wordlist[3],wordlist[4],wordlist[5],wordlist[6],wordlist[7],wordlist[8],wordlist[9])
@@ -119,8 +119,8 @@ def calculate_risk(pathwork, summary_file="summary"):
                 # print fileSeq
                 length = len(fileSeq)
                 pattern = re.compile(r'\d+')  
-                scenario =  0
-                fault = 0
+                scenario =  int(pattern.findall(fileSeq[length-4])[0])
+                fault = fileSeq[length-3]
                 patient = fileSeq[length-2]
 
                 pattern = re.compile(r'\d+')  
@@ -129,25 +129,25 @@ def calculate_risk(pathwork, summary_file="summary"):
                 init_bg = result1[0]
 
                 faultinf ="N/A"
-                # if scenario ==1:
-                #         faultinf = lib_s1[int(fault)-1]
-                #         # print "faultinf=%s" %faultinf
-                # elif scenario ==2:
-                #         faultinf = lib_s2[int(fault)-1]
-                # elif scenario ==3:
-                #         faultinf = lib_s3[int(fault)-1]
-                # elif scenario ==4:
-                #         faultinf = lib_s4[int(fault)-1]
-                # elif scenario ==5:
-                #         faultinf = lib_s5[int(fault)-1]
-                # elif scenario ==6:
-                #         faultinf = lib_s6[int(fault)-1]
-                # elif scenario ==7:
-                #         faultinf = lib_s7[int(fault)-1]
-                # elif scenario ==8:
-                #         faultinf = lib_s8[int(fault)-1]
+                if scenario ==1:
+                        faultinf = lib_s1[int(fault)-1]
+                        # print "faultinf=%s" %faultinf
+                elif scenario ==2:
+                        faultinf = lib_s2[int(fault)-1]
+                elif scenario ==3:
+                        faultinf = lib_s3[int(fault)-1]
+                elif scenario ==4:
+                        faultinf = lib_s4[int(fault)-1]
+                elif scenario ==5:
+                        faultinf = lib_s5[int(fault)-1]
+                elif scenario ==6:
+                        faultinf = lib_s6[int(fault)-1]
+                elif scenario ==7:
+                        faultinf = lib_s7[int(fault)-1]
+                elif scenario ==8:
+                        faultinf = lib_s8[int(fault)-1]
 
-                faulttime= 'N/A'#float(pattern.findall(faultinf)[0])
+                faulttime= float(pattern.findall(faultinf)[0])
 
                 total_num += 1
 
@@ -190,6 +190,8 @@ def calculate_risk(pathwork, summary_file="summary"):
 
                 bgTarget = 120
                 bgLowerTh = 70
+                thBg = 0
+                thIob = 0
 
                 sub_mttf = "N/A"
                 sub_rectime = "N/A"
@@ -228,6 +230,8 @@ def calculate_risk(pathwork, summary_file="summary"):
                         iob = float(lineSeq[4]) #data["IOB"][i]
                         insulinRate = float(lineSeq[5]) #data["rate"][i]
 
+
+
                         if count == 1: #initiate the pre_8 value at first line
                                 pre_insulinRate = insulinRate
                                 pre_iob = iob
@@ -246,24 +250,23 @@ def calculate_risk(pathwork, summary_file="summary"):
 
                                 elif bg > bgTarget:
                                         #if delBg >= -3:
-                                        if iob < -0.120728641206 and insulinRate == 0: # row_37
+                                        if insulinRate == 0: # row_37
                                                 sub_alert_flag = True
                                                 sub_alert_msg = "row_37"
 
                                         #elif delBg > 0:
                                         # checking if BG is rising
-                                        elif delBg > 0:
-                                                if delIob > 0 and iob < 0.126687105772: # row_1 done
+                                        if delBg > 0:
+                                                if delIob > 0: # row_1
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_1"
-                                                                # print "s=%s,falut=%s,initbg=%s,iob=%s,pre_iob=%s,delt=%s"%(scenario,fault,init_bg, iob,pre_iob,delIob)
                                                 #if delBg < 0:
-                                                elif delIob < 0 and iob <  0.145605040799: # row_2 done
+                                                if delIob < thIob: # row_2
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_2"
-                                                elif delBg > 0 and delIob == 0: # row_3 done
+                                                if delIob == thIob: # row_3
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_3"
@@ -272,29 +275,29 @@ def calculate_risk(pathwork, summary_file="summary"):
 
                                                 # checking if BG is falling more than the threshold
                                                 #if delBg > thBgFall:
-                                                if delIob > 0 and iob < -0.0622758866662: # row_4 done
+                                                if delIob > 0: # row_4
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_4"
-                                                elif delIob < 0 and iob < -0.113062983335: # row_5 done
+                                                if delIob < 0: # row_5
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_5"
-                                                elif delIob == 0 and iob < 0.580168168836: # row_6 done
+                                                if delIob == 0: # row_6
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_6"
 
-                                        elif delBg == 0:
-                                                if delIob > 0 and iob < -0.104069667554: # row_7 done
+                                        elif delBg == thBg:
+                                                if delIob > 0: # row_7
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_7"
-                                                elif delIob < 0 and iob < 0.264173781619: # row_8 done
+                                                if delIob < 0: # row_8
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_8"
-                                                elif delIob == 0: # row_9 done
+                                                if delIob == 0: # row_9
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_9"
@@ -304,45 +307,48 @@ def calculate_risk(pathwork, summary_file="summary"):
 
                                         if delBg > 0:
                                                 # checking if BG is rising more than the threshold
-                                                if delIob > 0 and iob > 0.161191472787:
-                                                        if delInsulinRate > 0: # row_28 done
+
+                                                #if delBg < 0.
+                                                if delIob > 0:
+                                                        if delInsulinRate > 0: # row_29
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_28"
-                                                elif delIob < 0 and iob > 0.257052081016:
-                                                        if delInsulinRate > 0: # row_29 done
+                                                #if delBg > thBgRise:
+                                                if delIob < 0:
+                                                        if delInsulinRate > 0: # row_28
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_29"
-                                                elif delIob == 0 and iob > -0.847656258429:
-                                                        if delInsulinRate > 0: # row_30 done
+                                                if delIob == thIob:
+                                                        if delInsulinRate > 0: # row_30
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_30"
                                         
                                         elif delBg < 0:
                                                 # checking if BG is falling more than the threshold
                                                 #if delBg < thBgFall:
-                                                if delIob > 0 and iob > -0.199631233636: # row_31 done
+                                                if delIob > 0: # row_31
                                                         if delInsulinRate > 0:
                                                                         sub_alert_flag = True
                                                                         sub_alert_msg = "row_31"
-                                                elif delIob < 0 and iob > 0.254236455594: # row_32 done
+                                                if delIob < 0: # row_32
                                                         if delInsulinRate > 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_32"
-                                                elif delIob == 0: # row_33 done
+                                                if delIob == thIob: # row_33
                                                         if delInsulinRate > 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_33"
 
                                         elif delBg == 0:
-                                                if delIob > 0 and iob > -0.216926320065:
-                                                        if delInsulinRate > 0: # row_34 done
+                                                if delIob > 0:
+                                                        if delInsulinRate > 0: # row_34
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_34"
-                                                elif delIob < 0 and iob > -0.0964223380798: # row_35 done
+                                                if delIob < 0: # row_35
                                                         if delInsulinRate > 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_35"
-                                                elif delIob == 0: # row_36 done
+                                                if delIob == 0: # row_36
                                                         if delInsulinRate > 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_36"
@@ -352,7 +358,7 @@ def calculate_risk(pathwork, summary_file="summary"):
                                 pre_bg =bg
 
 
-        #===================================
+#===================================
                         if float(lineSeq[11]) != 0 and (float(lineSeq[8]) > 25 or float(lineSeq[9]) > 45): #LBGI>5 , HGBI>9
                                 hazard_flag = True
                                 sub_hz_num += 1
@@ -443,13 +449,13 @@ def calculate_risk(pathwork, summary_file="summary"):
 
                 if sub_hz_num != 0:
                         hazard_num += 1
-                        # if float(hazard_time) >= faulttime:
-                        #         sub_mttf = float(hazard_time)-faulttime
-                        #         mttf += sub_mttf
-                        # else:
-                        #         hazard_earliness += 1
-                        #         print "early %s,%s,%s"%(scenario,fault,hazard_time)
-                        #         sub_mttf = "invalid"
+                        if float(hazard_time) >= faulttime:
+                                sub_mttf = float(hazard_time)-faulttime
+                                mttf += sub_mttf
+                        else:
+                                hazard_earliness += 1
+                                print ("early %s,%s,%s"%(scenario,fault,hazard_time))
+                                sub_mttf = "invalid"
                         if sub_alt_num != 0:
                                 if float(hazard_time) >= float(alert_time): #hazard should happen after alert
                                         sub_rectime = float(hazard_time)-float(alert_time)
@@ -465,17 +471,17 @@ def calculate_risk(pathwork, summary_file="summary"):
                         else:
                                 TN += 1
 
-                # # else:
-                # #         sub_mttf = "N/A"
-                # #         sub_rectime = "N/A"
+                # else:
+                #         sub_mttf = "N/A"
+                #         sub_rectime = "N/A"
 
                 if sub_alt_num != 0:
                         alert_num += 1
-                #         if float(alert_time) >= faulttime:
-                #                 sub_latancy = float(alert_time)-faulttime
-                #                 latency += sub_latancy
-                #         else:
-                #                 sub_latancy = "invalid"
+                        if float(alert_time) >= faulttime:
+                                sub_latancy = float(alert_time)-faulttime
+                                latency += sub_latancy
+                        else:
+                                sub_latancy = "invalid"
 
                 y_pred = np.array(y_pred)
                 y_true = np.array(y_true)
@@ -511,15 +517,12 @@ def calculate_risk(pathwork, summary_file="summary"):
                         sub_tpr = sub_TP/(sub_TP + sub_FN)
                 if sub_FP + sub_TN:
                         sub_fpr = sub_FP/(sub_FP + sub_TN)
-                summLine = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s\n"%(scenario,fault,faultinf,patient,init_bg,alert_msg,sub_alt_num,sub_hz_num,sub_TN,sub_FN,sub_TP,sub_FP, sub_tpr,sub_fpr, alert_time,hazard_time,sub_rectime,f1_micro,f1_macro,f1_weighted, count)
+                summLine = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n"%(scenario,fault,faultinf,patient,init_bg,alert_msg,sub_alt_num,sub_hz_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_tpr,sub_fpr, faulttime,alert_time,hazard_time,sub_latancy,sub_rectime,sub_mttf, f1_micro,f1_macro,f1_weighted,count)
                 summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
                 
-        if TP:
-                rtime = rectime*5/ TP
-        else:
-                rtime = -1
-        summLine = "Total num = %s, alert_num = %s, Hazard num =%s,   mttf =, lantecy =, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f, f1_weighted_avg=%.2f\n " \
-                %(total_num,alert_num,hazard_num,rtime, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num,f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num)
+
+        summLine = "Fault num = %s, alert_num = %s, Hazard num =%s, mttf =%.2f, lantecy =%.2f, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f , f1_weighted_avg=%.2f\n" \
+                %(total_num,alert_num,hazard_num,5*mttf/hazard_num, latency*5/alert_num, rectime*5/ TP, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num, f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num)
         summFile.write(summLine) 
         print (summLine)
         summFile.close()
@@ -535,4 +538,4 @@ def calculate_risk(pathwork, summary_file="summary"):
 
 
 if __name__ == "__main__":
-        calculate_risk(argv[1],argv[2])
+        calculate_risk(argv[1],argv[2],argv[3])

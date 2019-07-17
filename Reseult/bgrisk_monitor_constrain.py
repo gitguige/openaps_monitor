@@ -6,7 +6,11 @@ from numpy.lib.scimath import logn
 from math import e
 from math import pow
 
-
+import pandas as pd
+import numpy as np
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
+from sklearn.metrics import f1_score
 
 #for file in glob.glob("*.py"):
 #  print file
@@ -29,6 +33,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
         lib_s6 = []
         lib_s7 = []
         lib_s8 = []
+
         alert_num = 0
         hazard_num = 0
         h1_num = 0
@@ -48,6 +53,15 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
         sum_sub_FP = 0
         sum_sub_FN = 0
 
+        f1_micro_avg =0
+        f1_macro_avg =0
+        f1_weighted_avg =0
+
+        s1_8_total = [0,0,0,0,0,0,0,0,0]#total num of fault in each scenarios, index0 is just for empty place
+        s1_8_hazard = [0,0,0,0,0,0,0,0,0]#hazard num of fault in each scenarios, index0 is just for empty place
+
+        Faulttype = ["","addRate","stuckhighrate","decrate","stucklowrate","addBG","stuckhighBG","decBG","stucklowBG"]
+
         # fault_lib_path = "/home/gui/Documents/OpenAPS/openaps_monitor/myopenaps/fault_library_monitor/scenario_"
         for i in range(1,9):
                 fault_file = fault_lib_path + str(i) + '.txt'
@@ -64,25 +78,35 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                 faultLine = faultLine.replace('\n','')
                                 if i == 1:
                                         lib_s1.append(faultLine)
+                                        # s1_8_total[1] += 1
                                 elif i == 2:
                                         lib_s2.append(faultLine)
+                                        # s1_8_total[2] += 1
                                 elif i == 3:
                                         lib_s3.append(faultLine)
+                                        # s1_8_total[3] += 1
                                 elif i == 4:
                                         lib_s4.append(faultLine)
+                                        # s1_8_total[4] += 1
                                 elif i == 5:
                                         lib_s5.append(faultLine)
+                                        # s1_8_total[5] += 1
                                 elif i == 6:
                                         lib_s6.append(faultLine)
+                                        # s1_8_total[6] += 1
                                 elif i == 7:
                                         lib_s7.append(faultLine)
+                                        # s1_8_total[7] += 1
                                 elif i == 8:
                                         lib_s8.append(faultLine)
+                                        # s1_8_total[8] += 1
 
-        
+        # for i in range(1,9):
+        #         print(s1_8_total[i])
+
         # summFile = open("../summary.csv",'w')
         summFile = open(summary_file,'w')
-        summLine = "Scenario,fault,faultinf,Patient,init_bg,alert,alert_num,hazard_num,sub_TN,sub_FN,sub_TP,sub_FP,T1,T2,T3,Latency(T2-T1),Reaction time(T3-t2),mttf(T3-T1),Iteration_number\n"
+        summLine = "Scenario,fault,faultinf,Patient,init_bg,alert,alert_num,hazard_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_TPR, sub_FPR,T1,T2,T3,Latency(T2-T1),Reaction time(T3-t2),mttf(T3-T1),f1_micro,f1_macro,f1_weighted,Iteration_number\n"
         summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
         # summFile = open(savefile,'w')
         # summLine = 'Directory#,Filename#,Filetype#,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,Total#\n' %(wordlist[0],wordlist[1],wordlist[2],wordlist[3],wordlist[4],wordlist[5],wordlist[6],wordlist[7],wordlist[8],wordlist[9])
@@ -142,6 +166,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                 faulttime= float(pattern.findall(faultinf)[0])
 
                 total_num += 1
+                s1_8_total[scenario] += 1
 
                 bkupFile = fileLoc+'.bkup'
                 if os.path.isfile(bkupFile) != True:
@@ -181,11 +206,14 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                 sub_FN = 0
 
                 bgTarget = 120
-                bgLowerTh = 75
+                bgLowerTh = 70
 
                 sub_mttf = "N/A"
                 sub_rectime = "N/A"
                 sub_latancy ="N/A"
+
+                y_true = []
+                y_pred = []
 
 
                 for line in bkup_fp:
@@ -221,123 +249,124 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                 pre_insulinRate = insulinRate
                                 pre_iob = iob
                                 pre_bg =bg
-                                continue
+                                # continue
+                        else:
 
-                        delBg = bg-pre_bg #data["CGM_glucose"][i] - data["CGM_glucose"][i-1]
-                        delIob = iob - pre_iob #data["IOB"][i] - data["IOB"][i-1]
-                        delInsulinRate = insulinRate-pre_insulinRate #data["rate"][i] - data["rate"][i-1]
+                                delBg = bg-pre_bg #data["CGM_glucose"][i] - data["CGM_glucose"][i-1]
+                                delIob = iob - pre_iob #data["IOB"][i] - data["IOB"][i-1]
+                                delInsulinRate = insulinRate-pre_insulinRate #data["rate"][i] - data["rate"][i-1]
 
-                        if bg < bgLowerTh:
-                                if delInsulinRate != 0: # row_38
-                                        sub_alert_flag = True
-                                        sub_alert_msg = "row_38"
+                                if bg < bgLowerTh:
+                                        if delInsulinRate != 0: # row_38
+                                                sub_alert_flag = True
+                                                sub_alert_msg = "row_38"
 
-                        elif bg > bgTarget:
-                                #if delBg >= -3:
-                                if iob > -0.120728641206 and insulinRate == 0: # row_37
-                                        sub_alert_flag = True
-                                        sub_alert_msg = "row_37"
+                                elif bg > bgTarget:
+                                        #if delBg >= -3:
+                                        if iob < -0.120728641206 and insulinRate == 0: # row_37
+                                                sub_alert_flag = True
+                                                sub_alert_msg = "row_37"
 
-                                #elif delBg > 0:
-                                # checking if BG is rising
-                                elif delBg > 0:
-                                        if delIob > 0 and iob < 0.126687105772: # row_1 done
-                                                if delInsulinRate < 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_1"
-                                                        # print "s=%s,falut=%s,initbg=%s,iob=%s,pre_iob=%s,delt=%s"%(scenario,fault,init_bg, iob,pre_iob,delIob)
-                                        #if delBg < 0:
-                                        elif delIob < 0 and iob <  0.145605040799: # row_2 done
-                                                if delInsulinRate < 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_2"
-                                        elif delBg > 0 and delIob == 0: # row_3 done
-                                                if delInsulinRate < 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_3"
-
-                                elif delBg < 0:
-
-                                        # checking if BG is falling more than the threshold
-                                        #if delBg > thBgFall:
-                                        if delIob > 0 and iob < -0.0622758866662: # row_4 done
-                                                if delInsulinRate < 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_4"
-                                        elif delIob < 0 and iob < -0.113062983335: # row_5 done
-                                                if delInsulinRate < 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_5"
-                                        elif delIob == 0 and iob < 0.580168168836: # row_6 done
-                                                if delInsulinRate < 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_6"
-
-                                elif delBg == 0:
-                                        if delIob > 0 and iob < -0.104069667554: # row_7 done
-                                                if delInsulinRate < 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_7"
-                                        elif delIob < 0 and iob < 0.264173781619: # row_8 done
-                                                if delInsulinRate < 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_8"
-                                        elif delIob == 0: # row_9 done
-                                                if delInsulinRate < 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_9"
-                                
-
-                        elif bg < bgTarget:
-
-                                if delBg > 0:
-                                        # checking if BG is rising more than the threshold
-                                        if delIob > 0 and iob > 0.161191472787:
-                                                if delInsulinRate > 0: # row_28 done
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_28"
-                                        elif delIob < 0 and iob > 0.257052081016:
-                                                if delInsulinRate > 0: # row_29 done
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_29"
-                                        elif delIob == 0 and iob > -0.847656258429:
-                                                if delInsulinRate > 0: # row_30 done
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_30"
-                                
-                                elif delBg < 0:
-                                        # checking if BG is falling more than the threshold
-                                        #if delBg < thBgFall:
-                                        if delIob > 0 and iob > -0.199631233636: # row_31 done
-                                                if delInsulinRate > 0:
+                                        #elif delBg > 0:
+                                        # checking if BG is rising
+                                        elif delBg > 0:
+                                                if delIob > 0 and iob < 0.126687105772: # row_1 done
+                                                        if delInsulinRate < 0:
                                                                 sub_alert_flag = True
-                                                                sub_alert_msg = "row_31"
-                                        elif delIob < 0 and iob > 0.254236455594: # row_32 done
-                                                if delInsulinRate > 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_32"
-                                        elif delIob == 0: # row_33 done
-                                                if delInsulinRate > 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_33"
+                                                                sub_alert_msg = "row_1"
+                                                                # print "s=%s,falut=%s,initbg=%s,iob=%s,pre_iob=%s,delt=%s"%(scenario,fault,init_bg, iob,pre_iob,delIob)
+                                                #if delBg < 0:
+                                                elif delIob < 0 and iob <  0.145605040799: # row_2 done
+                                                        if delInsulinRate < 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_2"
+                                                elif delBg > 0 and delIob == 0: # row_3 done
+                                                        if delInsulinRate < 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_3"
 
-                                elif delBg == 0:
-                                        if delIob > 0 and iob > -0.216926320065:
-                                                if delInsulinRate > 0: # row_34 done
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_34"
-                                        elif delIob < 0 and iob > -0.0964223380798: # row_35 done
-                                                if delInsulinRate > 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_35"
-                                        elif delIob == 0: # row_36 done
-                                                if delInsulinRate > 0:
-                                                        sub_alert_flag = True
-                                                        sub_alert_msg = "row_36"
+                                        elif delBg < 0:
 
-                        pre_insulinRate = insulinRate
-                        pre_iob = iob
-                        pre_bg =bg
+                                                # checking if BG is falling more than the threshold
+                                                #if delBg > thBgFall:
+                                                if delIob > 0 and iob < -0.0622758866662: # row_4 done
+                                                        if delInsulinRate < 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_4"
+                                                elif delIob < 0 and iob < -0.113062983335: # row_5 done
+                                                        if delInsulinRate < 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_5"
+                                                elif delIob == 0 and iob < 0.580168168836: # row_6 done
+                                                        if delInsulinRate < 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_6"
+
+                                        elif delBg == 0:
+                                                if delIob > 0 and iob < -0.104069667554: # row_7 done
+                                                        if delInsulinRate < 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_7"
+                                                elif delIob < 0 and iob < 0.264173781619: # row_8 done
+                                                        if delInsulinRate < 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_8"
+                                                elif delIob == 0: # row_9 done
+                                                        if delInsulinRate < 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_9"
+                                        
+
+                                elif bg < bgTarget:
+
+                                        if delBg > 0:
+                                                # checking if BG is rising more than the threshold
+                                                if delIob > 0 and iob > 0.161191472787:
+                                                        if delInsulinRate > 0: # row_28 done
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_28"
+                                                elif delIob < 0 and iob > 0.257052081016:
+                                                        if delInsulinRate > 0: # row_29 done
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_29"
+                                                elif delIob == 0 and iob > -0.847656258429:
+                                                        if delInsulinRate > 0: # row_30 done
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_30"
+                                        
+                                        elif delBg < 0:
+                                                # checking if BG is falling more than the threshold
+                                                #if delBg < thBgFall:
+                                                if delIob > 0 and iob > -0.199631233636: # row_31 done
+                                                        if delInsulinRate > 0:
+                                                                        sub_alert_flag = True
+                                                                        sub_alert_msg = "row_31"
+                                                elif delIob < 0 and iob > 0.254236455594: # row_32 done
+                                                        if delInsulinRate > 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_32"
+                                                elif delIob == 0: # row_33 done
+                                                        if delInsulinRate > 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_33"
+
+                                        elif delBg == 0:
+                                                if delIob > 0 and iob > -0.216926320065:
+                                                        if delInsulinRate > 0: # row_34 done
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_34"
+                                                elif delIob < 0 and iob > -0.0964223380798: # row_35 done
+                                                        if delInsulinRate > 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_35"
+                                                elif delIob == 0: # row_36 done
+                                                        if delInsulinRate > 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_36"
+
+                                pre_insulinRate = insulinRate
+                                pre_iob = iob
+                                pre_bg =bg
 
 
 #===================================
@@ -416,6 +445,8 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
 
                         # pre_hbgi = hbgi
                         # pre_lbgi = lbgi
+                        y_pred.append(sub_alert_flag)
+                        y_true.append(hazard_flag)                        
 
                 # print "alert=%s,time=%s,h1=%s,h2=%s,hz_time=%s" %(sub_alert_flag,alert_time,h1_flag,h2_flag,hazard_time)
                 src_fp.close()
@@ -429,17 +460,25 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
 
                 if sub_hz_num != 0:
                         hazard_num += 1
+                        s1_8_hazard[int(scenario)]+=1 #record hazard number for each scenario
+
                         if float(hazard_time) >= faulttime:
                                 sub_mttf = float(hazard_time)-faulttime
                                 mttf += sub_mttf
                         else:
                                 hazard_earliness += 1
-                                print "early %s,%s,%s"%(scenario,fault,hazard_time)
+                                print ("early %s,%s,%s"%(scenario,fault,hazard_time))
                                 sub_mttf = "invalid"
                         if sub_alt_num != 0:
-                                sub_rectime = float(hazard_time)-float(alert_time)
-                                rectime += sub_rectime
-                                TP += 1
+                                if float(hazard_time) >= float(alert_time) :
+                                        if float(alert_time) >= faulttime: #hazard should happen after alert
+                                                sub_rectime = float(hazard_time)-float(alert_time)
+                                        else :
+                                                sub_rectime = float(hazard_time)-float(faulttime)
+                                        rectime += sub_rectime
+                                        TP += 1
+                                else:
+                                        FN+=1
                         else:
                                 FN += 1
                 else:
@@ -460,23 +499,70 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         else:
                                 sub_latancy = "invalid"
 
+                y_pred = np.array(y_pred)
+                y_true = np.array(y_true)
                         
-
+                f1_weighted = 0
+                f1_micro = 0
+                f1_macro = 0
+                result = classification_report(y_true, y_pred)
+                resultSeq = str(result).split('\n')
+                for line in resultSeq:
+                        if 'accuracy' in line: #f1_micro
+                                pattern = re.compile(r'\d+')  
+                                result1 = pattern.findall(line)
+                                f1_micro = "%s.%s"%(result1[0],result1[1])                               
+                        elif 'macro' in line: #f1_macro
+                                pattern = re.compile(r'\d+')  
+                                result1 = pattern.findall(line)
+                                f1_macro = "%s.%s"%(result1[len(result1)-3],result1[len(result1)-2])
+                        elif 'weighted' in line: #f1_weighted
+                                pattern = re.compile(r'\d+')  
+                                result1 = pattern.findall(line)
+                                f1_weighted = "%s.%s"%(result1[len(result1)-3],result1[len(result1)-2])
+                        else:
+                                pass
                 
+                f1_micro_avg += float(f1_micro)
+                f1_macro_avg += float(f1_macro)
+                f1_weighted_avg += float(f1_weighted)
 
-
-                summLine = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n"%(scenario,fault,faultinf,patient,init_bg,alert_msg,sub_alt_num,sub_hz_num,sub_TN,sub_FN,sub_TP,sub_FP, faulttime,alert_time,hazard_time,sub_latancy,sub_rectime,sub_mttf, count)
+                sub_tpr = ''
+                sub_fpr = ''
+                if sub_TP + sub_FN:
+                        sub_tpr = sub_TP/(sub_TP + sub_FN)
+                if sub_FP + sub_TN:
+                        sub_fpr = sub_FP/(sub_FP + sub_TN)
+                summLine = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n"%(scenario,fault,faultinf,patient,init_bg,alert_msg,sub_alt_num,sub_hz_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_tpr,sub_fpr, faulttime,alert_time,hazard_time,sub_latancy,sub_rectime,sub_mttf, f1_micro,f1_macro,f1_weighted,count)
                 summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
                 
 
-        summLine = "Fault num = %s, alert_num = %s, Hazard num =%s, earliness num =%s, mttf =%s min, lantecy =%s min, reaction_time=%s min, TN=%s, TP= %s, FP =%s, FN =%s, avg_TN=%s,avg_TP=%s,avg_FP=%s,avg_FN=%s " \
-                %(total_num,alert_num,hazard_num,hazard_earliness,5*mttf/hazard_num, latency*5/alert_num, rectime*5/ hazard_num, TN,TP,FP,FN,sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num)
+        summLine = "Fault num = %s, alert_num = %s, Hazard num =%s, mttf =%.2f, lantecy =%.2f, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f , f1_weighted_avg=%.2f\n" \
+                %(total_num,alert_num,hazard_num,5*mttf/hazard_num, latency*5/alert_num, rectime*5/ TP, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num, f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num)
         summFile.write(summLine) 
-        print summLine
+        print (summLine)
         summFile.close()
+
+        resfile = open("result.txt",'a+')
+        resname= summary_file.split('.')[0]
+        resfile.write("%s:" %resname)
+        resfile.write(summLine)
+        resfile.close()
         # print os.getcwd()
 
         # fp_source = open("filename",'r')
+
+        resname = summary_file.split('.')[0]
+        resname += '_faultype.csv'
+        fp_res = open(resname,'w')
+        fp_res.write("Scenario, Faulttype,Total num, Hazard coverage\n")
+        for i in range(1,9):
+                if s1_8_total[i]:
+                        resline = "%s,%s,%s,%.2f%%\n"%(i,Faulttype[i],s1_8_total[i],s1_8_hazard[i]*100.0/s1_8_total[i])
+                        fp_res.write(resline)
+                        print (resline)
+        fp_res.close()
+                        
 
 
 if __name__ == "__main__":

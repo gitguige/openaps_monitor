@@ -159,6 +159,11 @@ def calculate_risk(pathwork, summary_file="summary"):
                         #print('Bkup file already exists!!')
                         pass
 
+                data = pd.read_csv(bkupFile, error_bad_lines=False)
+                bg_record = data["CGM_glucose"].tolist()
+                percentile10 = np.percentile(np.array(bg_record),10) 
+                percentile90 = np.percentile(np.array(bg_record),90) 
+
 
                 src_fp = open(fileLoc, 'w')
                 bkup_fp = open(bkupFile, 'r')
@@ -197,6 +202,8 @@ def calculate_risk(pathwork, summary_file="summary"):
 
                 y_true = []
                 y_pred = []
+                t10 = 0
+                t90 = 0
 
 
                 for line in bkup_fp:
@@ -239,113 +246,29 @@ def calculate_risk(pathwork, summary_file="summary"):
                                 delIob = iob - pre_iob #data["IOB"][i] - data["IOB"][i-1]
                                 delInsulinRate = insulinRate-pre_insulinRate #data["rate"][i] - data["rate"][i-1]
 
-                                if bg < bgLowerTh:
-                                        if delInsulinRate != 0: # row_38
-                                                sub_alert_flag = True
-                                                sub_alert_msg = "row_38"
+                                if bg < 70 or bg >180:
+                                        sub_alert_flag = True
+                                        sub_alert_msg = "rule_1"
+                                if delBg<-25 or delBg > 15 :
+                                        sub_alert_flag = True
+                                        sub_alert_msg = "rule_2"
+                                if bg < percentile10:
+                                        t10 = count
+                                elif bg >percentile90:
+                                        t90 = count
 
-                                elif bg > bgTarget:
-                                        #if delBg >= -3:
-                                        if iob < -0.120728641206 and insulinRate == 0: # row_37
-                                                sub_alert_flag = True
-                                                sub_alert_msg = "row_37"
-
-                                        #elif delBg > 0:
-                                        # checking if BG is rising
-                                        elif delBg > 0:
-                                                if delIob > 0 and iob < 0.126687105772: # row_1 done
-                                                        if delInsulinRate < 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_1"
-                                                                # print "s=%s,falut=%s,initbg=%s,iob=%s,pre_iob=%s,delt=%s"%(scenario,fault,init_bg, iob,pre_iob,delIob)
-                                                #if delBg < 0:
-                                                elif delIob < 0 and iob <  0.145605040799: # row_2 done
-                                                        if delInsulinRate < 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_2"
-                                                elif delBg > 0 and delIob == 0: # row_3 done
-                                                        if delInsulinRate < 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_3"
-
-                                        elif delBg < 0:
-
-                                                # checking if BG is falling more than the threshold
-                                                #if delBg > thBgFall:
-                                                if delIob > 0 and iob < -0.0622758866662: # row_4 done
-                                                        if delInsulinRate < 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_4"
-                                                elif delIob < 0 and iob < -0.113062983335: # row_5 done
-                                                        if delInsulinRate < 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_5"
-                                                elif delIob == 0 and iob < 0.580168168836: # row_6 done
-                                                        if delInsulinRate < 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_6"
-
-                                        elif delBg == 0:
-                                                if delIob > 0 and iob < -0.104069667554: # row_7 done
-                                                        if delInsulinRate < 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_7"
-                                                elif delIob < 0 and iob < 0.264173781619: # row_8 done
-                                                        if delInsulinRate < 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_8"
-                                                elif delIob == 0: # row_9 done
-                                                        if delInsulinRate < 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_9"
-                                        
-
-                                elif bg < bgTarget:
-
-                                        if delBg > 0:
-                                                # checking if BG is rising more than the threshold
-                                                if delIob > 0 and iob > 0.161191472787:
-                                                        if delInsulinRate > 0: # row_28 done
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_28"
-                                                elif delIob < 0 and iob > 0.257052081016:
-                                                        if delInsulinRate > 0: # row_29 done
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_29"
-                                                elif delIob == 0 and iob > -0.847656258429:
-                                                        if delInsulinRate > 0: # row_30 done
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_30"
-                                        
-                                        elif delBg < 0:
-                                                # checking if BG is falling more than the threshold
-                                                #if delBg < thBgFall:
-                                                if delIob > 0 and iob > -0.199631233636: # row_31 done
-                                                        if delInsulinRate > 0:
-                                                                        sub_alert_flag = True
-                                                                        sub_alert_msg = "row_31"
-                                                elif delIob < 0 and iob > 0.254236455594: # row_32 done
-                                                        if delInsulinRate > 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_32"
-                                                elif delIob == 0: # row_33 done
-                                                        if delInsulinRate > 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_33"
-
-                                        elif delBg == 0:
-                                                if delIob > 0 and iob > -0.216926320065:
-                                                        if delInsulinRate > 0: # row_34 done
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_34"
-                                                elif delIob < 0 and iob > -0.0964223380798: # row_35 done
-                                                        if delInsulinRate > 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_35"
-                                                elif delIob == 0: # row_36 done
-                                                        if delInsulinRate > 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_36"
+                                if t10:
+                                        if bg > percentile10:
+                                                if count - t10 > 5: #no longer than alfa
+                                                        sub_alert_flag = True
+                                                        sub_alert_msg = "rule_3"
+                                                t10 = 0
+                                elif t90:
+                                        if bg < percentile90:
+                                                if count - t90 > 5: #no longer than alfa
+                                                        sub_alert_flag = True
+                                                        sub_alert_msg = "rule_4"
+                                                t90 = 0
 
                                 pre_insulinRate = insulinRate
                                 pre_iob = iob
