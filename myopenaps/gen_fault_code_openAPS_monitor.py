@@ -226,14 +226,19 @@ def gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,directi
 	if 'rate' in variable:
 		daterange=[0.125,0.25,0.5,1,1.5,2,2.5,3,3.5,4]
 	else:
-		daterange=[0.5,1,2,4,8,16,32,64,128,256]
+		daterange=[16,32,48,64,96,128,160,192,224,256]
 	
 	for gain in daterange: #single or multiple bitflips
 		trigger_time = random.randint(10,190)
-		duration = int((199 - trigger_time)/4) #divided into four parts
-		for i in np.arange(trigger_time,199,duration):
-			if i+duration <= 199: #make sure the stop time is no more than 199
-				stop_time = random.randint(i+1,i+duration) #hong long fault will last, at least one iteration
+		# duration = int((199 - trigger_time)/4) #divided into four parts
+		duration = (199 - trigger_time)/4 
+		# for i in np.arange(trigger_time,199,duration):
+		for i in range(4):
+			time = int(trigger_time + i*duration)
+			endpoint = time+int(duration)
+			if endpoint <=199:
+			# if i+duration <= 199: #make sure the stop time is no more than 199
+				stop_time = random.randint(time+1,endpoint) #hong long fault will last, at least one iteration
 				code.append(func('',trigger, trigger_time,stop_time, variable, gain,additional_code))
 				code_STPA.append(func(trigger_code,trigger, trigger_time,stop_time, variable, gain,additional_code))
 				#param.append(','.join(['relative distance',str(t1),str(dt),str(delta)]))
@@ -494,6 +499,6 @@ scenarios = {
 
 }
 
-for sceneNum in [9,10,11,12,13,14,15,16,17,18]:
+for sceneNum in [17,18]:
 	scenarios[sceneNum](sceneNum)
 

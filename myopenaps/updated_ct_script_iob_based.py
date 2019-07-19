@@ -91,7 +91,7 @@ for _ in range(iteration_num):
 
   
   read_glucose_from_glucosym = open("../glucosym/closed_loop_algorithm_samples/glucose_output_algo_bw.txt", "r")
-  loaded_glucose = read_glucose_from_glucosym.read()
+  loaded_glucose = float(read_glucose_from_glucosym.read())
 
   ##### Detect Alerts #################
   if float(loaded_glucose) > 280 or float(loaded_glucose) < 80:
