@@ -11,7 +11,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 ##########################################################
-initial_glucose = [80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320]
+initial_glucose = [80, 100, 120, 140, 160, 180, 200]
 #initial_glucose = [80, 100]
 #initial_glucose = [80]
 cmd_main = 'python '+'updated_ct_script_iob_based.py '#+sys.argv[1]
