@@ -33,6 +33,20 @@ def calculate_risk(pathwork, summary_file="summary"):
         lib_s6 = []
         lib_s7 = []
         lib_s8 = []
+        lib_s9 = []
+        lib_s10 = []
+        lib_s11 = []
+        lib_s12 = []
+        lib_s13 = []
+        lib_s14 = []
+        lib_s15 = []
+        lib_s16 = []       
+        lib_s17 = []
+        lib_s18 = []    
+
+        lib_scenario = [0,lib_s1, lib_s2,lib_s3, lib_s4,lib_s5, lib_s6, lib_s7, lib_s8, lib_s9, lib_s10, \
+                lib_s11, lib_s12, lib_s13, lib_s14, lib_s15, lib_s16, lib_s17, lib_s18]   
+
         alert_num = 0
         hazard_num = 0
         h1_num = 0
