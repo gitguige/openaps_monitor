@@ -5,7 +5,7 @@ import os
 fp = open("result.txt",'r')
 summary_file = open("summary_table.csv",'w')
 # sumline = ",Baseline Transient, Transient,WOT Transient,Baseline Permanent, Permanent, WOT Permanent,Baseline Faultfree, Faultfree, WOT Faultfree\n"
-sumline = ",Baseline Transient, Transient,Baseline Permanent, Permanent,Baseline Faultfree, Faultfree\n"
+sumline = ",Baseline HardwareFI, Hardware FI,Baseline Faultfree, Faultfree\n"
 summary_file.write(sumline)
 
 Total = "Totalnum"
