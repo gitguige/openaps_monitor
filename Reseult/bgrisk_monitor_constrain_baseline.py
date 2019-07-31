@@ -49,6 +49,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
 
         alert_num = 0
         hazard_num = 0
+        hazard_alert_num = 0 # count the situation where alert and hazard both happen
         h1_num = 0
         h2_num = 0
         hazard_earliness = 0
@@ -429,8 +430,11 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                 hazard_earliness += 1
                                 print ("early %s,%s,%s"%(scenario,fault,hazard_time))
                                 sub_mttf = "invalid"
+
                         if sub_alt_num != 0:
                                 sub_rectime = float(hazard_time)-float(alert_time)
+                                rectime += sub_rectime
+                                hazard_alert_num += 1
 
                                 if float(hazard_time) >= float(alert_time) :
                                         # if float(alert_time) >= faulttime: #hazard should happen after alert
@@ -438,19 +442,21 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                         # else :
                                         #         sub_rectime = float(hazard_time)-float(faulttime) #
 
-                                        rectime += sub_rectime
+                                        # rectime += sub_rectime
 
-                                        if np.nonzero(alert_time_record[:int(faulttime)]): #alert happens between[0,T1] ~ too early
-                                                FP += 1
-                                        elif np.nonzero(alert_time_record[np.nonzero(hazard_time_record)[-1]:]): #alert happens between[T4,200], where T4 represents the end of a hazard time ~ too late
-                                                FP += 1
+                                        # hazard_end_time = np.nonzero(hazard_time_record)[-1]
 
-                                        if np.nonzero(alert_time_record[int(faulttime):int(hazard_time)]): #alert happens between[T1,T3]
-                                                TP += 1
-                                        else:
-                                                FN += 1
+                                        # if np.nonzero(alert_time_record[:int(faulttime)]): #alert happens between[0,T1] ~ too early
+                                        #         FP += 1
+                                        # # elif np.nonzero(alert_time_record[hazard_end_time:]): #alert happens between[T4,200], where T4 represents the end of a hazard time ~ too late
+                                        # #         FP += 1
+
+                                        # elif np.nonzero(alert_time_record[int(faulttime):hazard_end_time ]):#int(hazard_time)]): #alert happens between[T1,T3]
+                                        #         TP += 1
+                                        # else:
+                                        #         FN += 1
                                         
-                                        # TP += 1
+                                        TP += 1
                                 else:
                                         FN+=1
                         else:
