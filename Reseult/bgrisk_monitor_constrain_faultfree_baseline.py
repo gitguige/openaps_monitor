@@ -294,7 +294,7 @@ def calculate_risk(pathwork, summary_file="summary"):
                                 hazard_flag = True
                                 sub_hz_num += 1
                                 if sub_hz_num == 1:
-                                        hazard_time = float(lineSeq[0])+2 # record the first hazard time
+                                        hazard_time = float(lineSeq[0])#+2 # record the first hazard time
                         else :
                                 hazard_flag = False
 
@@ -455,8 +455,8 @@ def calculate_risk(pathwork, summary_file="summary"):
                 rtime = rectime*5/ TP
         else:
                 rtime = -1
-        summLine = "Total num = %s, alert_num = %s, Hazard num =%s,   mttf =, lantecy =, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f, f1_weighted_avg=%.2f\n " \
-                %(total_num,alert_num,hazard_num,rtime, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num,f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num)
+        summLine = "Total num = %s, alert_num = %s, Hazard num =%s,   mttf =, lantecy =, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f, f1_weighted_avg=%.2f, TN=%s,TP=%s,FP=%s,FN=%s\n " \
+                %(total_num,alert_num,hazard_num,rtime, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num,f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,TP,FP,FN)
         summFile.write(summLine) 
         print (summLine)
         summFile.close()

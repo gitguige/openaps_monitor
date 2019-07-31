@@ -242,9 +242,6 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                 accident_pred = 0
                 pred_start_glucose = 0
 
-                alert_time_record =[]
-                hazard_time_record =[]
-
 
 
                 for line in bkup_fp:
@@ -276,7 +273,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         iob = float(lineSeq[4]) #data["IOB"][i]
                         insulinRate = float(lineSeq[5]) #data["rate"][i]
 
-                        if count <=5:#== 1: #initiate the pre_8 value at first line
+                        if count == 1: #initiate the pre_8 value at first line
                                 pre_insulinRate = insulinRate
                                 pre_iob = iob
                                 pre_bg =bg
@@ -308,12 +305,11 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                                 #                 sub_alert_flag = True
                                                 #                 sub_alert_msg = "row_21" # New context table
                                                 # el
-                                                # if delIob <= 0: # IOB is falling
-                                                #         if delInsulinRate == 0:
-                                                #                 sub_alert_flag = True
-                                                #                 sub_alert_msg = "row_22" # New context table
-                                                # el
-                                                if delIob > 0 and iob < 0.126687105772: # row_1 done
+                                                if delIob <= 0: # IOB is falling
+                                                        if delInsulinRate == 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_22" # New context table
+                                                elif delIob > 0 and iob < 0.126687105772: # row_1 done
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_1"
@@ -397,10 +393,10 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                                                 sub_alert_msg = "row_30"
                                         
                                         elif delBg < 0:
-                                                # if delIob >=0: # IOB is not falling
-                                                #         if delInsulinRate == 0:
-                                                #                 sub_alert_flag = True
-                                                #                 sub_alert_msg = "row_27" # New context table
+                                                if delIob >=0: # IOB is not falling
+                                                        if delInsulinRate == 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_27" # New context table
                                                                 
                                                 # checking if BG is falling more than the threshold
                                                 #if delBg < thBgFall:
@@ -443,7 +439,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                 if bg>280 or bg < 70:
                                         accident_pred += 1 # predict an accident
                                 if sub_hz_num == 1:
-                                        hazard_time = float(lineSeq[0])#+2 # record the first hazard time
+                                        hazard_time = float(lineSeq[0])+2 # record the first hazard time
                                         pred_start_glucose = bg
                         else :
                                 hazard_flag = False
@@ -453,22 +449,17 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                 if sub_alt_num == 1:
                                         alert_time = float(lineSeq[0]) # record the first alert time
                                 # sub_alert_flag = False
-                                alert_time_record.append(int(lineSeq[0]))
-                        else:
-                                alert_time_record.append(0)
 
                         if hazard_flag == True :
                                 if sub_alert_flag == True:
                                         sub_TP += 1
                                 else:
                                         sub_FN += 1
-                                hazard_time_record.append(int(lineSeq[0]))
                         else:
                                 if sub_alert_flag == True:
                                         sub_FP += 1
                                 else:
                                         sub_TN += 1
-                                hazard_time_record.append(int(lineSeq[0]))
 
 
 
@@ -549,27 +540,14 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                 print ("early %s,%s,%s"%(scenario,fault,hazard_time))
                                 sub_mttf = "invalid"
                         if sub_alt_num != 0:
-                                sub_rectime = float(hazard_time)-float(alert_time)
-
                                 if float(hazard_time) >= float(alert_time) :
-                                        # if float(alert_time) >= faulttime: #hazard should happen after alert
-                                        #         sub_rectime = float(hazard_time)-float(alert_time)
-                                        # else :
-                                        #         sub_rectime = float(hazard_time)-float(faulttime) #
+                                        if float(alert_time) >= faulttime: #hazard should happen after alert
+                                                sub_rectime = float(hazard_time)-float(alert_time)
+                                        else :
+                                                sub_rectime = float(hazard_time)-float(faulttime) #
 
                                         rectime += sub_rectime
-
-                                        if np.nonzero(alert_time_record[:int(faulttime)]): #alert happens between[0,T1] ~ too early
-                                                FP += 1
-                                        elif np.nonzero(alert_time_record[np.nonzero(hazard_time_record)[-1]:]): #alert happens between[T4,200], where T4 represents the end of a hazard time ~ too late
-                                                FP += 1
-
-                                        if np.nonzero(alert_time_record[int(faulttime):int(hazard_time)]): #alert happens between[T1,T3]
-                                                TP += 1
-                                        else:
-                                                FN += 1
-                                        
-                                        # TP += 1
+                                        TP += 1
                                 else:
                                         FN+=1
                         else:
@@ -586,11 +564,11 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
 
                 if sub_alt_num != 0:
                         alert_num += 1
-                        # if float(alert_time) >= faulttime:
-                        sub_latancy = float(alert_time)-faulttime
-                        latency += sub_latancy
-                        # else:
-                        #         sub_latancy = "invalid"
+                        if float(alert_time) >= faulttime:
+                                sub_latancy = float(alert_time)-faulttime
+                                latency += sub_latancy
+                        else:
+                                sub_latancy = "invalid"
 
                 y_pred = np.array(y_pred)
                 y_true = np.array(y_true)
@@ -630,8 +608,8 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                 summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
                 
 
-        summLine = "Fault num = %s, alert_num = %s, Hazard num =%s, mttf =%.2f, lantecy =%.2f, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f , f1_weighted_avg=%.2f, TN=%s,TP=%s,FP=%s,FN=%s\n" \
-                %(total_num,alert_num,hazard_num,5*mttf/hazard_num if hazard_num else 0, latency*5/alert_num if alert_num else 0, rectime*5/ TP if TP else 0, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num, f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,TP,FP,FN)
+        summLine = "Fault num = %s, alert_num = %s, Hazard num =%s, mttf =%.2f, lantecy =%.2f, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f , f1_weighted_avg=%.2f\n" \
+                %(total_num,alert_num,hazard_num,5*mttf/hazard_num if hazard_num else 0, latency*5/alert_num if alert_num else 0, rectime*5/ TP if TP else 0, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num, f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num)
         summFile.write(summLine) 
         print (summLine)
         summFile.close()

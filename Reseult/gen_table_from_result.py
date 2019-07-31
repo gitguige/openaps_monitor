@@ -23,6 +23,10 @@ f1_micro_avg = "f1_micro_avg"
 f1_macro_avg = "f1_macro_avg"
 f1_weighted_avg = "f1_weighted_avg"
 
+TP ="TP"
+TN = "TN"
+FP ="FP"
+FN ="FN"
 
 for line in fp:
 	if ":" in line:
@@ -47,6 +51,12 @@ for line in fp:
 		f1_micro_avg += ','+(Seq[10].split(',')[0])
 		f1_macro_avg += ','+(Seq[11].split(',')[0])
 		f1_weighted_avg += ','+(Seq[12].split(',')[0]).replace('\n','')
+		
+		TN += ','+(Seq[13].split(',')[0])
+		TP += ','+(Seq[14].split(',')[0])
+		FP += ','+(Seq[15].split(',')[0])
+		FN += ','+(Seq[16].split(',')[0]).replace('\n','')
+
 
 summary_file.write("%s\n"%Total)
 summary_file.write("%s\n"%Alert)
@@ -65,6 +75,11 @@ summary_file.write("\n")
 summary_file.write("%s\n"%MTTF)
 summary_file.write("%s\n"%Latency)
 summary_file.write("%s\n"%Reaction_time)
+
+summary_file.write("%s\n"%TN)
+summary_file.write("%s\n"%TP)
+summary_file.write("%s\n"%FP)
+summary_file.write("%s\n"%FN)
 
 fp.close()
 summary_file.close()
