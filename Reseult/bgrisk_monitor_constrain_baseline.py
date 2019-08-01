@@ -61,6 +61,9 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
         TP = 0
         FP = 0
         FN = 0
+        t_true = [] #persimulation
+        t_pred = []
+
 
         sum_sub_TN = 0
         sum_sub_TP = 0
@@ -70,6 +73,8 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
         f1_micro_avg =0
         f1_macro_avg =0
         f1_weighted_avg =0
+
+        total_pred = 0 # the number that risk index predicts hyper- hypoglycemia [70,280]
 
         s1_8_total = [0]#total num of fault in each scenarios, index0 is just for empty place
         s1_8_hazard = [0]#hazard num of fault in each scenarios, index0 is just for empty place
@@ -97,37 +102,13 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                 faultLine = faultLine.replace('\n','')
 
                                 lib_scenario[i].append(faultLine)
-                                # if i == 1:
-                                #         lib_s1.append(faultLine)
-                                #         # s1_8_total[1] += 1
-                                # elif i == 2:
-                                #         lib_s2.append(faultLine)
-                                #         # s1_8_total[2] += 1
-                                # elif i == 3:
-                                #         lib_s3.append(faultLine)
-                                #         # s1_8_total[3] += 1
-                                # elif i == 4:
-                                #         lib_s4.append(faultLine)
-                                #         # s1_8_total[4] += 1
-                                # elif i == 5:
-                                #         lib_s5.append(faultLine)
-                                #         # s1_8_total[5] += 1
-                                # elif i == 6:
-                                #         lib_s6.append(faultLine)
-                                #         # s1_8_total[6] += 1
-                                # elif i == 7:
-                                #         lib_s7.append(faultLine)
-                                #         # s1_8_total[7] += 1
-                                # elif i == 8:
-                                #         lib_s8.append(faultLine)
-                                #         # s1_8_total[8] += 1
 
         # for i in range(1,9):
         #         print(s1_8_total[i])
 
         # summFile = open("../summary.csv",'w')
         summFile = open(summary_file,'w')
-        summLine = "Scenario,fault,faultinf,Patient,init_bg,alert,alert_num,hazard_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_TPR, sub_FPR,T1,T2,T3,Latency(T2-T1),Reaction time(T3-t2),mttf(T3-T1),f1_micro,f1_macro,f1_weighted,Iteration_number\n"
+        summLine = "Scenario,fault,faultinf,Patient,init_bg,alert,alert_num,hazard_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_TPR, sub_FPR,T1,T2,T3,Latency(T2-T1),Reaction time(T3-t2),mttf(T3-T1),f1_micro,f1_macro,f1_weighted,Iteration_number,glucose_at_T3,prediction_rate,TN,FN,TP,FP\n"
         summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
         # summFile = open(savefile,'w')
         # summLine = 'Directory#,Filename#,Filetype#,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,Total#\n' %(wordlist[0],wordlist[1],wordlist[2],wordlist[3],wordlist[4],wordlist[5],wordlist[6],wordlist[7],wordlist[8],wordlist[9])
@@ -145,10 +126,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                 fileresult = os.path.join(root, file)
                                 fileset.append(fileresult)
                                 
-        #                         summLine = '%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n' %(root,file,filetype,consist[0],consist[1],consist[2],consist[3],consist[4],consist[5],consist[6],consist[7],consist[8],consist[9],total_consist)
-        #                         summFile.write(summLine)
-        # summFile.close()
-                        #             os.system('cp '+ fileresult+ ' result1/')
+                                # os.system('cp '+ fileresult+ ' result1/')
                                 # print(fileresult)
         for fileLoc in fileset:
         # fileLoc = "/home/gui/Documents/OpenAPS/openaps_monitor/Reseult/simulationCollectdata_Random_trasiant/1_belowTarget_add_rate_H2/1/patientA/data_patientA_80.csv"
@@ -240,11 +218,14 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                 sub_rectime = "N/A"
                 sub_latancy ="N/A"
 
-                y_true = []
+                y_true = [] #pertimeline
                 y_pred = []
 
                 t10 = 0
                 t90 = 0
+                accident_pred = 0
+                pred_start_glucose = 0
+
                 alert_time_record =[]
                 hazard_time_record =[]
 
@@ -279,9 +260,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         iob = float(lineSeq[4]) #data["IOB"][i]
                         insulinRate = float(lineSeq[5]) #data["rate"][i]
 
-
-
-                        if count == 1: #initiate the pre_8 value at first line
+                        if count <=5:#== 1: #initiate the pre_8 value at first line
                                 pre_insulinRate = insulinRate
                                 pre_iob = iob
                                 pre_bg =bg
@@ -319,6 +298,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
 
                                 
 
+
                                 pre_insulinRate = insulinRate
                                 pre_iob = iob
                                 pre_bg =bg
@@ -329,8 +309,11 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         if float(lineSeq[11]) != 0 and (float(lineSeq[8]) > 25 or float(lineSeq[9]) > 45): #LBGI>5 , HGBI>9
                                 hazard_flag = True
                                 sub_hz_num += 1
+                                if bg>280 or bg < 70:
+                                        accident_pred += 1 # predict an accident
                                 if sub_hz_num == 1:
                                         hazard_time = float(lineSeq[0])#+2 # record the first hazard time
+                                        pred_start_glucose = bg
                         else :
                                 hazard_flag = False
 
@@ -418,10 +401,19 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                 sum_sub_FP += sub_FP
                 sum_sub_FN += sub_FN
 
+                if accident_pred != 0:
+                        total_pred += 1
+                        accident_pred = accident_pred*1.0/sub_hz_num # ratio of successful prediction
 
+
+                perTN = 0
+                perFN = 0
+                perTP = 0
+                perFP = 0
                 if sub_hz_num != 0:
                         hazard_num += 1
                         s1_8_hazard[int(scenario)]+=1 #record hazard number for each scenario
+                        t_true.append(100)    
 
                         if float(hazard_time) >= faulttime:
                                 sub_mttf = float(hazard_time)-faulttime
@@ -447,25 +439,36 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                         # hazard_end_time = np.nonzero(hazard_time_record)[-1]
 
                                         # if np.nonzero(alert_time_record[:int(faulttime)]): #alert happens between[0,T1] ~ too early
-                                        #         FP += 1
+                                        #         perFP += 1
                                         # # elif np.nonzero(alert_time_record[hazard_end_time:]): #alert happens between[T4,200], where T4 represents the end of a hazard time ~ too late
-                                        # #         FP += 1
+                                        # #         perFP += 1
 
                                         # elif np.nonzero(alert_time_record[int(faulttime):hazard_end_time ]):#int(hazard_time)]): #alert happens between[T1,T3]
-                                        #         TP += 1
+                                        #         perTP += 1
                                         # else:
-                                        #         FN += 1
+                                        #         perFN += 1
                                         
-                                        TP += 1
+                                        perTP = 1
+                                        t_pred.append(100)
                                 else:
-                                        FN+=1
+                                        perFN=1
+                                        t_pred.append(0)
                         else:
-                                FN += 1
+                                perFN = 1
+                                t_pred.append(0)
                 else:
+                        t_true.append(0)
+
                         if sub_alt_num != 0:
-                                FP += 1
+                                perFP = 1
+                                t_pred.append(100)
                         else:
-                                TN += 1
+                                perTN = 1
+                                t_pred.append(0)
+                TP += perTP
+                TN += perTN
+                FP += perFP
+                FN += perFN
 
                 # else:
                 #         sub_mttf = "N/A"
@@ -491,7 +494,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         if 'accuracy' in line: #f1_micro
                                 pattern = re.compile(r'\d+')  
                                 result1 = pattern.findall(line)
-                                f1_micro = "%s.%s"%(result1[0],result1[1])
+                                f1_micro = "%s.%s"%(result1[0],result1[1])                               
                         elif 'macro' in line: #f1_macro
                                 pattern = re.compile(r'\d+')  
                                 result1 = pattern.findall(line)
@@ -513,15 +516,46 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         sub_tpr = sub_TP/(sub_TP + sub_FN)
                 if sub_FP + sub_TN:
                         sub_fpr = sub_FP/(sub_FP + sub_TN)
-                summLine = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n"%(scenario,fault,faultinf,patient,init_bg,alert_msg,sub_alt_num,sub_hz_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_tpr,sub_fpr, faulttime,alert_time,hazard_time,sub_latancy,sub_rectime,sub_mttf, f1_micro,f1_macro,f1_weighted,count)
+                summLine = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n"\
+                            %(scenario,fault,faultinf,patient,init_bg,\
+                            alert_msg,sub_alt_num,sub_hz_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_tpr,sub_fpr, \
+                            faulttime,alert_time,hazard_time,sub_latancy,sub_rectime,sub_mttf, \
+                            f1_micro,f1_macro,f1_weighted,count,pred_start_glucose,accident_pred,\
+                            perTN,perFN,perTP,perFP)
                 summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
                 
 
-        summLine = "Fault num = %s, alert_num = %s, Hazard num =%s, mttf =%.2f, lantecy =%.2f, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f , f1_weighted_avg=%.2f, TN=%s,TP=%s,FP=%s,FN=%s\n" \
-                %(total_num,alert_num,hazard_num,5*mttf/hazard_num if hazard_num else 0, latency*5/alert_num if alert_num else 0, rectime*5/ TP if TP else 0, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num, f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,TP,FP,FN)
+        t_pred = np.array(t_pred)
+        t_true = np.array(t_true)
+                
+        tf1_weighted = 0
+        tf1_micro = 0
+        tf1_macro = 0
+        result = classification_report(t_true, t_pred)
+        resultSeq = str(result).split('\n')
+        for line in resultSeq:
+                if 'accuracy' in line: #f1_micro
+                        pattern = re.compile(r'\d+')  
+                        result1 = pattern.findall(line)
+                        tf1_micro = "%s.%s"%(result1[0],result1[1])                               
+                elif 'macro' in line: #f1_macro
+                        pattern = re.compile(r'\d+')  
+                        result1 = pattern.findall(line)
+                        t1_macro = "%s.%s"%(result1[len(result1)-3],result1[len(result1)-2])
+                elif 'weighted' in line: #f1_weighted
+                        pattern = re.compile(r'\d+')  
+                        result1 = pattern.findall(line)
+                        tf1_weighted = "%s.%s"%(result1[len(result1)-3],result1[len(result1)-2])
+                else:
+                        pass
+        
+
+        summLine = "Fault num = %s, alert_num = %s, Hazard num =%s, mttf =%.2f, lantecy =%.2f, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f , f1_weighted_avg=%.2f, TN=%s,TP=%s,FP=%s,FN=%s, F1_micro=%.2f, F1_macro=%.2f , F1_weighted=%.2f\n" \
+                %(total_num,alert_num,hazard_num,5*mttf/hazard_num if hazard_num else 0, latency*5/alert_num if alert_num else 0, rectime*5/ hazard_alert_num if hazard_alert_num else 0, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num, f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,TP,FP,FN,tf1_micro_avg,tf1_macro_avg,tf1_weighted_avg)
         summFile.write(summLine) 
         print (summLine)
         summFile.close()
+        print ("predict %s cases out of %s" %(total_pred,hazard_num))
 
         resfile = open("result.txt",'a+')
         resname= summary_file.split('.')[0]

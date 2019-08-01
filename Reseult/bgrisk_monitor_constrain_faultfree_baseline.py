@@ -49,6 +49,7 @@ def calculate_risk(pathwork, summary_file="summary"):
 
         alert_num = 0
         hazard_num = 0
+        hazard_alert_num = 0 # count the situation where alert and hazard both happen
         h1_num = 0
         h2_num = 0
         hazard_earliness = 0
@@ -70,6 +71,7 @@ def calculate_risk(pathwork, summary_file="summary"):
         f1_macro_avg =0
         f1_weighted_avg =0
 
+        total_pred = 0 # the number that risk index predicts hyper- hypoglycemia [70,280]
         # fault_lib_path = "/home/gui/Documents/OpenAPS/openaps_monitor/myopenaps/fault_library_monitor/scenario_"
         # for i in range(1,9):
         #         fault_file = fault_lib_path + str(i) + '.txt'
@@ -104,7 +106,7 @@ def calculate_risk(pathwork, summary_file="summary"):
         
         # summFile = open("../summary.csv",'w')
         summFile = open(summary_file,'w')
-        summLine = "Scenario,fault,faultinf,Patient,init_bg,alert,alert_num,hazard_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_TPR, sub_FPR,T2,T3,Reaction time(T3-t2),f1_micro,f1_macro,f1_weighted,Iteration_number\n"
+        summLine = "Scenario,fault,faultinf,Patient,init_bg,alert,alert_num,hazard_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_TPR, sub_FPR,T2,T3,Reaction time(T3-t2),f1_micro,f1_macro,f1_weighted,Iteration_number,glucose_at_T3,prediction_rate,TN,FN,TP,FP\n"
         summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
         # summFile = open(savefile,'w')
         # summLine = 'Directory#,Filename#,Filetype#,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,Total#\n' %(wordlist[0],wordlist[1],wordlist[2],wordlist[3],wordlist[4],wordlist[5],wordlist[6],wordlist[7],wordlist[8],wordlist[9])
@@ -184,7 +186,7 @@ def calculate_risk(pathwork, summary_file="summary"):
 
                 line = bkup_fp.readline() #title
                 # print line
-                line = line.replace('\n','') + ",alert_msg\n"
+                line = line.replace('\n','') + ",alert_msg,hazard_flag\n"
                 src_fp.write(line)
 
                 lbgi_temp = 0
@@ -218,6 +220,12 @@ def calculate_risk(pathwork, summary_file="summary"):
                 y_pred = []
                 t10 = 0
                 t90 = 0
+                accident_pred = 0
+                pred_start_glucose = 0
+
+                alert_time_record =[]
+                hazard_time_record =[]
+
 
 
                 for line in bkup_fp:
@@ -249,7 +257,7 @@ def calculate_risk(pathwork, summary_file="summary"):
                         iob = float(lineSeq[4]) #data["IOB"][i]
                         insulinRate = float(lineSeq[5]) #data["rate"][i]
 
-                        if count == 1: #initiate the pre_8 value at first line
+                        if count <=5:#== 1: #initiate the pre_8 value at first line
                                 pre_insulinRate = insulinRate
                                 pre_iob = iob
                                 pre_bg =bg
@@ -354,7 +362,7 @@ def calculate_risk(pathwork, summary_file="summary"):
 
 
 
-                        srcLine = '%s,%s\n' %(line,sub_alert_msg)
+                        srcLine = '%s,%s,%s\n' %(line,sub_alert_msg,hazard_flag)
                         src_fp.write(srcLine)
                         if "N/A" not in sub_alert_msg:
                                 if sub_alt_num == 1:
@@ -377,7 +385,15 @@ def calculate_risk(pathwork, summary_file="summary"):
                 sum_sub_FP += sub_FP
                 sum_sub_FN += sub_FN
 
+                if accident_pred != 0:
+                        total_pred += 1
+                        accident_pred = accident_pred*1.0/sub_hz_num # ratio of successful prediction
 
+
+                perTN = 0
+                perFN = 0
+                perTP = 0
+                perFP = 0
                 if sub_hz_num != 0:
                         hazard_num += 1
                         # if float(hazard_time) >= faulttime:
@@ -388,19 +404,25 @@ def calculate_risk(pathwork, summary_file="summary"):
                         #         print "early %s,%s,%s"%(scenario,fault,hazard_time)
                         #         sub_mttf = "invalid"
                         if sub_alt_num != 0:
+                                sub_rectime = float(hazard_time)-float(alert_time)
+                                rectime += sub_rectime
                                 if float(hazard_time) >= float(alert_time): #hazard should happen after alert
-                                        sub_rectime = float(hazard_time)-float(alert_time)
-                                        rectime += sub_rectime
-                                        TP += 1
+                                        #         sub_rectime = float(hazard_time)-float(alert_time)
+                                        # rectime += sub_rectime
+                                        perTP = 1
                                 else:
-                                        FN+=1
+                                        perFN=1
                         else:
-                                FN += 1
+                                perFN = 1
                 else:
                         if sub_alt_num != 0:
-                                FP += 1
+                                perFP = 1
                         else:
-                                TN += 1
+                                perTN = 1
+                TP += perTP
+                TN += perTN
+                FP += perFP
+                FN += perFN
 
                 # # else:
                 # #         sub_mttf = "N/A"
@@ -448,11 +470,12 @@ def calculate_risk(pathwork, summary_file="summary"):
                         sub_tpr = sub_TP/(sub_TP + sub_FN)
                 if sub_FP + sub_TN:
                         sub_fpr = sub_FP/(sub_FP + sub_TN)
-                summLine = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s\n"%(scenario,fault,faultinf,patient,init_bg,alert_msg,sub_alt_num,sub_hz_num,sub_TN,sub_FN,sub_TP,sub_FP, sub_tpr,sub_fpr, alert_time,hazard_time,sub_rectime,f1_micro,f1_macro,f1_weighted, count)
+                summLine = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s,%s, %s,%s,%s\n"%(scenario,fault,faultinf,patient,init_bg,alert_msg,sub_alt_num,sub_hz_num,sub_TN,sub_FN,sub_TP,sub_FP, sub_tpr,sub_fpr, alert_time,hazard_time,sub_rectime,f1_micro,f1_macro,f1_weighted, count,pred_start_glucose,accident_pred,\
+                            perTN,perFN,perTP,perFP)
                 summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
                 
-        if TP:
-                rtime = rectime*5/ TP
+        if hazard_alert_num:
+                rtime = rectime*5/ hazard_alert_num
         else:
                 rtime = -1
         summLine = "Total num = %s, alert_num = %s, Hazard num =%s,   mttf =, lantecy =, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f, f1_weighted_avg=%.2f, TN=%s,TP=%s,FP=%s,FN=%s\n " \
@@ -460,6 +483,7 @@ def calculate_risk(pathwork, summary_file="summary"):
         summFile.write(summLine) 
         print (summLine)
         summFile.close()
+        print ("predict %s cases out of %s" %(total_pred,hazard_num))
 
         resfile = open("result.txt",'a+')
         resname= summary_file.split('.')[0]
