@@ -371,7 +371,7 @@ def calculate_risk(pathwork, summary_file="summary"):
                                         sub_FP += 1
                                 else:
                                         sub_TN += 1
-                                hazard_time_record.append(int(0)
+                                hazard_time_record.append(0)
 
 
 
@@ -457,7 +457,10 @@ def calculate_risk(pathwork, summary_file="summary"):
                         if sub_alt_num != 0:
                                 sub_rectime = float(hazard_time)-float(alert_time)
                                 rectime += sub_rectime
-                                if float(hazard_time) >= float(alert_time): #hazard should happen after alert
+                                hazard_alert_num += 1                               
+
+                                if float(hazard_time) >= float(alert_time) :
+                                        # if float(alert_time) >= faulttime: #hazard should happen after alert
                                         #         sub_rectime = float(hazard_time)-float(alert_time)
                                         # rectime += sub_rectime
                                         perTP = 1
