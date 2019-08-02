@@ -27,6 +27,10 @@ TP ="TP"
 TN = "TN"
 FP ="FP"
 FN ="FN"
+F1_micro = "F1_micro"
+F1_macro = "F1_macro"
+F1_weighted = "F1_weighted"
+
 
 for line in fp:
 	if ":" in line:
@@ -57,6 +61,10 @@ for line in fp:
 		FP += ','+(Seq[15].split(',')[0])
 		FN += ','+(Seq[16].split(',')[0]).replace('\n','')
 
+		F1_micro += ','+(Seq[17].split(',')[0])
+		F1_macro += ','+(Seq[18].split(',')[0])
+		F1_weighted += ','+(Seq[19].split(',')[0]).replace('\n','')
+
 
 summary_file.write("%s\n"%Total)
 summary_file.write("%s\n"%Alert)
@@ -80,6 +88,9 @@ summary_file.write("%s\n"%TN)
 summary_file.write("%s\n"%TP)
 summary_file.write("%s\n"%FP)
 summary_file.write("%s\n"%FN)
+summary_file.write("%s\n"%F1_micro)
+summary_file.write("%s\n"%F1_macro)
+summary_file.write("%s\n"%F1_weighted)
 
 fp.close()
 summary_file.close()

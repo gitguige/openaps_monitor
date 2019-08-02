@@ -61,6 +61,9 @@ def calculate_risk(pathwork, summary_file="summary"):
         TP = 0
         FP = 0
         FN = 0
+        t_true = [] #persimulation
+        t_pred = []
+
 
         sum_sub_TN = 0
         sum_sub_TP = 0
@@ -301,8 +304,11 @@ def calculate_risk(pathwork, summary_file="summary"):
                         if float(lineSeq[11]) != 0 and (float(lineSeq[8]) > 25 or float(lineSeq[9]) > 45): #LBGI>5 , HGBI>9
                                 hazard_flag = True
                                 sub_hz_num += 1
+                                if bg>280 or bg < 70:
+                                        accident_pred += 1 # predict an accident
                                 if sub_hz_num == 1:
                                         hazard_time = float(lineSeq[0])#+2 # record the first hazard time
+                                        pred_start_glucose = bg
                         else :
                                 hazard_flag = False
 
@@ -311,17 +317,22 @@ def calculate_risk(pathwork, summary_file="summary"):
                                 if sub_alt_num == 1:
                                         alert_time = float(lineSeq[0]) # record the first alert time
                                 # sub_alert_flag = False
+                                alert_time_record.append(int(lineSeq[0]))
+                        else:
+                                alert_time_record.append(0)
 
                         if hazard_flag == True :
                                 if sub_alert_flag == True:
                                         sub_TP += 1
                                 else:
                                         sub_FN += 1
+                                hazard_time_record.append(int(lineSeq[0]))
                         else:
                                 if sub_alert_flag == True:
                                         sub_FP += 1
                                 else:
                                         sub_TN += 1
+                                hazard_time_record.append(int(0)
 
 
 
@@ -396,6 +407,7 @@ def calculate_risk(pathwork, summary_file="summary"):
                 perFP = 0
                 if sub_hz_num != 0:
                         hazard_num += 1
+                        t_true.append(100)    
                         # if float(hazard_time) >= faulttime:
                         #         sub_mttf = float(hazard_time)-faulttime
                         #         mttf += sub_mttf
@@ -410,15 +422,22 @@ def calculate_risk(pathwork, summary_file="summary"):
                                         #         sub_rectime = float(hazard_time)-float(alert_time)
                                         # rectime += sub_rectime
                                         perTP = 1
+                                        t_pred.append(100)
                                 else:
                                         perFN=1
+                                        t_pred.append(0)
                         else:
                                 perFN = 1
+                                t_pred.append(0)
                 else:
+                        t_true.append(0)
+
                         if sub_alt_num != 0:
                                 perFP = 1
+                                t_pred.append(100)
                         else:
                                 perTN = 1
+                                t_pred.append(0)
                 TP += perTP
                 TN += perTN
                 FP += perFP
@@ -474,12 +493,35 @@ def calculate_risk(pathwork, summary_file="summary"):
                             perTN,perFN,perTP,perFP)
                 summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
                 
+        t_pred = np.array(t_pred)
+        t_true = np.array(t_true)
+                
+        tf1_weighted = 0
+        tf1_micro = 0
+        tf1_macro = 0
+        result = classification_report(t_true, t_pred)
+        resultSeq = str(result).split('\n')
+        for line in resultSeq:
+                if 'accuracy' in line: #f1_micro
+                        pattern = re.compile(r'\d+')  
+                        result1 = pattern.findall(line)
+                        tf1_micro = "%s.%s"%(result1[0],result1[1])                               
+                elif 'macro' in line: #f1_macro
+                        pattern = re.compile(r'\d+')  
+                        result1 = pattern.findall(line)
+                        tf1_macro = "%s.%s"%(result1[len(result1)-3],result1[len(result1)-2])
+                elif 'weighted' in line: #f1_weighted
+                        pattern = re.compile(r'\d+')  
+                        result1 = pattern.findall(line)
+                        tf1_weighted = "%s.%s"%(result1[len(result1)-3],result1[len(result1)-2])
+                else:
+                        pass
         if hazard_alert_num:
                 rtime = rectime*5/ hazard_alert_num
         else:
                 rtime = -1
-        summLine = "Total num = %s, alert_num = %s, Hazard num =%s,   mttf =, lantecy =, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f, f1_weighted_avg=%.2f, TN=%s,TP=%s,FP=%s,FN=%s\n " \
-                %(total_num,alert_num,hazard_num,rtime, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num,f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,TP,FP,FN)
+        summLine = "Total num = %s, alert_num = %s, Hazard num =%s,   mttf =, lantecy =, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f, f1_weighted_avg=%.2f, TN=%s,TP=%s,FP=%s,FN=%s, F1_micro=%s, F1_macro=%s , F1_weighted=%s\n" \
+                %(total_num,alert_num,hazard_num,rtime, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num,f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,TP,FP,FN,tf1_micro,tf1_macro,tf1_weighted)
         summFile.write(summLine) 
         print (summLine)
         summFile.close()

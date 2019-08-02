@@ -371,7 +371,7 @@ def calculate_risk(pathwork, summary_file="summary"):
                                         sub_FP += 1
                                 else:
                                         sub_TN += 1
-                                hazard_time_record.append(int(lineSeq[0]))
+                                hazard_time_record.append(int(0)
 
 
 
@@ -446,6 +446,7 @@ def calculate_risk(pathwork, summary_file="summary"):
                 perFP = 0
                 if sub_hz_num != 0:
                         hazard_num += 1
+                        t_true.append(100)    
                         # if float(hazard_time) >= faulttime:
                         #         sub_mttf = float(hazard_time)-faulttime
                         #         mttf += sub_mttf
@@ -547,7 +548,7 @@ def calculate_risk(pathwork, summary_file="summary"):
                 elif 'macro' in line: #f1_macro
                         pattern = re.compile(r'\d+')  
                         result1 = pattern.findall(line)
-                        t1_macro = "%s.%s"%(result1[len(result1)-3],result1[len(result1)-2])
+                        tf1_macro = "%s.%s"%(result1[len(result1)-3],result1[len(result1)-2])
                 elif 'weighted' in line: #f1_weighted
                         pattern = re.compile(r'\d+')  
                         result1 = pattern.findall(line)
@@ -558,8 +559,8 @@ def calculate_risk(pathwork, summary_file="summary"):
                 rtime = rectime*5/ hazard_alert_num
         else:
                 rtime = -1
-        summLine = "Total num = %s, alert_num = %s, Hazard num =%s,   mttf =, lantecy =, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f, f1_weighted_avg=%.2f, TN=%s,TP=%s,FP=%s,FN=%s, F1_micro=%.2f, F1_macro=%.2f , F1_weighted=%.2f\n" \
-                %(total_num,alert_num,hazard_num,rtime, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num,f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,TP,FP,FN,tf1_micro_avg,tf1_macro_avg,tf1_weighted_avg)
+        summLine = "Total num = %s, alert_num = %s, Hazard num =%s,   mttf =, lantecy =, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f, f1_weighted_avg=%.2f, TN=%s,TP=%s,FP=%s,FN=%s, F1_micro=%s, F1_macro=%s , F1_weighted=%s\n" \
+                %(total_num,alert_num,hazard_num,rtime, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num,f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,TP,FP,FN,tf1_micro,tf1_macro,tf1_weighted)
         summFile.write(summLine) 
         print (summLine)
         summFile.close()
