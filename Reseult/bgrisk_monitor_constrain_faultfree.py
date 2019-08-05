@@ -562,8 +562,8 @@ def calculate_risk(pathwork, summary_file="summary"):
                 rtime = rectime*5/ hazard_alert_num
         else:
                 rtime = -1
-        summLine = "Total num = %s, alert_num = %s, Hazard num =%s,   mttf =, lantecy =, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f, f1_weighted_avg=%.2f, TN=%s,TP=%s,FP=%s,FN=%s, F1_micro=%s, F1_macro=%s , F1_weighted=%s\n" \
-                %(total_num,alert_num,hazard_num,rtime, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num,f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,TP,FP,FN,tf1_micro,tf1_macro,tf1_weighted)
+        summLine = "Total num = %s, alert_num = %s, Hazard num =%s,   mttf =, lantecy =, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f, f1_weighted_avg=%.2f, TN=%s (%.2f%%),TP=%s (%.2f%%),FP=%s (%.2f%%),FN=%s (%.2f%%), F1_micro=%s, F1_macro=%s , F1_weighted=%s\n" \
+                %(total_num,alert_num,hazard_num,rtime, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num,f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,100*TN/total_num,TP,100*TP/total_num,FP,100*FP/total_num,FN,100*FN/total_num,tf1_micro,tf1_macro,tf1_weighted)
         summFile.write(summLine) 
         print (summLine)
         summFile.close()
