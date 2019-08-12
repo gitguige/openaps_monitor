@@ -471,19 +471,22 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
 
                                         # rectime += sub_rectime
 
-                                        # hazard_end_time = np.nonzero(hazard_time_record)[-1]
+                                        hazard_end_time = np.nonzero(hazard_time_record)[-1]
 
                                         # if np.nonzero(alert_time_record[:int(faulttime)]): #alert happens between[0,T1] ~ too early
                                         #         perFP += 1
                                         # # elif np.nonzero(alert_time_record[hazard_end_time:]): #alert happens between[T4,200], where T4 represents the end of a hazard time ~ too late
                                         # #         perFP += 1
 
-                                        # elif np.nonzero(alert_time_record[int(faulttime):hazard_end_time ]):#int(hazard_time)]): #alert happens between[T1,T3]
-                                        #         perTP += 1
-                                        # else:
-                                        #         perFN += 1
+                                        # el
+                                        if np.nonzero(alert_time_record[int(faulttime):int(hazard_time)]):#hazard_end_time ]):#int(hazard_time)]): #alert happens between[T1,T3]
+                                                perTP += 1
+                                        elif np.nonzero(alert_time_record[:int(faulttime)]): #alert happens between[0,T1] ~ too early
+                                                perFP += 1
+                                        else:
+                                                perFN += 1
                                         
-                                        perTP = 1
+                                        # perTP = 1
                                         t_pred.append(100)
                                 else:
                                         perFN=1
@@ -585,7 +588,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         pass
         
 
-        summLine = "Fault num = %s, alert_num = %s, Hazard num =%s, mttf =%.2f, lantecy =%.2f, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f , f1_weighted_avg=%.2f, TN=%s (%.2f%%),TP=%s (%.2f%%),FP=%s (%.2f%%),FN=%s (%.2f%%), F1_micro=%s, F1_macro=%s , F1_weighted=%s\n" \
+        summLine = "Fault num = %s, alert_num = %s, Hazard num =%s, mttf =%.2f, lantecy =%.2f, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f , f1_weighted_avg=%.2f, TN=%s (%.1f%%),TP=%s (%.1f%%),FP=%s (%.1f%%),FN=%s (%.1f%%), F1_micro=%s, F1_macro=%s , F1_weighted=%s\n" \
                 %(total_num,alert_num,hazard_num,5*mttf/hazard_num if hazard_num else 0, latency*5/alert_num if alert_num else 0, rectime*5/ hazard_alert_num if hazard_alert_num else 0, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num, f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,100*TN/total_num,TP,100*TP/total_num,FP,100*FP/total_num,FN,100*FN/total_num,tf1_micro,tf1_macro,tf1_weighted)
         summFile.write(summLine) 
         print (summLine)
@@ -607,7 +610,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
         fp_res.write("Scenario, Faulttype,Total num, Hazard coverage\n")
         for i in range(1,19):
                 if s1_8_total[i]:
-                        resline = "%s,%s,%s,%.2f%%\n"%(i,Faulttype[i],s1_8_total[i],s1_8_hazard[i]*100.0/s1_8_total[i])
+                        resline = "%s,%s,%s,%.1f%%\n"%(i,Faulttype[i],s1_8_total[i],s1_8_hazard[i]*100.0/s1_8_total[i])
                         fp_res.write(resline)
                         print (resline)
         fp_res.close()
