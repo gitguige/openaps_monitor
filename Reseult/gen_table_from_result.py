@@ -31,6 +31,10 @@ F1_micro = "F1_micro"
 F1_macro = "F1_macro"
 F1_weighted = "F1_weighted"
 
+MTTF_std ="MTTF_std/mins"
+Latency_std = "Latency_std/min"
+Reaction_time_std = "Reaction_time_std/mins"
+
 
 for line in fp:
 	if ":" in line:
@@ -48,6 +52,7 @@ for line in fp:
 		MTTF += ','+(Seq[3].split(',')[0])
 		Latency += ','+(Seq[4].split(',')[0])
 		Reaction_time += ','+(Seq[5].split(',')[0])
+
 		avg_TN += ','+(Seq[6].split(',')[0])
 		avg_TP += ','+(Seq[7].split(',')[0])
 		avg_FP += ','+(Seq[8].split(',')[0])
@@ -65,6 +70,11 @@ for line in fp:
 		F1_macro += ','+(Seq[18].split(',')[0])
 		F1_weighted += ','+(Seq[19].split(',')[0]).replace('\n','')
 
+		MTTF_std += ','+(Seq[20].split(',')[0])
+		Latency_std += ','+(Seq[21].split(',')[0])
+		Reaction_time_std += ','+(Seq[22].split(',')[0]).replace('\n','')
+
+
 
 summary_file.write("%s\n"%Total)
 summary_file.write("%s\n"%Alert)
@@ -81,8 +91,11 @@ summary_file.write("%s\n"%f1_weighted_avg)
 summary_file.write("\n")
 
 summary_file.write("%s\n"%MTTF)
+summary_file.write("%s\n"%MTTF_std)
 summary_file.write("%s\n"%Latency)
+summary_file.write("%s\n"%Latency_std)
 summary_file.write("%s\n"%Reaction_time)
+summary_file.write("%s\n"%Reaction_time_std)
 
 summary_file.write("%s\n"%TN)
 summary_file.write("%s\n"%TP)

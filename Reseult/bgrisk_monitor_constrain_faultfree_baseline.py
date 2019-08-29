@@ -64,6 +64,10 @@ def calculate_risk(pathwork, summary_file="summary"):
         t_true = [] #persimulation
         t_pred = []
 
+        late_set = [] # set of latency
+        rect_set = [] # set of reaction time
+        mttf_set = [] # set of mttf
+
 
         sum_sub_TN = 0
         sum_sub_TP = 0
@@ -396,9 +400,6 @@ def calculate_risk(pathwork, summary_file="summary"):
                 sum_sub_FP += sub_FP
                 sum_sub_FN += sub_FN
 
-                if accident_pred != 0:
-                        total_pred += 1
-                        accident_pred = accident_pred*1.0/sub_hz_num # ratio of successful prediction
 
 
                 perTN = 0
@@ -408,6 +409,9 @@ def calculate_risk(pathwork, summary_file="summary"):
                 if sub_hz_num != 0:
                         hazard_num += 1
                         t_true.append(100)    
+                        if accident_pred != 0:
+                                total_pred += 1
+                                accident_pred = accident_pred*1.0/sub_hz_num # ratio of successful prediction
                         # if float(hazard_time) >= faulttime:
                         #         sub_mttf = float(hazard_time)-faulttime
                         #         mttf += sub_mttf
@@ -418,7 +422,8 @@ def calculate_risk(pathwork, summary_file="summary"):
                         if sub_alt_num != 0:
                                 sub_rectime = float(hazard_time)-float(alert_time)
                                 rectime += sub_rectime
-                                hazard_alert_num += 1                               
+                                hazard_alert_num += 1    
+                                rect_set.append(sub_rectime)                           
 
                                 if float(hazard_time) >= float(alert_time) :
                                         # if float(alert_time) >= faulttime: #hazard should happen after alert
@@ -523,8 +528,14 @@ def calculate_risk(pathwork, summary_file="summary"):
                 rtime = rectime*5/ hazard_alert_num
         else:
                 rtime = -1
-        summLine = "Total num = %s, alert_num = %s, Hazard num =%s,   mttf =, lantecy =, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f, f1_weighted_avg=%.2f, TN=%s (%.1f%%),TP=%s (%.1f%%),FP=%s (%.1f%%),FN=%s (%.1f%%), F1_micro=%s, F1_macro=%s , F1_weighted=%s\n" \
-                %(total_num,alert_num,hazard_num,rtime, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num,f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,100*TN/total_num,TP,100*TP/total_num,FP,100*FP/total_num,FN,100*FN/total_num,tf1_micro,tf1_macro,tf1_weighted)
+        summLine = "Total num = %s, alert_num = %s, Hazard num =%s,   mttf =, lantecy =, reaction_time=%.2f, \
+                avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f , f1_weighted_avg=%.2f, \
+                TN=%s (%.1f%%),TP=%s (%.1f%%),FP=%s (%.1f%%),FN=%s (%.1f%%), F1_micro=%s, F1_macro=%s , F1_weighted=%s, \
+                mttf_std=, lantecy_std=,rectime_std=%.2f       \n"\
+                %(total_num,alert_num,hazard_num,rtime, \
+				sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num,f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,\
+                100*TN/total_num,TP,100*TP/total_num,FP,100*FP/total_num,FN,100*FN/total_num,tf1_micro,tf1_macro,tf1_weighted,\
+                np.nanstd(rect_set)*5        )
         summFile.write(summLine) 
         print (summLine)
         summFile.close()

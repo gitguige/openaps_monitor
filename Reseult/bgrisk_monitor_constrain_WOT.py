@@ -64,6 +64,10 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
         t_true = [] #persimulation
         t_pred = []
 
+        late_set = [] # set of latency
+        rect_set = [] # set of reaction time
+        mttf_set = [] # set of mttf
+
 
         sum_sub_TN = 0
         sum_sub_TP = 0
@@ -341,7 +345,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                 pre_bg =bg
 
 
-#===================================
+                        #===================================
                         if float(lineSeq[11]) != 0 and (float(lineSeq[8]) > 25 or float(lineSeq[9]) > 45): #LBGI>5 , HGBI>9
                                 hazard_flag = True
                                 sub_hz_num += 1
@@ -437,9 +441,6 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                 sum_sub_FP += sub_FP
                 sum_sub_FN += sub_FN
 
-                if accident_pred != 0:
-                        total_pred += 1
-                        accident_pred = accident_pred*1.0/sub_hz_num # ratio of successful prediction
 
 
                 perTN = 0
@@ -451,9 +452,17 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         s1_8_hazard[int(scenario)]+=1 #record hazard number for each scenario
                         t_true.append(100)    
 
+                        hazard_time_record = np.array(hazard_time_record)
+                        hazard_time_record_nonzero = np.nonzero(hazard_time_record) #index array of nonzero items
+                        hazard_end_time = hazard_time_record[hazard_time_record_nonzero][-1]
+                        if accident_pred != 0:
+                                total_pred += 1
+                                accident_pred = accident_pred*1.0/sub_hz_num # ratio of successful prediction
+
                         if float(hazard_time) >= faulttime:
                                 sub_mttf = float(hazard_time)-faulttime
                                 mttf += sub_mttf
+                                mttf_set.append(sub_mttf)
                         else:
                                 hazard_earliness += 1
                                 print ("early %s,%s,%s"%(scenario,fault,hazard_time))
@@ -462,7 +471,8 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         if sub_alt_num != 0:
                                 sub_rectime = float(hazard_time)-float(alert_time)
                                 rectime += sub_rectime
-                                hazard_alert_num += 1                               
+                                hazard_alert_num += 1    
+                                rect_set.append(sub_rectime)                           
 
                                 if float(hazard_time) >= float(alert_time) :
                                         # if float(alert_time) >= faulttime: #hazard should happen after alert
@@ -472,17 +482,18 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
 
                                         # rectime += sub_rectime
 
-                                        hazard_end_time = np.nonzero(hazard_time_record)[-1]
-
                                         # if np.nonzero(alert_time_record[:int(faulttime)]): #alert happens between[0,T1] ~ too early
                                         #         perFP += 1
                                         # # elif np.nonzero(alert_time_record[hazard_end_time:]): #alert happens between[T4,200], where T4 represents the end of a hazard time ~ too late
                                         # #         perFP += 1
 
                                         # el
-                                        if np.nonzero(alert_time_record[int(faulttime):int(hazard_time)]):#hazard_end_time ]):#int(hazard_time)]): #alert happens between[T1,T3]
+                                        alert_time_recordT14 =np.array(alert_time_record[int(faulttime):int(hazard_end_time) ]) #transfer list to array format before using np.nonzero() function
+                                        alert_time_recordT01 =np.array(alert_time_record[:int(faulttime)]) #transfer list to array format before using np.nonzero() function
+
+                                        if len(alert_time_recordT14[np.nonzero(alert_time_recordT14)]):#int(hazard_time)]): #alert happens between[T1,T4]
                                                 perTP += 1
-                                        elif np.nonzero(alert_time_record[:int(faulttime)]): #alert happens between[0,T1] ~ too early
+                                        elif len(alert_time_recordT01[np.nonzero(alert_time_recordT01)]): #alert happens between[0,T1] ~ too early
                                                 perFP += 1
                                         else:
                                                 perFN += 1
@@ -520,6 +531,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         latency += sub_latancy
                         # else:
                         #         sub_latancy = "invalid"
+                        late_set.append(sub_latancy)
 
                 y_pred = np.array(y_pred)
                 y_true = np.array(y_true)
@@ -562,6 +574,8 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                             f1_micro,f1_macro,f1_weighted,count,pred_start_glucose,accident_pred,\
                             perTN,perFN,perTP,perFP)
                 summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
+
+                
                 
 
         t_pred = np.array(t_pred)
@@ -589,8 +603,16 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         pass
         
 
-        summLine = "Fault num = %s, alert_num = %s, Hazard num =%s, mttf =%.2f, lantecy =%.2f, reaction_time=%.2f, avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f , f1_weighted_avg=%.2f, TN=%s (%.1f%%),TP=%s (%.1f%%),FP=%s (%.1f%%),FN=%s (%.1f%%), F1_micro=%s, F1_macro=%s , F1_weighted=%s\n" \
-                %(total_num,alert_num,hazard_num,5*mttf/hazard_num if hazard_num else 0, latency*5/alert_num if alert_num else 0, rectime*5/ hazard_alert_num if hazard_alert_num else 0, sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num, f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,100*TN/total_num,TP,100*TP/total_num,FP,100*FP/total_num,FN,100*FN/total_num,tf1_micro,tf1_macro,tf1_weighted)
+                # %(total_num,alert_num,hazard_num,5*mttf/hazard_num if hazard_num else 0, latency*5/alert_num if alert_num else 0, rectime*5/ hazard_alert_num if hazard_alert_num else 0, \
+        summLine = "Fault num = %s, alert_num = %s, Hazard num =%s, mttf =%.2f, lantecy =%.2f, reaction_time=%.2f, \
+                avg_TN=%.2f,avg_TP=%.2f,avg_FP=%.2f,avg_FN=%.2f, f1_micro_avg=%.2f, f1_macro_avg=%.2f , f1_weighted_avg=%.2f, \
+                TN=%s (%.1f%%),TP=%s (%.1f%%),FP=%s (%.1f%%),FN=%s (%.1f%%), F1_micro=%s, F1_macro=%s , F1_weighted=%s, \
+                mttf_std=%.2f, lantecy_std=%.2f,rectime_std=%.2f       \n"\
+                %(total_num,alert_num,hazard_num,np.nanmean(mttf_set)*5, np.nanmean(late_set)*5, np.nanmean(rect_set)*5, \
+                sum_sub_TN/total_num,sum_sub_TP/total_num,sum_sub_FP/total_num,sum_sub_FN/total_num, f1_micro_avg/total_num, f1_macro_avg/total_num, f1_weighted_avg/total_num,TN,\
+                100*TN/total_num,TP,100*TP/total_num,FP,100*FP/total_num,FN,100*FN/total_num,tf1_micro,tf1_macro,tf1_weighted,\
+                np.nanstd(mttf_set)*5,np.nanstd(late_set)*5,np.nanstd(rect_set)*5        )
+
         summFile.write(summLine) 
         print (summLine)
         summFile.close()
@@ -604,7 +626,6 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
         # print os.getcwd()
 
         # fp_source = open("filename",'r')
-
 
 
 if __name__ == "__main__":
