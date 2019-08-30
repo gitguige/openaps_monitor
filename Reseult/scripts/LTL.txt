@@ -1,0 +1,51 @@
+Rule  No.Description
+1	(((BG>HBGT+Th12)∧(∆BG>0))∧((∆IOB<0)∧(IOB<Th1))⇒¬decrease_insulin)
+2	(((BG>HBGT+Th13)∧(∆BG>0))∧((∆IOB=0)∧(IOB<Th2))⇒¬decrease_insulin)
+3	(((BG>HBGT+Th14)∧(∆BG<0))∧((∆IOB>0)∧(IOB<Th3))⇒¬decrease_insulin)
+4	(((BG>HBGT+Th15)∧(∆BG<0))∧((∆IOB<0)∧(IOB<Th4))⇒¬decrease_insulin)
+5	(((BG>HBGT+Th16)∧(∆BG<0))∧((∆IOB=0)∧(IOB<Th5))⇒¬decrease_insulin)
+6	(((BG<LBGT+Th17)∧(∆BG<0))∧((∆IOB>0)∧(IOB>Th6))⇒¬increase_insulin)
+7	(((BG<LBGT+Th18)∧(∆BG<0))∧((∆IOB<0)∧(IOB>Th7))⇒¬increase_insulin)
+8	(((BG<LBGT+Th19)∧(∆BG<0))∧((∆IOB=0)∧(IOB>Th8))⇒¬increase_insulin)
+9	(((BG>HBGT+Th20)∧(IOB<Th9))⇒¬zero_insulin)
+10	((BG<Th21)⇒zero_insulin)
+11	(((BG>HBGT+Th22)∧(∆BG>Th23))∧((∆IOB<=0)∧(IOB<Th10))⇒ ¬keep_insulin)
+12	(((BG<LBGT+Th24)∧(∆BG<0))∧((∆IOB>=0)∧(IOB>Th11))⇒¬keep_insulin)
+
+1	(((BG>HBGT)∧(∆BG>0))∧((∆IOB<0)∧(IOB<Th1))⇒¬decrease_insulin)
+2	(((BG>HBGT)∧(∆BG>0))∧((∆IOB=0)∧(IOB<Th2))⇒¬decrease_insulin)
+3	(((BG>HBGT)∧(∆BG<0))∧((∆IOB>0)∧(IOB<Th3))⇒¬decrease_insulin)
+4	(((BG>HBGT)∧(∆BG<0))∧((∆IOB<0)∧(IOB<Th4))⇒¬decrease_insulin)
+5	(((BG>HBGT)∧(∆BG<0))∧((∆IOB=0)∧(IOB<Th5))⇒¬decrease_insulin)
+6	(((BG<LBGT)∧(∆BG<0))∧((∆IOB>0)∧(IOB>Th6))⇒¬increase_insulin)
+7	(((BG<LBGT)∧(∆BG<0))∧((∆IOB<0)∧(IOB>Th7))⇒¬increase_insulin)
+8	(((BG<LBGT)∧(∆BG<0))∧((∆IOB=0)∧(IOB>Th8))⇒¬increase_insulin)
+9	(((BG>HBGT)∧(IOB<Th9))⇒¬zero_insulin)
+10	((BG<Th21)⇒zero_insulin)
+11	(((BG>HBGT)∧(∆BG>0))∧((∆IOB<=0)∧(IOB<Th10))⇒ ¬keep_insulin)
+12	(((BG<LBGT)∧(∆BG<0))∧((∆IOB>=0)∧(IOB>Th11))⇒¬keep_insulin)
+
+
+1 & $\Box$(((BG$>$HBGT)$\wedge$($\Delta$BG$>$0))$\wedge$(($\Delta$IOB$<$0)$\wedge$(IOB$<$Th1))\\&$\Rightarrow$$\neg$ decrease\_insulin) 
+\\ \hline
+2 & $\Box$(((BG$>$HBGT)$\wedge$($\Delta$BG$>$0))$\wedge$(($\Delta$IOB$=$0)$\wedge$(IOB$<$Th2))\\&$\Rightarrow$$\neg$ decrease\_insulin) 
+\\ \hline
+3 & $\Box$(((BG$>$HBGT)$\wedge$($\Delta$BG$<$0))$\wedge$(($\Delta$IOB>0)$\wedge$(IOB$<$Th3))\\&$\Rightarrow$$\neg$ decrease\_insulin) 
+\\ \hline
+4 & $\Box$(((BG$>$HBGT)$\wedge$($\Delta$BG$<$0))$\wedge$(($\Delta$IOB$<$0)$\wedge$(IOB$<$Th4))\\&$\Rightarrow$$\neg$ decrease\_insulin) 
+\\ \hline
+5 & $\Box$(((BG$>$HBGT)$\wedge$($\Delta$BG$<$0))$\wedge$(($\Delta$IOB$=$0)$\wedge$(IOB$<$Th5))\\&$\Rightarrow$$\neg$ decrease\_insulin) 
+\\ \hline
+6 & $\Box$(((BG$<$LBGT)$\wedge$($\Delta$BG$<$0))$\wedge$(($\Delta$IOB>0)$\wedge$(IOB$>$Th6))\\&$\Rightarrow$$\neg$ increase\_insulin) 
+\\ \hline
+7 & $\Box$(((BG$<$LBGT)$\wedge$($\Delta$BG<0))$\wedge$(($\Delta$IOB$<$0)$\wedge$(IOB$>$Th7))\\&$\Rightarrow$$\neg$ increase\_insulin) 
+\\ \hline
+8 & $\Box$(((BG$<$LBGT)$\wedge$($\Delta$BG<0))$\wedge$(($\Delta$IOB$=$0)$\wedge$(IOB$>$Th8))\\&$\Rightarrow$$\neg$ increase\_insulin) 
+\\ \hline
+9 & $\Box$(((BG$>$HBGT)$\wedge$(IOB$<$Th9))$\Rightarrow$$\neg$ zero\_insulin)
+\\ \hline
+10 & $\Box$((BG$<$Th21)$\Rightarrow$zero\_insulin) 
+\\ \hline
+11 & $\Box$(((BG$>$HBGT)$\wedge$($\Delta$BG>0))$\wedge$(($\Delta$IOB$<=$0)$\wedge$(IOB$<$Th10))\\&$ \Rightarrow$ $\neg$keep\_insulin) 
+\\ \hline
+12 & $\Box$(((BG$<$LBGT)$\wedge$($\Delta$BG<0))$\wedge$(($\Delta$IOB$>=$0)$\wedge$(IOB$>$Th11))\\&$\Rightarrow$$\neg$ keep\_insulin)\\
