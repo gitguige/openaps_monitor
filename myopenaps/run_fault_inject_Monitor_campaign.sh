@@ -7,13 +7,14 @@
 # python run_openAPS_monitor.py fault_library_monitor/scenario_6
 # python run_openAPS_monitor.py fault_library_monitor/scenario_7
 # python run_openAPS_monitor.py fault_library_monitor/scenario_8
-python run_openAPS_monitor.py fault_library_monitor/scenario_9
-python run_openAPS_monitor.py fault_library_monitor/scenario_10
-python run_openAPS_monitor.py fault_library_monitor/scenario_11
+# python run_openAPS_monitor.py fault_library_monitor/scenario_9
+# python run_openAPS_monitor.py fault_library_monitor/scenario_10
+# python run_openAPS_monitor.py fault_library_monitor/scenario_11
+# python run_openAPS_monitor.py fault_library_monitor/scenario_12
+# python run_openAPS_monitor.py fault_library_monitor/scenario_13
+# python run_openAPS_monitor.py fault_library_monitor/scenario_18
+# python run_openAPS_monitor.py fault_library_monitor/scenario_17
+# python run_openAPS_monitor.py fault_library_monitor/scenario_16
+# python run_openAPS_monitor.py fault_library_monitor/scenario_15
+# python run_openAPS_monitor.py fault_library_monitor/scenario_14
 python run_openAPS_monitor.py fault_library_monitor/scenario_12
-python run_openAPS_monitor.py fault_library_monitor/scenario_13
-python run_openAPS_monitor.py fault_library_monitor/scenario_18
-python run_openAPS_monitor.py fault_library_monitor/scenario_17
-python run_openAPS_monitor.py fault_library_monitor/scenario_16
-python run_openAPS_monitor.py fault_library_monitor/scenario_15
-python run_openAPS_monitor.py fault_library_monitor/scenario_14

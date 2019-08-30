@@ -11,10 +11,12 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 ##########################################################
-initial_glucose = [80, 100, 120, 140, 160, 180, 200]
+initial_glucose = [100]#80, 100, 120, 140, 160, 180, 200]
 #initial_glucose = [80, 100]
 #initial_glucose = [80]
-cmd_main = 'python '+'updated_ct_script_iob_based.py '#+sys.argv[1]
+# cmd_main = 'python '+'updated_ct_script_iob_based.py '#+sys.argv[1]
+cmd_main = 'python '+'updated_ct_script_iob_based_mitigation.py '#+sys.argv[1]  mitigate the unsafe action
+
 browser = webdriver.Firefox()
 browser.get("http://localhost:3000/")
 input_text = browser.find_element_by_id("initialglucose")
@@ -29,7 +31,7 @@ for i in browser.find_elements_by_xpath("//*[@type='radio']"):
 	i.click()
 	time.sleep(1)
 	patient = patient_name[patient_id]
-	if patient_id == 0 or patient_id == 7:
+	if patient_id == 7:#0 or patient_id == 7:#9
 		for ig in initial_glucose:
 			output_dir = 'out/'+patient+'/'+str(ig)+'/'
 			if os.path.isdir(output_dir) != True:

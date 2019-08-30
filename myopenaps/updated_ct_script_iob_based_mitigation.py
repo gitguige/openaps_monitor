@@ -64,6 +64,9 @@ alertfile.close()
 faultfile = open(fault_file, 'w')
 faultfile.close()
 
+mitigate_H1_flag = False
+mitigate_H2_flag = False
+
 
 for _ in range(iteration_num):
 
@@ -546,10 +549,6 @@ for _ in range(iteration_num):
     print("loaded_glucose", glucose)
     print("\nbg\n", bg)
   
-  if glucose >= 39:        
-    prev_iob = iob
-  
-  prev_glucose = glucose
 #########################=============inject fault here==============#####################
   ## Fault_injection : Injection of fault in Controller output ######################
   #rate:HOOK#
@@ -560,11 +559,78 @@ for _ in range(iteration_num):
 
 
   #==========mitigation code####++==============
-  if glucose < 95:
-    if loaded_suggested_data["rate"] != 0:#delInsulinRate != 0: # row_38
-      loaded_suggested_data["rate"] = 0
+  rate_before_mitigate = loaded_suggested_data["rate"]
+  del_rate = loaded_suggested_data["rate"] - prev_rate
+  del_bg = glucose - prev_glucose
+  del_iob = iob - prev_iob
 
-  prev_rate = loaded_suggested_data["rate"]  
+  if glucose < 70:
+    if loaded_suggested_data["rate"] != 0:#delInsulinRate != 0: # row_38
+      mitigate_H1_flag = True
+  elif glucose < bg_target-25: #LBGT=95
+    # if del_bg < 0:
+    if del_rate == 0 : #keep insulin
+      if del_iob >=0 and iob >0.3: # IOB is not falling #rule_27
+        mitigate_H1_flag = True
+    elif del_rate>0: #increase insulin
+      if del_bg < 0 :
+        if del_iob > 0 and iob > -0.199631233636: # row_31 done
+          mitigate_H1_flag = True
+        elif del_iob < 0 and iob > 0.254236455594: # row_32 done
+          mitigate_H1_flag = True
+        elif del_iob == 0: # row_33 done
+          mitigate_H1_flag = True
+
+  elif glucose < bg_target+10: #130
+    if iob >1.5 and loaded_suggested_data["rate"] >= 2: # rule_39
+        mitigate_H1_flag = True
+  # elif glucose < bg_target+40: #HBGT=160
+  #   if del_bg <0 and iob >2 and loaded_suggested_data["rate"] >= 2: # rule_40
+  #       mitigate_H1_flag = True
+
+  elif glucose > bg_target+40: #HBGT=160
+    if iob < -0.25 and loaded_suggested_data["rate"] == 0: # row_37
+      mitigate_H2_flag = True
+    elif del_bg<0: #Bg is falling
+      if del_rate < 0: #decrease rate
+        if del_iob > 0 and iob < -0.0622758866662: # row_4 done
+          mitigate_H2_flag = True
+        elif del_iob < 0 and iob < -0.113062983335: # row_5 done
+          mitigate_H2_flag = True
+        elif del_iob == 0 and iob < 0.580168168836: # row_6 done
+          mitigate_H2_flag = True
+    elif del_bg > 0: #BG is rising
+      if del_bg>1.5 and del_iob <= 0 and iob <-0.3: #row_22
+        if del_rate == 0:
+          mitigate_H2_flag = True
+      elif del_iob < 0 and iob <  0.145605040799: # row_2 done
+        if del_rate < 0:
+          mitigate_H2_flag = True
+      elif del_iob == 0: # row_3 done
+        if del_rate < 0:
+          mitigate_H2_flag = True
+
+
+  if mitigate_H1_flag == True: 
+    if rate_before_mitigate < prev_rate or glucose>bg_target+10:#if fault is removed stop mitigation
+      mitigate_H1_flag = False
+    loaded_suggested_data["rate"] = 0
+
+  if mitigate_H2_flag == True: 
+    if rate_before_mitigate > prev_rate or glucose<bg_target+40:#if fault is removed stop mitigation
+      mitigate_H2_flag = False
+    if del_bg<-0.5:
+      loaded_suggested_data["rate"] += 1
+    elif del_bg< -2:
+      loaded_suggested_data["rate"] += 0.5
+    else:
+      loaded_suggested_data["rate"] += 2
+
+  prev_rate = rate_before_mitigate#loaded_suggested_data["rate"]  
+  if glucose >= 39:        
+    prev_iob = iob
+  
+  prev_glucose = glucose
 
   list_suggested_data_to_dump.insert(0,loaded_suggested_data)
   #read the output in suggested.json and append it to list_suggested_data_to_dump list. Basically we are trying to get all the suggest      ed data and dump make a list lf that and then dump it to all_suggested.json file    
