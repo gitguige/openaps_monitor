@@ -603,7 +603,7 @@ for _ in range(iteration_num):
         elif del_iob == 0 and iob < 0.580168168836: # row_6 done
           mitigate_H2_flag = True
     elif del_bg > 0: #BG is rising
-      if del_bg>1.5 and del_iob <= 0 and iob <-0.3: #row_22
+      if del_bg>1.2 and del_iob <= 0 and iob <-0.3: #row_22
         if del_rate == 0:
           mitigate_H2_flag = True
       elif del_iob < 0 and iob <  0.145605040799: # row_2 done
@@ -627,12 +627,14 @@ for _ in range(iteration_num):
   elif mitigate_H2_flag == True: 
     if rate_before_mitigate > prev_rate or glucose<bg_target+40:#if fault is removed stop mitigation
       mitigate_H2_flag = False
-    if del_bg<-0.5:
-      loaded_suggested_data["rate"] += 1
-    elif del_bg< -2:
+    if del_bg< -2:
       loaded_suggested_data["rate"] += 0.5
-    else:
+    elif del_bg<-0.5:
+      loaded_suggested_data["rate"] += 1
+    elif del_bg<0.5:
       loaded_suggested_data["rate"] += 2
+    else:
+      loaded_suggested_data["rate"] += 4
   
   if loaded_suggested_data["rate"] > 4.5:
     loaded_suggested_data["rate"] = 4.5
