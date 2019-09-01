@@ -590,12 +590,12 @@ for _ in range(iteration_num):
         mitigate_H1_flag = True
 
   elif glucose > bg_target+40: #HBGT=160
-    if iob < -0.25 and loaded_suggested_data["rate"] == 0: # row_37
+    if iob > 1.71 and loaded_suggested_data["rate"] >= 2: # rule_41
+      mitigate_H21_flag = True #iob and rate is more than needed when bg is higher than HBGT
+    elif iob < -0.25 and loaded_suggested_data["rate"] == 0: # row_37
       mitigate_H2_flag = True
     elif del_bg<0: #Bg is falling
-      if iob > 1.71 and loaded_suggested_data["rate"] >= 2: # rule_41
-        mitigate_H21_flag = True #iob and rate is more than needed when bg is higher than HBGT
-      elif del_rate < 0: #decrease rate
+      if del_rate < 0: #decrease rate
         if del_iob > 0 and iob < -0.0622758866662: # row_4 done
           mitigate_H2_flag = True
         elif del_iob < 0 and iob < -0.113062983335: # row_5 done
@@ -634,8 +634,8 @@ for _ in range(iteration_num):
     else:
       loaded_suggested_data["rate"] += 2
   
-  if loaded_suggested_data["rate"] > 5:
-    loaded_suggested_data["rate"] = 5
+  if loaded_suggested_data["rate"] > 4.5:
+    loaded_suggested_data["rate"] = 4.5
 
   prev_rate = rate_before_mitigate#loaded_suggested_data["rate"]  
   if glucose >= 39:        
