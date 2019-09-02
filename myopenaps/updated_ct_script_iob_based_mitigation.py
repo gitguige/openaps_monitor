@@ -565,7 +565,10 @@ for _ in range(iteration_num):
   del_bg = glucose - prev_glucose
   del_iob = iob - prev_iob
 
-  if glucose < 70:
+  if iob>1.8 and loaded_suggested_data["rate"] != 0: #no insulin is needed when iob is high
+    mitigate_H21_flag  = True #"row_42" # New context table
+
+  elif glucose < 70:
     if loaded_suggested_data["rate"] != 0:#delInsulinRate != 0: # row_38
       mitigate_H1_flag = True
   elif glucose < bg_target-25: #LBGT=95
@@ -586,13 +589,16 @@ for _ in range(iteration_num):
     if iob >1.0 and loaded_suggested_data["rate"] >= 2: # rule_39
         mitigate_H1_flag = True
   elif glucose < bg_target+40: #HBGT=160
-    if del_bg <0 and iob >1.1 and loaded_suggested_data["rate"] >= 2.2: # rule_40
+    # if del_bg <0 and iob >1.1 and loaded_suggested_data["rate"] >= 2.2: # rule_40
+    if iob>1.1 :
+      if (del_bg < 0 and loaded_suggested_data["rate"] > 2.2):# or (del_bg < -5 and loaded_suggested_data["rate"] > 0):
         mitigate_H1_flag = True
 
   elif glucose > bg_target+40: #HBGT=160
-    if iob > 1.71 and loaded_suggested_data["rate"] >= 2: # rule_41
-      mitigate_H21_flag = True #iob and rate is more than needed when bg is higher than HBGT
-    elif iob < -0.25 and loaded_suggested_data["rate"] == 0: # row_37
+    # if iob > 1.71 and loaded_suggested_data["rate"] >= 2: # rule_41
+    #   mitigate_H21_flag = True #iob and rate is more than needed when bg is higher than HBGT
+    # el
+    if iob < -0.25 and loaded_suggested_data["rate"] == 0: # row_37
       mitigate_H2_flag = True
     elif del_bg<0: #Bg is falling
       if del_rate < 0: #decrease rate
@@ -613,28 +619,25 @@ for _ in range(iteration_num):
         if del_rate < 0:
           mitigate_H2_flag = True
 
-
-  if mitigate_H1_flag == True: 
-    if rate_before_mitigate < prev_rate or glucose>bg_target+40:#if fault is removed stop mitigation
-      mitigate_H1_flag = False
+  if mitigate_H21_flag == True:
+    if iob < 0.5:# or glucose<bg_target+40:#iob is low or glucose is less than 160: stop mitigation
+      mitigate_H21_flag = False
     loaded_suggested_data["rate"] = 0
 
-  elif mitigate_H21_flag == True:
-    if iob <0 or rate_before_mitigate < prev_rate or glucose<bg_target+40:#if fault is removed stop mitigation
-      mitigate_H21_flag = False
+  elif mitigate_H1_flag == True: 
+    if rate_before_mitigate < prev_rate or glucose>bg_target+40:#if fault is removed stop mitigation
+      mitigate_H1_flag = False
     loaded_suggested_data["rate"] = 0
 
   elif mitigate_H2_flag == True: 
     if rate_before_mitigate > prev_rate or glucose<bg_target+40:#if fault is removed stop mitigation
       mitigate_H2_flag = False
-    if del_bg< -2:
+    if iob>1.0:
       loaded_suggested_data["rate"] += 0.5
-    elif del_bg<-0.5:
+    elif iob>=0:
       loaded_suggested_data["rate"] += 1
-    elif del_bg<0.5:
-      loaded_suggested_data["rate"] += 2
     else:
-      loaded_suggested_data["rate"] += 4
+      loaded_suggested_data["rate"] += -2*iob+2
   
   if loaded_suggested_data["rate"] > 4.5:
     loaded_suggested_data["rate"] = 4.5
