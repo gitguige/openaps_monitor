@@ -276,8 +276,39 @@ def calculate_risk(pathwork, summary_file="summary"):
                                         if insulinRate != 0:#delInsulinRate != 0: # row_38
                                                 sub_alert_flag = True
                                                 sub_alert_msg = "row_38"
+                                      
+                                elif bg < bgTarget-25:#25: #LBGT=95
+                                        if delIob >=0 : # IOB is not falling
+                                                if delInsulinRate == 0 :
+                                                        sub_alert_flag = True
+                                                        sub_alert_msg = "row_27" # New context table
+                                        if delBg < 0:
+                                                                
+                                                # checking if BG is falling more than the threshold
+                                                #if delBg < thBgFall:
+                                                if delIob > 0: # row_31
+                                                        if delInsulinRate > 0:
+                                                                        sub_alert_flag = True
+                                                                        sub_alert_msg = "row_31"
+                                                if delIob < 0: # row_32
+                                                        if delInsulinRate > 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_32"
+                                                if delIob == thIob: # row_33
+                                                        if delInsulinRate > 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_33"
+                                elif bg<bgTarget+10: #MBGT 130
+                                        if insulinRate > 2:
+                                                sub_alert_flag = True
+                                                sub_alert_msg = "row_39" # New context table 
 
-                                if bg > bgTarget+40: #HBGT=160
+                                elif bg < bgTarget+40: # [130,160]
+                                        if (delBg < 0 and insulinRate > 2.2):# or (delBg < -5 and insulinRate > 0):
+                                                sub_alert_flag = True
+                                                sub_alert_msg = "row_40" # New context table
+                                
+                                else: # if bg > bgTarget+40: #HBGT=160
                                         #if delBg >= -3:
                                         if insulinRate == 0: # row_37
                                                 sub_alert_flag = True
@@ -292,11 +323,15 @@ def calculate_risk(pathwork, summary_file="summary"):
                                                         if delInsulinRate == 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_22" # New context table
-                                                if delIob < thIob: # row_2
+                                                elif delIob > 0 : # row_1 done
+                                                        if delInsulinRate < 0:
+                                                                sub_alert_flag = True
+                                                                sub_alert_msg = "row_1"
+                                                elif delIob < 0: # row_2
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_2"
-                                                if delIob == thIob: # row_3
+                                                if delIob == 0: # row_3
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_3"
@@ -317,36 +352,13 @@ def calculate_risk(pathwork, summary_file="summary"):
                                                         if delInsulinRate < 0:
                                                                 sub_alert_flag = True
                                                                 sub_alert_msg = "row_6"
-                                      
-                                elif bg < bgTarget-25: #LBGT=95
-                                        if delBg < 0:
-                                                if delIob >=0 : # IOB is not falling
-                                                        if delInsulinRate == 0 :
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_27" # New context table
-                                                                
-                                                # checking if BG is falling more than the threshold
-                                                #if delBg < thBgFall:
-                                                if delIob > 0: # row_31
-                                                        if delInsulinRate > 0:
-                                                                        sub_alert_flag = True
-                                                                        sub_alert_msg = "row_31"
-                                                if delIob < 0: # row_32
-                                                        if delInsulinRate > 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_32"
-                                                if delIob == thIob: # row_33
-                                                        if delInsulinRate > 0:
-                                                                sub_alert_flag = True
-                                                                sub_alert_msg = "row_33"
-
 
                                 pre_insulinRate = insulinRate
                                 pre_iob = iob
                                 pre_bg =bg
 
 
-#===================================
+                        #===================================
                         if float(lineSeq[11]) != 0 and (float(lineSeq[8]) > 25 or float(lineSeq[9]) > 45): #LBGI>5 , HGBI>9
                                 hazard_flag = True
                                 sub_hz_num += 1
