@@ -612,6 +612,9 @@ for _ in range(iteration_num):
       if del_bg>1.2 and del_iob <= 0 and iob <-0.3: #row_22
         if del_rate == 0:
           mitigate_H2_flag = True
+      elif del_iob > 0 and iob < -0.1:#0.126687105772: # row_1 done
+        if del_rate < 0:
+          mitigate_H2_flag = True
       elif del_iob < 0 and iob <  0.145605040799: # row_2 done
         if del_rate < 0:
           mitigate_H2_flag = True
