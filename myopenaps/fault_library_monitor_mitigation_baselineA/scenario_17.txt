@@ -1,0 +1,5 @@
+title:17_bitflip_add_glucose
+location//updated_ct_script_iob_based_mitigation.py//#glucose:HOOK#
+fault 3//if _>=18 and _<153://data_to_prepend["glucose"]+=32
+fault 4//if _>=18 and _<171://data_to_prepend["glucose"]+=32
+Total number of fault cases: 40
