@@ -618,7 +618,7 @@ for _ in range(iteration_num):
   #       # sub_alert_msg = "rule_4"
   #     t90 = 0
 
-  if mitigate_H1_flag == True: 
+  if mitigate_H1_flag != False:#== True: 
     # if rate_before_mitigate < prev_rate or glucose>70:#if fault is removed stop mitigation
     #   mitigate_H1_flag = False
     loaded_suggested_data["rate"] = 0
