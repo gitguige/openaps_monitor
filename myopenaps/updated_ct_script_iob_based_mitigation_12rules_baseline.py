@@ -579,24 +579,24 @@ for _ in range(iteration_num):
 
   if bg < 70 :
     mitigate_H1_flag |= 0x1
-  else:
-    mitigate_H1_flag &= 0xE
+  # else:
+  #   mitigate_H1_flag &= 0xE
   
   if bg >180:
     mitigate_H2_flag |= 0x1
-  else:
-    mitigate_H2_flag &= 0xE
+  # else:
+  #   mitigate_H2_flag &= 0xE
     # sub_alert_msg = "rule_1"
 
   if del_bg<-5:#25:
     mitigate_H1_flag |= 0x2
-  else:
-    mitigate_H1_flag &= 0xD
+  # else:
+  #   mitigate_H1_flag &= 0xD
 
   if del_bg > 3:#15 :
     mitigate_H2_flag |= 0x2
-  else:
-    mitigate_H2_flag &= 0xD
+  # else:
+  #   mitigate_H2_flag &= 0xD
     # sub_alert_msg = "rule_2
 
   # if _ > 5:
@@ -619,13 +619,13 @@ for _ in range(iteration_num):
   #     t90 = 0
 
   if mitigate_H1_flag != False:#== True: 
-    # if rate_before_mitigate < prev_rate or glucose>70:#if fault is removed stop mitigation
-    #   mitigate_H1_flag = False
+    if rate_before_mitigate < prev_rate or glucose>bg_target+40:#if fault is removed stop mitigation
+      mitigate_H1_flag = False
     loaded_suggested_data["rate"] = 0
 
   elif mitigate_H2_flag != False:#== True: 
-    # if rate_before_mitigate > prev_rate or glucose<180:#if fault is removed stop mitigation
-    #   mitigate_H2_flag = False
+    if rate_before_mitigate > prev_rate or glucose<bg_target+40:#if fault is removed stop mitigation
+      mitigate_H2_flag = False
     if iob>1.0:
       loaded_suggested_data["rate"] += 0.5
     elif iob>=0:
