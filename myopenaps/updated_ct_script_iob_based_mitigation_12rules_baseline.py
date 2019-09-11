@@ -623,7 +623,7 @@ for _ in range(iteration_num):
     #   mitigate_H1_flag = False
     loaded_suggested_data["rate"] = 0
 
-  elif mitigate_H2_flag == True: 
+  elif mitigate_H2_flag != False:#== True: 
     # if rate_before_mitigate > prev_rate or glucose<180:#if fault is removed stop mitigation
     #   mitigate_H2_flag = False
     if iob>1.0:
