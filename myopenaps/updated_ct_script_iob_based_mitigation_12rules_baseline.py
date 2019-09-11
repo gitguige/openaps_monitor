@@ -588,12 +588,12 @@ for _ in range(iteration_num):
     mitigate_H2_flag &= 0xE
     # sub_alert_msg = "rule_1"
 
-  if del_bg<-25:
+  if del_bg<-5:#25:
     mitigate_H1_flag |= 0x2
   else:
     mitigate_H1_flag &= 0xD
 
-  if del_bg > 15 :
+  if del_bg > 3:#15 :
     mitigate_H2_flag |= 0x2
   else:
     mitigate_H2_flag &= 0xD
