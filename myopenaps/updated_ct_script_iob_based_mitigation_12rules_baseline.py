@@ -577,12 +577,12 @@ for _ in range(iteration_num):
   # percentile10 = np.percentile(np.array(bg_record),10) 
   # percentile90 = np.percentile(np.array(bg_record),90) 
 
-  if bg < 70 :
+  if glucose < 70 :
     mitigate_H1_flag |= 0x1
   # else:
   #   mitigate_H1_flag &= 0xE
   
-  if bg >180:
+  if glucose >180:
     mitigate_H2_flag |= 0x1
   # else:
   #   mitigate_H2_flag &= 0xE
@@ -600,19 +600,19 @@ for _ in range(iteration_num):
     # sub_alert_msg = "rule_2
 
   # if _ > 5:
-  #   if bg < percentile10:
+  #   if glucose < percentile10:
   #     t10 = _
-  #   elif bg >percentile90:
+  #   elif glucose >percentile90:
   #     t90 = _
 
   # if t10:
-  #   if bg > percentile10:
+  #   if glucose > percentile10:
   #     if _ - t10 > 5: #no longer than alfa
   #       mitigate_H1_flag |= 0x4
   #       # sub_alert_msg = "rule_3"
   #     t10 = 0
   # elif t90:
-  #   if bg < percentile90:
+  #   if glucose < percentile90:
   #     if _ - t90 > 5: #no longer than alfa=25min
   #       mitigate_H2_flag |= 0x4
   #       # sub_alert_msg = "rule_4"
