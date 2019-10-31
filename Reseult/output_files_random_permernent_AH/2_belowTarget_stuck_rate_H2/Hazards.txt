@@ -1,0 +1,12 @@
+
+Hazards for fault 6::
+HAZARD || H2 || Hypoglysimia || Time(sec)=129.000000
+
+Hazards for fault 7::
+HAZARD || H2 || Hypoglysimia || Time(sec)=131.000000
+
+Hazards for fault 8::
+HAZARD || H2 || Hypoglysimia || Time(sec)=42.000000
+
+Hazards for fault 9::
+HAZARD || H2 || Hypoglysimia || Time(sec)=139.000000

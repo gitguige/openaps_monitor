@@ -1,5 +1,5 @@
 {
-    "index": 3,
+    "index": 0,
     "BGTarget": 95,
     "sens": 45,
     "deltat_v": 20,
@@ -19,8 +19,8 @@
         "basal": [
             {
                 "amt": 0,
-                "start": 15,
-                "length": 30
+                "start": 0,
+                "length": 0
             }
         ],
         "carb": [
