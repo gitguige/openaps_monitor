@@ -112,7 +112,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
 
         # summFile = open("../summary.csv",'w')
         summFile = open(summary_file,'w')
-        summLine = "Scenario,fault,faultinf,Patient,init_bg,alert,alert_num,hazard_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_TPR, sub_FPR,T1,T2,T3,Latency(T2-T1),Reaction time(T3-t2),mttf(T3-T1),f1_micro,f1_macro,f1_weighted,Iteration_number,glucose_at_T3,prediction_rate,TN,FN,TP,FP\n"
+        summLine = "Scenario,fault,faultinf,Patient,init_bg,alert,alert_num,hazard_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_TPR, sub_FPR,T1,T2,T3,Latency(T2-T1),Reaction time(T3-t2),mttf(T3-T1),f1_micro,f1_macro,f1_weighted,Iteration_number,glucose_at_T3,prediction_rate,TN,FN,TP,FP,hazard_msg\n"
         summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
         # summFile = open(savefile,'w')
         # summLine = 'Directory#,Filename#,Filetype#,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,Total#\n' %(wordlist[0],wordlist[1],wordlist[2],wordlist[3],wordlist[4],wordlist[5],wordlist[6],wordlist[7],wordlist[8],wordlist[9])
@@ -192,7 +192,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
 
                 line = bkup_fp.readline() #title
                 # print line
-                line = line.replace('\n','') + ",alert_msg,hazard_flag\n"
+                line = line.replace('\n','') + ",alert_msg,hazard_flag,hazard_msg\n"
                 src_fp.write(line)
 
                 lbgi_temp = 0
@@ -251,6 +251,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         count += 1
                         sub_alert_msg ="N/A"
                         sub_alert_flag = False
+                        sub_hazard_msg ="N/A"
 
                         # lbgi_temp += rlbg
                         # hbgi_temp += rhbg
@@ -278,7 +279,8 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                 if bg < 70 or bg >180:
                                         sub_alert_flag = True
                                         sub_alert_msg = "rule_1"
-                                if delBg<-25 or delBg > 15 :
+                                # if delBg<-25 or delBg > 15 :
+                                if delBg<-5 or delBg > 3 :
                                         sub_alert_flag = True
                                         sub_alert_msg = "rule_2"
                                 if bg < percentile10:
@@ -313,6 +315,11 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         if float(lineSeq[11]) != 0 and (float(lineSeq[8]) > 25 or float(lineSeq[9]) > 45): #LBGI>5 , HGBI>9
                                 hazard_flag = True
                                 sub_hz_num += 1
+                                if float(lineSeq[8]) > 25:
+                                        sub_hazard_msg ="H1"
+                                elif float(lineSeq[9]) > 45:
+                                        sub_hazard_msg ="H2"
+
                                 if bg>280 or bg < 70:
                                         accident_pred += 1 # predict an accident
                                 if sub_hz_num == 1:
@@ -382,7 +389,7 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
 
 
 
-                        srcLine = '%s,%s,%s\n' %(line,sub_alert_msg,hazard_flag)
+                        srcLine = '%s,%s,%s,%s\n' %(line,sub_alert_msg,hazard_flag,sub_hazard_msg)
                         src_fp.write(srcLine)
                         if "N/A" not in sub_alert_msg:
                                 if sub_alt_num == 1:
@@ -390,6 +397,14 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                                 else:
                                         alert_msg += '||'+sub_alert_msg  
                         # sub_alert_msg = "N/A"
+
+                        if "N/A" not in sub_hazard_msg:
+                                if sub_hz_num == 1:
+                                        hazard_msg = sub_hazard_msg
+                                elif sub_hazard_msg not in  hazard_msg:
+                                        hazard_msg += '||'+sub_hazard_msg 
+
+
 
                         # pre_hbgi = hbgi
                         # pre_lbgi = lbgi
@@ -531,12 +546,12 @@ def calculate_risk(pathwork,fault_lib_path,summary_file="summary"):
                         sub_tpr = sub_TP/(sub_TP + sub_FN)
                 if sub_FP + sub_TN:
                         sub_fpr = sub_FP/(sub_FP + sub_TN)
-                summLine = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n"\
+                summLine = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n"\
                             %(scenario,fault,faultinf,patient,init_bg,\
                             alert_msg,sub_alt_num,sub_hz_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_tpr,sub_fpr, \
                             faulttime,alert_time,hazard_time,sub_latancy,sub_rectime,sub_mttf, \
                             f1_micro,f1_macro,f1_weighted,count,pred_start_glucose,accident_pred,\
-                            perTN,perFN,perTP,perFP)
+                            perTN,perFN,perTP,perFP,hazard_msg)
                 summFile.write(summLine)       # savefile = savefile.replace('\n','')+'.csv'
 
                 
