@@ -14,8 +14,8 @@ from selenium.webdriver.common.keys import Keys
 initial_glucose = [100]#80, 100, 120, 140, 160, 180, 200]
 #initial_glucose = [80, 100]
 #initial_glucose = [80]
-# cmd_main = 'python '+'updated_ct_script_iob_based.py '#+sys.argv[1]
-cmd_main = 'python '+'updated_ct_script_iob_based_mitigation.py '#+sys.argv[1]  mitigate the unsafe action
+cmd_main = 'python '+'updated_ct_script_iob_based.py '#+sys.argv[1]
+# cmd_main = 'python '+'updated_ct_script_iob_based_mitigation.py '#+sys.argv[1]  mitigate the unsafe action
 
 browser = webdriver.Firefox()
 browser.get("http://localhost:3000/")
@@ -25,7 +25,7 @@ patient_name = ["patientA","patientB","patientC","patientD","patientE","patientF
 #patient_name = ["patientA"]
 patient_id = 0
 
-os.system('rm -r ./out/*') #clear the content in out folder 
+# os.system('rm -r ./out/*') #clear the content in out folder 
 
 for i in browser.find_elements_by_xpath("//*[@type='radio']"):
 	i.click()
@@ -33,9 +33,9 @@ for i in browser.find_elements_by_xpath("//*[@type='radio']"):
 	patient = patient_name[patient_id]
 	if patient_id == 7:#0 or patient_id == 7:#9
 		for ig in initial_glucose:
-			output_dir = 'out/'+patient+'/'+str(ig)+'/'
-			if os.path.isdir(output_dir) != True:
-				os.makedirs(output_dir)
+			# output_dir = 'out/'+patient+'/'+str(ig)+'/'
+			# if os.path.isdir(output_dir) != True:
+			# 	os.makedirs(output_dir)
 			cmd_initialize = 'python '+'initialize.py '+ str(ig)
 			input_text.clear()
 			input_text.click()
@@ -48,8 +48,8 @@ for i in browser.find_elements_by_xpath("//*[@type='radio']"):
 			cmd_collect_data = 'python '+'updated_collected.py'
 			os.system(cmd_collect_data)
 
-			cmd = 'cp -a out/alerts.txt out/fault_times.txt out/hazards.txt'  + ' ' + output_dir
-			os.system(cmd)
+			# cmd = 'cp -a out/alerts.txt out/fault_times.txt out/hazards.txt'  + ' ' + output_dir #annotated by zxg on AUG 14 2020
+			# os.system(cmd)
 				
 			directory = "./simulation_data/"+patient
 			
@@ -57,6 +57,8 @@ for i in browser.find_elements_by_xpath("//*[@type='radio']"):
 				os.makedirs(directory)
 			
 			csv_file_name = 'data_'+patient+'_'+str(ig)+'.csv'
+
+			'''### use the independent update_riskindex.py under the Result folder to renew risk info### modified by zxg on AUG 14 2020 
 			cm_file_name = 'confustion_matrix_'+str(ig)+'.txt'
 			f1_file_name = 'f1_score_'+str(ig)+'.txt'
 			cmd_label_data = 'python '+'data_labeling_script.py'
@@ -82,6 +84,8 @@ for i in browser.find_elements_by_xpath("//*[@type='radio']"):
 			os.system(cmd_move_f1_score)
 			
 			cmd_move_data = 'mv '+'labeled_data.csv '+directory+'/'+csv_file_name
+			'''
+			cmd_move_data = 'mv '+'data.csv '+directory+'/'+csv_file_name #use unlabeled data instead
 			os.system(cmd_move_data)
 
 	patient_id = patient_id+1	

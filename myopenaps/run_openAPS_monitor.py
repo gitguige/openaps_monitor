@@ -54,23 +54,23 @@ def insert_fault_code(fileLoc, faultLoc, codeline):
 def inject_fault(fileName):
   # global start_time_0
   in_file = fileName+'.txt'
-  outfile_path = 'out/'
+  # outfile_path = 'out/'
   sceneLine  = fileName.split('_')
   sceneNum = sceneLine[len(sceneLine)-1]
 
-  # recFaultTime="//fltTime=open(\'out/fault_times.txt\',\'a+\')//fltTime.write(str(time.time())+\'||\')//fltTime.close()"
-  recFaultTime="//fltTime=open(\'out/fault_times.txt\',\'a+\')//fltTime.write(str(_)+\'||\')//fltTime.close()"
+  # # recFaultTime="//fltTime=open(\'out/fault_times.txt\',\'a+\')//fltTime.write(str(time.time())+\'||\')//fltTime.close()"
+  # recFaultTime="//fltTime=open(\'out/fault_times.txt\',\'a+\')//fltTime.write(str(_)+\'||\')//fltTime.close()"
 
-  name_end = 0
-  name_id = []
-  fileNames = os.listdir("./result")
-  #rint("Num of Line",len(fileNames))
-  if len(fileNames) == 0:
-    name_end = 0
-  else:
-    for name in fileNames:
-      name_id.append(int(((name.split('_')[1])).split('.')[0]))
-    name_end = max(name_id)
+  # name_end = 0
+  # name_id = []
+  # fileNames = os.listdir("./result")
+  # #rint("Num of Line",len(fileNames))
+  # if len(fileNames) == 0:
+  #   name_end = 0
+  # else:
+  #   for name in fileNames:
+  #     name_id.append(int(((name.split('_')[1])).split('.')[0]))
+  #   name_end = max(name_id)
 
   with open(in_file, 'r') as fp:
     print( in_file)
@@ -82,147 +82,148 @@ def inject_fault(fileName):
     title = line.split(':')
     title[1] = title[1].replace('\n','')
 
-    if os.path.isdir('../output_files/'+title[1]) != True:
-      os.makedirs('../output_files/'+title[1])
+    # if os.path.isdir('../output_files/'+title[1]) != True:
+    #   os.makedirs('../output_files/'+title[1])
 
-    hazardFile = open('../output_files/'+title[1]+'/Hazards.txt','w')
-    alertFile = open('../output_files/'+title[1]+'/Alerts.txt','w')
-    summFile = open('../output_files/'+title[1]+'/summary.csv','w')
+    # hazardFile = open('../output_files/'+title[1]+'/Hazards.txt','w')
+    # alertFile = open('../output_files/'+title[1]+'/Alerts.txt','w')
+    # summFile = open('../output_files/'+title[1]+'/summary.csv','w')
 
-    summLine = 'Scenario#,Fault#,Fault-line,Alerts,Hazards,T1,T2,T3\n'
-    summFile.write(summLine)
+    # summLine = 'Scenario#,Fault#,Fault-line,Alerts,Hazards,T1,T2,T3\n'
+    # summFile.write(summLine)
 
-    hazardFile.close()
-    alertFile.close()
-    summFile.close()
+    # hazardFile.close()
+    # alertFile.close()
+    # summFile.close()
 
-    hazardFile = open('../output_files/'+title[1]+'/Hazards.txt','a+')
-    alertFile = open('../output_files/'+title[1]+'/Alerts.txt','a+')
-    summFile = open('../output_files/'+title[1]+'/summary.csv','a')
+    # hazardFile = open('../output_files/'+title[1]+'/Hazards.txt','a+')
+    # alertFile = open('../output_files/'+title[1]+'/Alerts.txt','a+')
+    # summFile = open('../output_files/'+title[1]+'/summary.csv','a')
 
     line = fp.readline() # fault location line
     lineSeg = line.split('//')
     fileLoc = lineSeg[1]
     faultLoc = lineSeg[2]
     for line in fp:
-      line = line + recFaultTime
+      # line = line + recFaultTime
       lineSeg = line.split('//')
       startWord = lineSeg[0].split(' ')
       del lineSeg[0]
 
       if startWord[0]=='fault':
         print("+++++++++++"+title[1]+"++++++++++++++")
-        output_dir = '../output_files/'+title[1]+'/'+startWord[1]
-        if os.path.isdir(output_dir) != True:
-          os.makedirs(output_dir)
+        # output_dir = '../output_files/'+title[1]+'/'+startWord[1]
+        if 1:
+        # if os.path.isdir(output_dir) != True:
+        #   os.makedirs(output_dir)
           insert_fault_code(fileLoc, faultLoc, lineSeg)
-          print(os.getcwd())
+          # print(os.getcwd())
           # os.system('ls')
 #          cmd = 'python '+ 'updated_ct_script_iob_based_backup.py 200'
           os.system('./run_standalone_monitor.sh')
 
           '''Copy all output files in a common directory'''
-          cmd = 'cp -a ' + outfile_path+'/.' + ' ' + output_dir
-          os.system(cmd)
+          # cmd = 'cp -a ' + outfile_path+'/.' + ' ' + output_dir
+          # os.system(cmd)
 
           simulation_data_dir = './simulationCollection/'+title[1]+'/'+startWord[1]
           if os.path.isdir(simulation_data_dir) != True:
             os.makedirs(simulation_data_dir)
           cmd = 'mv -f ./simulation_data/* ' + ' ' + simulation_data_dir
           os.system(cmd)
-
-        faultTime = 'N/A'
-        with open(output_dir+'/fault_times.txt') as fltFile:
-          fltLine = fltFile.readline()  # first line
-          fltTime = fltLine.split('||')
-          if fltTime[0]=="":
-            tm = -9999.
-          else:
-            tm = float(fltTime[0])
-
-
-        '''Write all alerts in single file '''
-        alertMsg = 'N/A'
-        alertTime = 'N/A'
-        startTime = 0
-        with open(output_dir+'/alerts.txt') as alFile:
-          alLine = alFile.readline()  # first line
-          alertFile.write('\nAlerts for fault '+startWord[1]+'::\n')
-          for alLine in alFile:
-            alertFile.write(alLine)
-            if alLine.find('Glucose') >= 0:
-              if tm >=0:
-                # strTime = alLine.split('=')
-              #   startTime = 0#start_time_0 #float(strTime[len(strTime)-1])
-              # if startTime > 0.0:
-                strTime = alLine.split('=')
-                strAlert = alLine.split('||')
-                if 1:
-                  if alertMsg == 'N/A':
-                    alertMsg = strAlert[1]
-                    alertTime = str(float(strTime[len(strTime)-1])-startTime)
-                  else:
-                    alertMsg = alertMsg +'||'+ strAlert[1]
-                    alertTime = alertTime+'||'+ str(float(strTime[len(strTime)-1])-startTime)
-        # if startTime==0.0:
-        #   alertMsg = 'Comma unavailable'
-        #   alertTime = str(startTime)
+          
+        # faultTime = 'N/A'
+        # with open(output_dir+'/fault_times.txt') as fltFile:
+        #   fltLine = fltFile.readline()  # first line
+        #   fltTime = fltLine.split('||')
+        #   if fltTime[0]=="":
+        #     tm = -9999.
+        #   else:
+        #     tm = float(fltTime[0])
 
 
-        '''Write all hazards in single file '''
-        hazardMsg = 'N/A'
-        hazardTime = 'N/A'
-        with open(output_dir+'/hazards.txt') as hzFile:
-          hazLine = hzFile.readline()  # first line
-          hazardFile.write('\nHazards for fault '+startWord[1]+'::\n')
-          for hazLine in hzFile:
-            hazardFile.write(hazLine)
-            hzTime = hazLine.split('=')
-            hzTime = hzTime[len(hzTime)-1]
-            hzTime = hzTime.replace('\n','')
-            hzMsg = hazLine.split('||')
-            if hazardMsg=='N/A':
-              hazardMsg = hzMsg[1]
-              hazardTime = str(float(hzTime) - startTime)
-            else:
-              hazardMsg = hazardMsg +'||'+ hzMsg[1]
-              hazardTime = hazardTime +'||'+  str(float(hzTime) - startTime)
+        # '''Write all alerts in single file '''
+        # alertMsg = 'N/A'
+        # alertTime = 'N/A'
+        # startTime = 0
+        # with open(output_dir+'/alerts.txt') as alFile:
+        #   alLine = alFile.readline()  # first line
+        #   alertFile.write('\nAlerts for fault '+startWord[1]+'::\n')
+        #   for alLine in alFile:
+        #     alertFile.write(alLine)
+        #     if alLine.find('Glucose') >= 0:
+        #       if tm >=0:
+        #         # strTime = alLine.split('=')
+        #       #   startTime = 0#start_time_0 #float(strTime[len(strTime)-1])
+        #       # if startTime > 0.0:
+        #         strTime = alLine.split('=')
+        #         strAlert = alLine.split('||')
+        #         if 1:
+        #           if alertMsg == 'N/A':
+        #             alertMsg = strAlert[1]
+        #             alertTime = str(float(strTime[len(strTime)-1])-startTime)
+        #           else:
+        #             alertMsg = alertMsg +'||'+ strAlert[1]
+        #             alertTime = alertTime+'||'+ str(float(strTime[len(strTime)-1])-startTime)
+        # # if startTime==0.0:
+        # #   alertMsg = 'Comma unavailable'
+        # #   alertTime = str(startTime)
 
 
-        # calculate fault time
-        if tm <= -9999.:
-          faultTime = 'N/A'
-        elif tm - startTime < 0:
-          faultTime = '0'
-        else:
-          faultTime = str(tm - startTime)
+        # '''Write all hazards in single file '''
+        # hazardMsg = 'N/A'
+        # hazardTime = 'N/A'
+        # with open(output_dir+'/hazards.txt') as hzFile:
+        #   hazLine = hzFile.readline()  # first line
+        #   hazardFile.write('\nHazards for fault '+startWord[1]+'::\n')
+        #   for hazLine in hzFile:
+        #     hazardFile.write(hazLine)
+        #     hzTime = hazLine.split('=')
+        #     hzTime = hzTime[len(hzTime)-1]
+        #     hzTime = hzTime.replace('\n','')
+        #     hzMsg = hazLine.split('||')
+        #     if hazardMsg=='N/A':
+        #       hazardMsg = hzMsg[1]
+        #       hazardTime = str(float(hzTime) - startTime)
+        #     else:
+        #       hazardMsg = hazardMsg +'||'+ hzMsg[1]
+        #       hazardTime = hazardTime +'||'+  str(float(hzTime) - startTime)
 
 
-        # delete the recFaultTime codes, don't want to store it in summary.csv
-        del lineSeg[len(lineSeg)-1]
-        del lineSeg[len(lineSeg)-1]
-        del lineSeg[len(lineSeg)-1]
+        # # calculate fault time
+        # if tm <= -9999.:
+        #   faultTime = 'N/A'
+        # elif tm - startTime < 0:
+        #   faultTime = '0'
+        # else:
+        #   faultTime = str(tm - startTime)
 
-        faultLine = '||'.join(lineSeg)
-        faultLine = faultLine.replace('\n','')
-        summLine = '%d,%d,"%s",%s,%s,%s,%s,%s\n' %(int(sceneNum),int(startWord[1]),faultLine,alertMsg,hazardMsg,faultTime,alertTime,hazardTime)
-        summFile.write(summLine)
+
+        # # delete the recFaultTime codes, don't want to store it in summary.csv
+        # del lineSeg[len(lineSeg)-1]
+        # del lineSeg[len(lineSeg)-1]
+        # del lineSeg[len(lineSeg)-1]
+
+        # faultLine = '||'.join(lineSeg)
+        # faultLine = faultLine.replace('\n','')
+        # summLine = '%d,%d,"%s",%s,%s,%s,%s,%s\n' %(int(sceneNum),int(startWord[1]),faultLine,alertMsg,hazardMsg,faultTime,alertTime,hazardTime)
+        # summFile.write(summLine)
 
         #break
       # if "fault" in line:  
-        name_end = name_end+1
-        name_end_str = str(name_end)
+        # name_end = name_end+1
+        # name_end_str = str(name_end)
 
         cmd = '> '+'data.csv'
         os.system(cmd)
-        cmd = 'python '+'updated_collected.py'
-        os.system(cmd)
-        cmd = 'cp '+'data.csv'+' ./result/data_%s.csv'%name_end_str
-        os.system(cmd)  
+        # cmd = 'python '+'updated_collected.py'
+        # os.system(cmd)
+        # cmd = 'cp '+'data.csv'+' ./result/data_%s.csv'%name_end_str
+        # os.system(cmd)  
 
-    hazardFile.close()
-    alertFile.close()
-    summFile.close()
+    # hazardFile.close()
+    # alertFile.close()
+    # summFile.close()
     
     print('Fault injection and execution done !!!')
     bkupFile = fileLoc+'.bkup'
