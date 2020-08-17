@@ -1,0 +1,21 @@
+title:12_bitflip_add_rate
+location//updated_ct_script_iob_based.py//#rate:HOOK#
+fault 1//if xxxxx://loaded_suggested_data["rate"]+=0.5
+fault 2//if xxxxx://loaded_suggested_data["rate"]+=0.5
+fault 3//if xxxxx://loaded_suggested_data["rate"]+=0.5
+fault 4//if xxxxx://loaded_suggested_data["rate"]+=0.5
+fault 5//if xxxxx://loaded_suggested_data["rate"]+=0.5
+fault 6//if xxxxx://loaded_suggested_data["rate"]+=0.5
+fault 7//if xxxxx://loaded_suggested_data["rate"]+=0.5
+fault 8//if xxxxx://loaded_suggested_data["rate"]+=0.5
+fault 9//if xxxxx://loaded_suggested_data["rate"]+=0.5
+fault 10//if xxxxx://loaded_suggested_data["rate"]+=1
+fault 11//if xxxxx://loaded_suggested_data["rate"]+=1
+fault 12//if xxxxx://loaded_suggested_data["rate"]+=1
+fault 13//if xxxxx://loaded_suggested_data["rate"]+=1
+fault 14//if xxxxx://loaded_suggested_data["rate"]+=1
+fault 15//if xxxxx://loaded_suggested_data["rate"]+=1
+fault 16//if xxxxx://loaded_suggested_data["rate"]+=1
+fault 17//if xxxxx://loaded_suggested_data["rate"]+=1
+fault 18//if xxxxx://loaded_suggested_data["rate"]+=1
+Total number of fault cases: 18

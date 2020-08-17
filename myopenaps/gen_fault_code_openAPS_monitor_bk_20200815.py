@@ -68,9 +68,9 @@ def gen_stuck_glucose_code(trigger_code,trigger, trigger_time, stop_time,variabl
 	
 ### Write codes to fault library file
 def write_to_file(code, exp_name, target_file, faultLoc):
-	if os.path.isdir('fault_library_monitor_V2') != True:
-		os.makedirs('fault_library_monitor_V2')
-	fileName = 'fault_library_monitor_V2/scenario_'+str(sceneNum)
+	if os.path.isdir('fault_library_monitor') != True:
+		os.makedirs('fault_library_monitor')
+	fileName = 'fault_library_monitor/scenario_'+str(sceneNum)
 	out_file = fileName+'.txt'
 	#param_file = fileName+'_params.csv'
 
@@ -82,15 +82,15 @@ def write_to_file(code, exp_name, target_file, faultLoc):
 			outfile.write('fault ' + str(i+1) + '//' + line + '\n')
 		outfile.write('Total number of fault cases: '+str(i+1))
 
-	with open('run_fault_inject_monitor_V2_campaign.sh', 'a+') as runFile:
-		runFile.write('python run_openAPS_monitor.py '+fileName+'\n')
+	with open('run_fault_inject_campaign.sh', 'a+') as runFile:
+		runFile.write('python run_openAPS.py '+fileName+'\n')
 
 ############################################################################
 
 def write_to_file_STPA(code, exp_name, target_file, faultLoc):
-	if os.path.isdir('fault_library_monitor_V2_STPA') != True:
-		os.makedirs('fault_library_monitor_V2_STPA')
-	fileName = 'fault_library_monitor_V2_STPA/scenario_'+str(sceneNum)
+	if os.path.isdir('fault_library_monitor_STPA') != True:
+		os.makedirs('fault_library_monitor_STPA')
+	fileName = 'fault_library_monitor_STPA/scenario_'+str(sceneNum)
 	out_file = fileName+'.txt'
 	#param_file = fileName+'_params.csv'
 
@@ -102,8 +102,8 @@ def write_to_file_STPA(code, exp_name, target_file, faultLoc):
 			outfile.write('fault ' + str(i+1) + '//' + line + '\n')
 		outfile.write('Total number of fault cases: '+str(i+1))
 
-	with open('run_fault_inject_monitor_V2_STPA_campaign.sh', 'a+') as runFile:
-		runFile.write('python run_openAPS_monitor.py '+fileName+'\n')
+	with open('run_fault_inject_STPA_campaign.sh', 'a+') as runFile:
+		runFile.write('python run_openAPS.py '+fileName+'\n')
 
 def write_both_to_file(code,code_STPA, title, fileLoc, faultLoc):
 	write_to_file(code, title, fileLoc, faultLoc)
@@ -112,7 +112,7 @@ def write_both_to_file(code,code_STPA, title, fileLoc, faultLoc):
 
 def gen_belowTarget_noinc_add_rate(sceneNum):
 	title = str(sceneNum)+'_belowTarget_add_rate_H2'
-	#faultLibFile = 'fault_library_monitor_V2/dRelPlantRad'
+	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#rate:HOOK#'
 	trigger = '_'
@@ -137,7 +137,7 @@ def gen_belowTarget_noinc_add_rate(sceneNum):
 
 def gen_belowTarget_inc_stuck_rate(sceneNum):
 	title = str(sceneNum)+'_belowTarget_stuck_rate_H2'
-	#faultLibFile = 'fault_library_monitor_V2/dRelPlantRad'
+	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#rate:HOOK#'
 	trigger = '_'
@@ -162,7 +162,7 @@ def gen_belowTarget_inc_stuck_rate(sceneNum):
 
 def gen_aboveTarget_nodec_sub_rate(sceneNum):
 	title = str(sceneNum)+'_aboveTarget_sub_rate_H1'
-	#faultLibFile = 'fault_library_monitor_V2/dRelPlantRad'
+	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#rate:HOOK#'
 	trigger = '_'
@@ -186,7 +186,7 @@ def gen_aboveTarget_nodec_sub_rate(sceneNum):
 	write_to_file_STPA(code_STPA, title, fileLoc, faultLoc)
 
 ##########################################################################################################
-def gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,newvalue,newvalue2=0,early_start=False):
+def gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,newvalue,newvalue2=0):
 		
 	trigger = '_'
 	# trigger_time = 10 # 10 is an arbitrary number, I want the fault be injected after 10th iteration
@@ -194,20 +194,17 @@ def gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,newvalue,ne
 	code = []
 	code_STPA=[]
 	#param = []
-	if early_start:
-		time_partition =[(6,10),(11,20),(21,30)]
-	else:
-		time_partition =[(6,30),(31,75),(76,120)]
+
 	valuelist = []
 	valuelist.append(newvalue)
 	if newvalue2:
 		valuelist.append(newvalue2)
 	for valueitem in valuelist:
-		for i in range(3): #
-			trigger_time = random.randint(time_partition[i][0],time_partition[i][1])
-			duration = int((120 - trigger_time)/3) #divided into 3 parts
-			for i in np.arange(trigger_time,120,duration):
-				if i+duration <= 121: #make sure the stop time is no more than 121
+		for starttime in [10,100]: #10~99, 100~190 
+			trigger_time = random.randint(starttime,starttime+90)
+			duration = int((199 - trigger_time)/4) #divided into four parts
+			for i in np.arange(trigger_time,199,duration):
+				if i+duration <= 199: #make sure the stop time is no more than 199
 					stop_time = random.randint(i+1,i+duration) #hong long fault will last, at least one iteration
 					code.append(gen_stuck_code('',trigger, trigger_time,stop_time, variable, valueitem))
 					code_STPA.append(gen_stuck_code(trigger_code,trigger, trigger_time,stop_time, variable, valueitem))
@@ -217,7 +214,7 @@ def gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,newvalue,ne
 
 	write_both_to_file(code,code_STPA, title, fileLoc, faultLoc)
 
-def gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,direction,early_start=False): #direction: 0-decreade, 1-increase
+def gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,direction): #direction: 0-decreade, 1-increase
 		
 	trigger = '_'
 	# trigger_time = 10 # 10 is an arbitrary number, I want the fault be injected after 10th iteration
@@ -225,10 +222,7 @@ def gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,directi
 	code = []
 	code_STPA=[]
 	#param = []
-	if early_start:
-		time_partition =[(6,10),(11,20),(21,30)]
-	else:
-		time_partition =[(6,30),(31,75),(76,120)]
+
 
 	additional_code=''
 	if direction == True:
@@ -239,23 +233,23 @@ def gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,directi
 
 	if 'rate' in variable:
 		# daterange=[0.125,0.25,0.5,1,1.5,2,2.5,3,3.5,4]
-		daterange=[0.5,1]
+		daterange=[2,3,4]
 	else:
 		# daterange=[16,32,48,64,96,128,160,192,224,256]
-		daterange=[32,64]
+		daterange=[32,64,128,192,256]
 	
 	for gain in daterange: #single or multiple bitflips
-		for i in range(3): #
-			trigger_time = random.randint(time_partition[i][0],time_partition[i][1])
-			# duration = int((120 - trigger_time)/3) #divided into 3 parts
-			duration = (120 - trigger_time)/3 
+		for starttime in [10,100]: #10~99, 100~190 
+			trigger_time = random.randint(starttime,starttime+90)
+			# duration = int((199 - trigger_time)/4) #divided into four parts
+			duration = (199 - trigger_time)/4 
 			# for i in np.arange(trigger_time,199,duration):
-			for i in range(3):
-				startpoint = int(trigger_time + i*duration)
-				endpoint = startpoint+int(duration)
-				if endpoint <=121:
-				# if i+duration <= 121: #make sure the stop time is no more than 121
-					stop_time = random.randint(startpoint+1,endpoint) #hong long fault will last, at least one iteration
+			for i in range(4):
+				time = int(trigger_time + i*duration)
+				endpoint = time+int(duration)
+				if endpoint <=199:
+				# if i+duration <= 199: #make sure the stop time is no more than 199
+					stop_time = random.randint(time+1,endpoint) #hong long fault will last, at least one iteration
 					code.append(func('',trigger, trigger_time,stop_time, variable, gain,additional_code))
 					code_STPA.append(func(trigger_code,trigger, trigger_time,stop_time, variable, gain,additional_code))
 					#param.append(','.join(['relative distance',str(t1),str(dt),str(delta)]))
@@ -265,13 +259,13 @@ def gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,directi
 
 def gen_lostconnection_hold_rate(sceneNum): #S9
 	title = str(sceneNum)+'_lostconnection_hold_rate'
-	#faultLibFile = 'fault_library_monitor_V2/dRelPlantRad'
+	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#rate:HOOK#'
 	variable = 'rate_refresh'
 	newvalue = 0
 
-	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,newvalue,early_start=True)
+	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,newvalue)
 
 def gen_bitflip_double_rate(sceneNum): #S10
 	title = str(sceneNum)+'_bitflip_double_rate'
@@ -312,17 +306,17 @@ def gen_bitflip_sub_rate(sceneNum): #S13
 	faultLoc = '#rate:HOOK#'
 	variable = 'loaded_suggested_data["rate"]'
 
-	gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, False,early_start=True)
+	gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, False)
 ############========================#########################
 def gen_lostconnection_hold_glucose(sceneNum):#S14
 	title = str(sceneNum)+'_lostconnection_hold_glucose'
-	#faultLibFile = 'fault_library_monitor_V2/dRelPlantRad'
+	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#glucose:HOOK#'
 	variable = 'glucose_refresh'
 	newvalue = 0
 
-	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,newvalue,early_start=True)
+	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable,newvalue)
 
 def gen_bitflip_double_glucose(sceneNum): #S15
 	title = str(sceneNum)+'_bitflip_double_glucose'
@@ -353,63 +347,18 @@ def gen_bitflip_add_glucose(sceneNum): #S17
 
 	gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, True)
 
-def gen_bitflip_sub_glucose(sceneNum): #S18
+def gen_bitflip_sub_glucose(sceneNum): #S17
 	title = str(sceneNum)+'_bitflip_sub_glucose'
 	
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#glucose:HOOK#'
 	variable = 'data_to_prepend["glucose"]'
 
-	gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, False,early_start=True)
-	######################
-
-def gen_max_rate(sceneNum):#S19
-	title = str(sceneNum)+'_maximize_rate'
-	
-	fileLoc = 'updated_ct_script_iob_based.py'
-	faultLoc = '#rate:HOOK#'
-	variable = 'loaded_suggested_data["rate"]'
-	newvalue = '2'
-	# newvalue2 = '4'
-
-	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, newvalue)
-
-def gen_min_rate(sceneNum):#S20
-	title = str(sceneNum)+'_minimize_rate'
-	
-	fileLoc = 'updated_ct_script_iob_based.py'
-	faultLoc = '#rate:HOOK#'
-	variable = 'loaded_suggested_data["rate"]'
-	newvalue = '0'
-	# newvalue2 = '4'
-
-	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, newvalue,early_start=True)
-
-def gen_max_glucose(sceneNum):#S21
-	title = str(sceneNum)+'_maximize_rate'
-	
-	fileLoc = 'updated_ct_script_iob_based.py'
-	faultLoc = '#glucose:HOOK#'
-	variable = 'data_to_prepend["glucose"]'
-	newvalue = '175'
-
-	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, newvalue)
-
-def gen_min_glucose(sceneNum):#S22
-	title = str(sceneNum)+'_minimize_rate'
-	
-	fileLoc = 'updated_ct_script_iob_based.py'
-	faultLoc = '#glucose:HOOK#'
-	variable = 'data_to_prepend["glucose"]'
-	newvalue = '80'
-
-	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, newvalue)
-
+	gen_add_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, False)
 ##########################################################################################
-'''
 def gen_aboveTarget_nodec_stuck_rate(sceneNum):
 	title = str(sceneNum)+'_aboveTarget_stuck_rate_H1'
-	#faultLibFile = 'fault_library_monitor_V2/dRelPlantRad'
+	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#rate:HOOK#'
 	trigger = '_'
@@ -435,7 +384,7 @@ def gen_aboveTarget_nodec_stuck_rate(sceneNum):
 ###############glucose:HOOK#############
 def gen_belowTarget_add_glucose(sceneNum):
 	title = str(sceneNum)+'_belowTarget_add_glucose_H2'
-	#faultLibFile = 'fault_library_monitor_V2/dRelPlantRad'
+	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#glucose:HOOK#'
 	trigger = '_'
@@ -460,7 +409,7 @@ def gen_belowTarget_add_glucose(sceneNum):
 
 def gen_belowTarget_stuck_glucose(sceneNum):
 	title = str(sceneNum)+'_belowTarget_stuck_glucose_H2'
-	#faultLibFile = 'fault_library_monitor_V2/dRelPlantRad'
+	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#glucose:HOOK#'
 	trigger = '_'
@@ -485,7 +434,7 @@ def gen_belowTarget_stuck_glucose(sceneNum):
 
 def gen_aboveTarget_sub_glucose(sceneNum):
 	title = str(sceneNum)+'_aboveTarget_sub_glucose_H1'
-	#faultLibFile = 'fault_library_monitor_V2/dRelPlantRad'
+	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#glucose:HOOK#'
 	trigger = '_'
@@ -510,7 +459,7 @@ def gen_aboveTarget_sub_glucose(sceneNum):
 
 def gen_aboveTarget_stuck_glucose(sceneNum):
 	title = str(sceneNum)+'_aboveTarget_stuck_glucose_H1'
-	#faultLibFile = 'fault_library_monitor_V2/dRelPlantRad'
+	#faultLibFile = 'fault_library_monitor/dRelPlantRad'
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#glucose:HOOK#'
 	trigger = '_'
@@ -532,41 +481,37 @@ def gen_aboveTarget_stuck_glucose(sceneNum):
 
 	write_to_file(code, title, fileLoc, faultLoc)
 	write_to_file_STPA(code_STPA, title, fileLoc, faultLoc)
-'''
+
 ###_main_###
 
-with open('run_fault_inject_monitor_V2_campaign.sh', 'w') as runFile:
-    runFile.write('#Usage: python run_openAPS_monitor.py fault_library_monitor_V2\n')
+with open('run_fault_inject_campaign.sh', 'w') as runFile:
+    runFile.write('#Usage: python run_openAPS.py fault_library_monitor\n')
 
-with open('run_fault_inject_monitor_V2_STPA_campaign.sh', 'w') as runFile:
-    runFile.write('#Usage: python run_openAPS_monitor.py target_fault_library_monitor_V2\n')
+with open('run_fault_inject_STPA_campaign.sh', 'w') as runFile:
+    runFile.write('#Usage: python run_openAPS.py target_fault_library_monitor\n')
 	
 scenarios = {
-# 1 : gen_belowTarget_noinc_add_rate,
-# 2 : gen_belowTarget_inc_stuck_rate,
-# 3 : gen_aboveTarget_nodec_sub_rate,
-# 4 : gen_aboveTarget_nodec_stuck_rate,
-# 5 : gen_belowTarget_add_glucose,
-# 6 : gen_belowTarget_stuck_glucose,
-# 7 : gen_aboveTarget_sub_glucose,
-# 8 : gen_aboveTarget_stuck_glucose,
+1 : gen_belowTarget_noinc_add_rate,
+2 : gen_belowTarget_inc_stuck_rate,
+3 : gen_aboveTarget_nodec_sub_rate,
+4 : gen_aboveTarget_nodec_stuck_rate,
+5 : gen_belowTarget_add_glucose,
+6 : gen_belowTarget_stuck_glucose,
+7 : gen_aboveTarget_sub_glucose,
+8 : gen_aboveTarget_stuck_glucose,
 9 : gen_lostconnection_hold_rate, #hardware error
-# 10 : gen_bitflip_double_rate,
-# 11 : gen_bitflip_half_rate,
+10 : gen_bitflip_double_rate,
+11 : gen_bitflip_half_rate,
 12 : gen_bitflip_add_rate,
 13 : gen_bitflip_sub_rate,
 14 : gen_lostconnection_hold_glucose, #hardware error
-# 15 : gen_bitflip_double_glucose,
-# 16 : gen_bitflip_half_glucose,
+15 : gen_bitflip_double_glucose,
+16 : gen_bitflip_half_glucose,
 17 : gen_bitflip_add_glucose,
 18 : gen_bitflip_sub_glucose,
-19 : gen_max_rate,
-20 : gen_min_rate,
-21 : gen_max_glucose,
-22 : gen_min_glucose,
 
 }
 
-for sceneNum in [9,12,13,14,17,18,19,20,21,22]:
+for sceneNum in [9,10,11,12,13,14,15,16,17,18]:
 	scenarios[sceneNum](sceneNum)
 
