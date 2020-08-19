@@ -1,4 +1,4 @@
-title:22_minimize_rate
+title:22_minimize_glucose
 location//updated_ct_script_iob_based.py//#glucose:HOOK#
 fault 1//if _>=9 and _<19://data_to_prepend["glucose"]=80
 fault 2//if _>=9 and _<50://data_to_prepend["glucose"]=80
@@ -7,8 +7,4 @@ fault 4//if _>=47 and _<66://data_to_prepend["glucose"]=80
 fault 5//if _>=47 and _<85://data_to_prepend["glucose"]=80
 fault 6//if _>=47 and _<112://data_to_prepend["glucose"]=80
 fault 7//if _>=115 and _<116://data_to_prepend["glucose"]=80
-fault 8//if _>=115 and _<117://data_to_prepend["glucose"]=80
-fault 9//if _>=115 and _<118://data_to_prepend["glucose"]=80
-fault 10//if _>=115 and _<119://data_to_prepend["glucose"]=80
-fault 11//if _>=115 and _<120://data_to_prepend["glucose"]=80
 Total number of fault cases: 11

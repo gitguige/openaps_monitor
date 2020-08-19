@@ -43,11 +43,16 @@ for _ in range(iteration_num):
   read_glucose_from_glucosym = open("../glucosym/closed_loop_algorithm_samples/glucose_output_algo_bw.txt", "r")
   loaded_glucose = float(read_glucose_from_glucosym.read())
 
-  if glucose_refresh == True:
-    data_to_prepend["glucose"] = loaded_glucose 
+  # if glucose_refresh == True:
+  prev_data_to_prepend_glucose = data_to_prepend["glucose"]
+  data_to_prepend["glucose"] = loaded_glucose 
 
 # Fault_injection ############# permanent hardware fault injection #################################  
   #glucose:HOOK#
+
+  if glucose_refresh != True:
+    data_to_prepend["glucose"] = prev_data_to_prepend_glucose 
+
   data_to_prepend["date"] = int(time.time())*1000
   
   data.insert(0, data_to_prepend)

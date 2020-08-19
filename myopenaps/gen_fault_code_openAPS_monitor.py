@@ -386,7 +386,7 @@ def gen_min_rate(sceneNum):#S20
 	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, newvalue,early_start=True)
 
 def gen_max_glucose(sceneNum):#S21
-	title = str(sceneNum)+'_maximize_rate'
+	title = str(sceneNum)+'_maximize_glucose'
 	
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#glucose:HOOK#'
@@ -396,7 +396,7 @@ def gen_max_glucose(sceneNum):#S21
 	gen_code_common_multiplestoptime(title,fileLoc,faultLoc,variable, newvalue)
 
 def gen_min_glucose(sceneNum):#S22
-	title = str(sceneNum)+'_minimize_rate'
+	title = str(sceneNum)+'_minimize_glucose'
 	
 	fileLoc = 'updated_ct_script_iob_based.py'
 	faultLoc = '#glucose:HOOK#'
