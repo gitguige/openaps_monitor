@@ -120,7 +120,7 @@ def inject_fault(fileName):
           # print(os.getcwd())
           # os.system('ls')
 #          cmd = 'python '+ 'updated_ct_script_iob_based_backup.py 200'
-          os.system('./run_standalone_monitor.sh')
+          os.system('./run_standalone_monitor.sh '+title[1]+' '+startWord[1]) #pass scenario and fault num to the .sh script
 
           '''Copy all output files in a common directory'''
           # cmd = 'cp -a ' + outfile_path+'/.' + ' ' + output_dir

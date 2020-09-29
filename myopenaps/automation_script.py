@@ -9,12 +9,20 @@ import time
 import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from sys import argv
+
+#####################################################
+MITIGATION=0 #whether activate mitigation code 0:None; 1:TP; 2:FP; 3:TP+FP
 
 ##########################################################
-initial_glucose = [100]#80, 100, 120, 140, 160, 180, 200]
+initial_glucose = [80, 100, 120, 140, 160, 180, 200]
 #initial_glucose = [80, 100]
 #initial_glucose = [80]
-cmd_main = 'python '+'updated_ct_script_iob_based.py '#+sys.argv[1]
+if MITIGATION:
+	cmd_main = 'python '+'updated_ct_script_iob_based.py '#+sys.argv[1]
+else:
+	cmd_main = 'python '+'updated_ct_script_iob_based_mitigation_CAWT.py '#+sys.argv[1]
+
 # cmd_main = 'python '+'updated_ct_script_iob_based_mitigation.py '#+sys.argv[1]  mitigate the unsafe action
 
 browser = webdriver.Firefox()
@@ -31,8 +39,35 @@ for i in browser.find_elements_by_xpath("//*[@type='radio']"):
 	i.click()
 	time.sleep(1)
 	patient = patient_name[patient_id]
-	if patient_id == 7:#0 or patient_id == 7:#9
+	if patient_id == 0:#0 or patient_id == 7:#9
+
+		if MITIGATION>0:
+			scenario_inf=argv[1].replace('\n','')
+			scenario_num=int(scenario_inf.split('_')[0])
+			fault_num=int(argv[2])
+			file_testlist = np.load("../Reseult/script_jupyternotebook/filelist/file_testlist_{}_CV{}.npy".format(patient,0))
+			test_result =pd.read_csv('../Reseult/scripts-12rules/result/summary_monitor_hardware_{0}-{0}_CV0.csv'.format(patient))
+			datastream_test = test_result[test_result['Scenario']==scenario_num]
+			datastream_test = datastream_test[datastream_test['fault']==fault_num]
+
+
 		for ig in initial_glucose:
+
+			if MITIGATION>0:
+				if not ('../simulationCollection_newmodel/{}/{}/{}/data_{}_{}.csv'.format(scenario_inf,fault_num,patient,patient,ig) in file_testlist):
+					continue
+				alert_num = int(datastream_test[datastream_test['init_bg']==ig]['alert_num'].tolist()[0])
+				hazard_num = int(datastream_test[datastream_test['init_bg']==ig]['hazard_num'].tolist()[0])
+				if MITIGATION ==1:
+					if hazard_num<1: #only test on hazardous cases TP
+						continue
+				elif MITIGATION ==2:
+					if alert_num<1 or hazard_num>0: #only test FP cases: alert>0 and hazard==0
+						continue
+
+				print('initial_glucose={}'.format(ig))
+				print('alert_num={},hazard_num={}'.format(alert_num,hazard_num))
+
 			# output_dir = 'out/'+patient+'/'+str(ig)+'/'
 			# if os.path.isdir(output_dir) != True:
 			# 	os.makedirs(output_dir)
@@ -43,7 +78,7 @@ for i in browser.find_elements_by_xpath("//*[@type='radio']"):
 			input_text.send_keys(Keys.RETURN)
 			#time.sleep(1)
 			os.system(cmd_initialize)
-			os.system(cmd_main)
+			os.system(cmd_main+' {} {}_CV0'.format(MITIGATION,patient))
 			
 			cmd_collect_data = 'python '+'updated_collected.py'
 			os.system(cmd_collect_data)

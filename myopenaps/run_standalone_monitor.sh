@@ -3,5 +3,5 @@
 #pip2 install -r requirements_openpilot.txt
 
 export PYTHONPATH="$PWD":$PYTHONPATH
-python automation_script.py
+python automation_script.py $1 $2
 # /bin/sh -c './updated_ct_script_iob_based.py'
