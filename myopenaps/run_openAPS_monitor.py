@@ -132,6 +132,9 @@ def inject_fault(fileName):
               os.makedirs(simulation_data_dir)
             cmd = 'mv -f ./simulation_data/* ' + ' ' + simulation_data_dir
             os.system(cmd)
+            cmd = 'rm -rf ./simulation_data'
+            os.system(cmd)
+            
           
         # faultTime = 'N/A'
         # with open(output_dir+'/fault_times.txt') as fltFile:
