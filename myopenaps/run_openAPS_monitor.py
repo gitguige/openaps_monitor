@@ -126,11 +126,12 @@ def inject_fault(fileName):
           # cmd = 'cp -a ' + outfile_path+'/.' + ' ' + output_dir
           # os.system(cmd)
 
-          simulation_data_dir = './simulationCollection/'+title[1]+'/'+startWord[1]
-          if os.path.isdir(simulation_data_dir) != True:
-            os.makedirs(simulation_data_dir)
-          cmd = 'mv -f ./simulation_data/* ' + ' ' + simulation_data_dir
-          os.system(cmd)
+          if os.path.isdir('./simulation_data') == True:
+            simulation_data_dir = './simulationCollection/'+title[1]+'/'+startWord[1]
+            if os.path.isdir(simulation_data_dir) != True:
+              os.makedirs(simulation_data_dir)
+            cmd = 'mv -f ./simulation_data/* ' + ' ' + simulation_data_dir
+            os.system(cmd)
           
         # faultTime = 'N/A'
         # with open(output_dir+'/fault_times.txt') as fltFile:
