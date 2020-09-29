@@ -1,0 +1,221 @@
+Scenario,fault,faultinf,Patient,init_bg,alert,alert_num,hazard_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_TPR, sub_FPR,T1,T2,T3,Latency(T2-T1),Reaction time(T3-t2),mttf(T3-T1),f1_micro,f1_macro,f1_weighted,Iteration_number,glucose_at_T3,prediction_rate,TN,FN,TP,FP,hazard_msg
+20,6,if _>=11 and _<95:||loaded_suggested_data["rate"]=0,patientG,100,row_5||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7,36,34,92,22,12,24,0.35294117647058826,0.20689655172413793, 11.0,54.0,83.0,43.0,29.0,72.0,0.6933333333333334,0.5714285714285714,0.6963809523809524,150,201.59753351296882,0,0,0,1,0,H2
+21,7,if _>=89 and _<110:||data_to_prepend["glucose"]=175,patientG,80,N/A,0,0,150,0,0,0,,0.0, 89.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,4,if _>=12 and _<37:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 12.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,6,if _>=47 and _<112:||data_to_prepend["glucose"]=80,patientG,200,row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7,13,0,137,0,0,13,,0.08666666666666667, 47.0,99.0,N/A,52.0,N/A,N/A,0.9133333333333333,0.47735191637630664,0.9547038327526133,150,0,0,0,0,0,1,N/A
+18,12,if _>=9 and _<107:||data_to_prepend["glucose"]-=64||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,80,N/A,0,0,118,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,118,0,0,1,0,0,0,N/A
+21,2,if _>=22 and _<55:||data_to_prepend["glucose"]=175,patientG,100,N/A,0,0,150,0,0,0,,0.0, 22.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,10,if _>=9 and _<32:||data_to_prepend["glucose"]-=64||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,100,N/A,0,0,134,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,134,0,0,1,0,0,0,N/A
+14,9,if _>=21 and _<88:||glucose_refresh=0,patientG,180,N/A,0,0,150,0,0,0,,0.0, 21.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,18,if _>=25 and _<118:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 25.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,14,if _>=11 and _<54:||data_to_prepend["glucose"]-=64||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 11.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,2,if _>=29 and _<88:||loaded_suggested_data["rate"]+=0.5,patientG,100,N/A,0,0,150,0,0,0,,0.0, 29.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,10,if _>=9 and _<23:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,180,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,7,if _>=86 and _<91:||loaded_suggested_data["rate"]+=0.5,patientG,180,N/A,0,0,150,0,0,0,,0.0, 86.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,2,if _>=9 and _<55:||loaded_suggested_data["rate"]=0,patientG,180,row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7,16,10,124,10,0,16,0.0,0.11428571428571428, 9.0,39.0,68.0,30.0,29.0,59.0,0.8266666666666667,0.45255474452554745,0.8447688564476885,150,194.47787464489068,0,0,0,1,0,H2
+9,4,if _>=19 and _<39:||rate_refresh=0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 19.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,1,if _>=29 and _<47:||loaded_suggested_data["rate"]=2,patientG,200,N/A,0,0,150,0,0,0,,0.0, 29.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,14,if _>=74 and _<102:||loaded_suggested_data["rate"]+=1,patientG,180,N/A,0,0,150,0,0,0,,0.0, 74.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,1,if _>=6 and _<12:||rate_refresh=0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 6.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,12,if _>=6 and _<120:||loaded_suggested_data["rate"]+=1,patientG,140,N/A,0,0,150,0,0,0,,0.0, 6.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,13,if _>=11 and _<43:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 11.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,9,if _>=23 and _<117:||rate_refresh=0,patientG,100,N/A,0,0,150,0,0,0,,0.0, 23.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,3,if _>=6 and _<94:||rate_refresh=0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 6.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,4,if _>=70 and _<86:||data_to_prepend["glucose"]=175,patientG,120,N/A,0,0,150,0,0,0,,0.0, 70.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,8,if _>=27 and _<79:||loaded_suggested_data["rate"]=0,patientG,140,row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7,11,10,129,10,0,11,0.0,0.07857142857142857, 27.0,68.0,94.0,41.0,26.0,67.0,0.8599999999999999,0.46236559139784944,0.8630824372759857,150,195.2518656906971,0,0,0,1,0,H2
+13,15,if _>=11 and _<106:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,100,N/A,0,0,150,0,0,0,,0.0, 11.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,14,if _>=11 and _<68:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 11.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,9,if _>=86 and _<116:||data_to_prepend["glucose"]+=32,patientG,140,N/A,0,0,150,0,0,0,,0.0, 86.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,3,if _>=9 and _<98:||loaded_suggested_data["rate"]=0,patientG,80,row_5||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7,35,34,93,22,12,23,0.35294117647058826,0.19827586206896552, 9.0,58.0,86.0,49.0,28.0,77.0,0.7,0.5765104460756635,0.7015245623941275,150,200.3776084566,0,0,0,1,0,H2
+17,16,if _>=98 and _<103:||data_to_prepend["glucose"]+=64,patientG,120,N/A,0,0,150,0,0,0,,0.0, 98.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,2,if _>=10 and _<69:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,180,N/A,0,0,150,0,0,0,,0.0, 10.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,17,if _>=98 and _<107:||data_to_prepend["glucose"]+=64,patientG,140,N/A,0,0,150,0,0,0,,0.0, 98.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,11,if _>=9 and _<79:||data_to_prepend["glucose"]-=64||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,180,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,7,if _>=89 and _<110:||data_to_prepend["glucose"]=175,patientG,160,N/A,0,0,150,0,0,0,,0.0, 89.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,3,if _>=10 and _<83:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,200,N/A,0,0,150,0,0,0,,0.0, 10.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,12,if _>=6 and _<120:||loaded_suggested_data["rate"]+=1,patientG,180,N/A,0,0,150,0,0,0,,0.0, 6.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,8,if _>=86 and _<108:||data_to_prepend["glucose"]+=32,patientG,100,N/A,0,0,150,0,0,0,,0.0, 86.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,6,if _>=12 and _<91:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 12.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,6,if _>=11 and _<95:||loaded_suggested_data["rate"]=0,patientG,80,row_5||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7,30,30,98,22,8,22,0.26666666666666666,0.18333333333333332, 11.0,60.0,87.0,49.0,27.0,76.0,0.7066666666666667,0.5416666666666666,0.7066666666666667,150,202.1281860552808,0,0,0,1,0,H2
+13,2,if _>=10 and _<72:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 10.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,4,if _>=43 and _<58:||loaded_suggested_data["rate"]=2,patientG,80,N/A,0,0,150,0,0,0,,0.0, 43.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,18,if _>=91 and _<117:||loaded_suggested_data["rate"]+=1,patientG,180,N/A,0,0,150,0,0,0,,0.0, 91.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,17,if _>=98 and _<107:||data_to_prepend["glucose"]+=64,patientG,160,N/A,0,0,150,0,0,0,,0.0, 98.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,2,if _>=22 and _<55:||data_to_prepend["glucose"]=175,patientG,140,N/A,0,0,150,0,0,0,,0.0, 22.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,16,if _>=23 and _<31:||data_to_prepend["glucose"]-=64||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 23.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,9,if _>=86 and _<116:||data_to_prepend["glucose"]+=32,patientG,160,N/A,0,0,150,0,0,0,,0.0, 86.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,15,if _>=74 and _<116:||loaded_suggested_data["rate"]+=1,patientG,200,N/A,0,0,150,0,0,0,,0.0, 74.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,16,if _>=98 and _<103:||data_to_prepend["glucose"]+=64,patientG,200,N/A,0,0,150,0,0,0,,0.0, 98.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,18,if _>=98 and _<113:||data_to_prepend["glucose"]+=64,patientG,80,N/A,0,0,150,0,0,0,,0.0, 98.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,5,if _>=11 and _<53:||loaded_suggested_data["rate"]=0,patientG,180,row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7,12,0,138,0,0,12,,0.08, 11.0,41.0,N/A,30.0,N/A,N/A,0.92,0.4791666666666667,0.9583333333333334,150,0,0,0,0,0,1,N/A
+21,2,if _>=22 and _<55:||data_to_prepend["glucose"]=175,patientG,160,N/A,0,0,150,0,0,0,,0.0, 22.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,2,if _>=22 and _<55:||data_to_prepend["glucose"]=175,patientG,120,N/A,0,0,150,0,0,0,,0.0, 22.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,2,if _>=10 and _<69:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 10.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,4,if _>=70 and _<86:||data_to_prepend["glucose"]=175,patientG,160,N/A,0,0,150,0,0,0,,0.0, 70.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,7,if _>=86 and _<91:||data_to_prepend["glucose"]+=32,patientG,100,N/A,0,0,150,0,0,0,,0.0, 86.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,8,if _>=29 and _<67:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,200,N/A,0,0,150,0,0,0,,0.0, 29.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,7,if _>=89 and _<110:||data_to_prepend["glucose"]=175,patientG,120,N/A,0,0,150,0,0,0,,0.0, 89.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,6,if _>=47 and _<112:||data_to_prepend["glucose"]=80,patientG,80,row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7,26,6,118,6,0,26,0.0,0.18055555555555555, 47.0,86.0,124.0,39.0,38.0,77.0,0.7866666666666666,0.4402985074626866,0.8453731343283583,150,191.46267428275573,0,0,0,1,0,H2
+12,14,if _>=74 and _<102:||loaded_suggested_data["rate"]+=1,patientG,160,N/A,0,0,150,0,0,0,,0.0, 74.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,2,if _>=6 and _<55:||rate_refresh=0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 6.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,7,if _>=84 and _<85:||loaded_suggested_data["rate"]=2,patientG,80,N/A,0,0,150,0,0,0,,0.0, 84.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,5,if _>=12 and _<81:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 12.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,16,if _>=25 and _<45:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 25.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,1,if _>=9 and _<10:||loaded_suggested_data["rate"]=0,patientG,100,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,8,if _>=23 and _<62:||rate_refresh=0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 23.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,10,if _>=6 and _<20:||loaded_suggested_data["rate"]+=1,patientG,200,N/A,0,0,150,0,0,0,,0.0, 6.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,9,if _>=75 and _<116:||data_to_prepend["glucose"]=80,patientG,180,N/A,0,0,150,0,0,0,,0.0, 75.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,18,if _>=98 and _<113:||data_to_prepend["glucose"]+=64,patientG,140,N/A,0,0,150,0,0,0,,0.0, 98.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,2,if _>=9 and _<55:||loaded_suggested_data["rate"]=0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,5,if _>=33 and _<72:||loaded_suggested_data["rate"]+=0.5,patientG,100,N/A,0,0,150,0,0,0,,0.0, 33.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,6,if _>=47 and _<112:||data_to_prepend["glucose"]=80,patientG,100,row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7,25,6,119,6,0,25,0.0,0.1736111111111111, 47.0,87.0,125.0,40.0,38.0,78.0,0.7933333333333333,0.4423791821561338,0.8493680297397769,150,190.62484401762504,0,0,0,1,0,H2
+17,16,if _>=98 and _<103:||data_to_prepend["glucose"]+=64,patientG,140,N/A,0,0,150,0,0,0,,0.0, 98.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,16,if _>=25 and _<45:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 25.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,1,if _>=22 and _<47:||data_to_prepend["glucose"]=175,patientG,180,N/A,0,0,150,0,0,0,,0.0, 22.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,13,if _>=31 and _<57:||data_to_prepend["glucose"]+=64,patientG,140,N/A,0,0,150,0,0,0,,0.0, 31.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,5,if _>=47 and _<85:||data_to_prepend["glucose"]=80,patientG,100,N/A,0,0,150,0,0,0,,0.0, 47.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,1,if _>=9 and _<10:||loaded_suggested_data["rate"]=0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,2,if _>=22 and _<55:||data_to_prepend["glucose"]=175,patientG,180,N/A,0,0,150,0,0,0,,0.0, 22.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,10,if _>=6 and _<20:||loaded_suggested_data["rate"]+=1,patientG,140,N/A,0,0,150,0,0,0,,0.0, 6.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,1,if _>=6 and _<12:||rate_refresh=0,patientG,100,N/A,0,0,150,0,0,0,,0.0, 6.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,10,if _>=9 and _<23:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,100,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,6,if _>=12 and _<117:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 12.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,3,if _>=22 and _<87:||data_to_prepend["glucose"]=175,patientG,100,N/A,0,0,150,0,0,0,,0.0, 22.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,1,if _>=9 and _<10:||loaded_suggested_data["rate"]=0,patientG,200,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,12,if _>=9 and _<107:||data_to_prepend["glucose"]-=64||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,200,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,4,if _>=47 and _<66:||data_to_prepend["glucose"]=80,patientG,160,N/A,0,0,150,0,0,0,,0.0, 47.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,8,if _>=86 and _<108:||data_to_prepend["glucose"]+=32,patientG,140,N/A,0,0,150,0,0,0,,0.0, 86.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,9,if _>=86 and _<116:||data_to_prepend["glucose"]+=32,patientG,120,N/A,0,0,150,0,0,0,,0.0, 86.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,1,if _>=29 and _<47:||loaded_suggested_data["rate"]=2,patientG,140,N/A,0,0,150,0,0,0,,0.0, 29.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,9,if _>=84 and _<117:||loaded_suggested_data["rate"]=2,patientG,160,N/A,0,0,150,0,0,0,,0.0, 84.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,5,if _>=12 and _<83:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,120,row_1||row_1,2,0,148,0,0,2,,0.013333333333333334, 12.0,49.0,N/A,37.0,N/A,N/A,0.9866666666666668,0.4966442953020134,0.993288590604027,150,0,0,0,0,0,1,N/A
+18,8,if _>=24 and _<67:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 24.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,9,if _>=29 and _<100:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,100,N/A,0,0,150,0,0,0,,0.0, 29.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,4,if _>=71 and _<80:||data_to_prepend["glucose"]+=32,patientG,140,N/A,0,0,150,0,0,0,,0.0, 71.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,2,if _>=10 and _<72:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 10.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,6,if _>=12 and _<91:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,100,N/A,0,0,150,0,0,0,,0.0, 12.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,3,if _>=10 and _<93:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,200,row_1,1,0,149,0,0,1,,0.006666666666666667, 10.0,90.0,N/A,80.0,N/A,N/A,0.9933333333333333,0.4983277591973244,0.9966555183946489,150,0,0,0,0,0,1,N/A
+19,4,if _>=43 and _<58:||loaded_suggested_data["rate"]=2,patientG,100,N/A,0,0,150,0,0,0,,0.0, 43.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,3,if _>=29 and _<115:||loaded_suggested_data["rate"]=2,patientG,80,row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9,50,26,85,15,11,39,0.4230769230769231,0.31451612903225806, 29.0,60.0,104.0,31.0,44.0,75.0,0.64,0.5242011278195489,0.6775563909774436,150,73.73378079300879,0.5769230769230769,0,0,1,0,H1
+9,7,if _>=23 and _<55:||rate_refresh=0,patientG,200,N/A,0,0,150,0,0,0,,0.0, 23.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,6,if _>=19 and _<89:||rate_refresh=0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 19.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,8,if _>=23 and _<62:||rate_refresh=0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 23.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,5,if _>=47 and _<85:||data_to_prepend["glucose"]=80,patientG,200,N/A,0,0,150,0,0,0,,0.0, 47.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,3,if _>=22 and _<87:||data_to_prepend["glucose"]=175,patientG,200,N/A,0,0,150,0,0,0,,0.0, 22.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,3,if _>=22 and _<87:||data_to_prepend["glucose"]=175,patientG,140,N/A,0,0,150,0,0,0,,0.0, 22.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,13,if _>=31 and _<57:||data_to_prepend["glucose"]+=64,patientG,200,N/A,0,0,150,0,0,0,,0.0, 31.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,3,if _>=6 and _<94:||rate_refresh=0,patientG,200,row_13||row_13||row_13||row_13||row_13||row_13||row_13||row_13||row_13||row_13||row_13||row_13||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9,59,29,76,15,14,45,0.4827586206896552,0.371900826446281, 6.0,38.0,80.0,32.0,42.0,74.0,0.6,0.5175814751286449,0.6398799313893653,150,72.78140763614877,0.7931034482758621,0,0,1,0,H1
+17,12,if _>=24 and _<97:||data_to_prepend["glucose"]+=64,patientG,80,N/A,0,0,150,0,0,0,,0.0, 24.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,17,if _>=25 and _<74:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 25.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,7,if _>=24 and _<28:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 24.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,13,if _>=11 and _<44:||data_to_prepend["glucose"]-=64||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 11.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,9,if _>=29 and _<100:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 29.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,1,if _>=21 and _<31:||data_to_prepend["glucose"]+=32,patientG,120,N/A,0,0,150,0,0,0,,0.0, 21.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,8,if _>=84 and _<106:||loaded_suggested_data["rate"]=2,patientG,80,N/A,0,0,150,0,0,0,,0.0, 84.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,4,if _>=19 and _<39:||rate_refresh=0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 19.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,1,if _>=21 and _<31:||data_to_prepend["glucose"]+=32,patientG,160,N/A,0,0,150,0,0,0,,0.0, 21.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,17,if _>=25 and _<74:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,200,N/A,0,0,150,0,0,0,,0.0, 25.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,12,if _>=6 and _<120:||loaded_suggested_data["rate"]+=1,patientG,160,N/A,0,0,150,0,0,0,,0.0, 6.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,15,if _>=31 and _<112:||data_to_prepend["glucose"]+=64,patientG,80,N/A,0,0,150,0,0,0,,0.0, 31.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,2,if _>=29 and _<71:||loaded_suggested_data["rate"]=2,patientG,120,row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6,10,0,140,0,0,10,,0.06666666666666667, 29.0,61.0,N/A,32.0,N/A,N/A,0.9333333333333333,0.4827586206896552,0.9655172413793105,150,0,0,0,0,0,1,N/A
+21,5,if _>=70 and _<93:||data_to_prepend["glucose"]=175,patientG,80,N/A,0,0,150,0,0,0,,0.0, 70.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,6,if _>=43 and _<115:||loaded_suggested_data["rate"]=2,patientG,80,row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9,26,14,110,14,0,26,0.0,0.19117647058823528, 43.0,79.0,119.0,36.0,40.0,76.0,0.7333333333333333,0.42307692307692313,0.7671794871794873,150,73.9555487858417,0,0,0,1,0,H1
+17,18,if _>=98 and _<113:||data_to_prepend["glucose"]+=64,patientG,180,N/A,0,0,150,0,0,0,,0.0, 98.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+14,3,if _>=7 and _<100:||glucose_refresh=0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 7.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,6,if _>=43 and _<115:||loaded_suggested_data["rate"]=2,patientG,200,row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9,34,20,99,17,3,31,0.15,0.23846153846153847, 43.0,71.0,112.0,28.0,41.0,69.0,0.68,0.4579945799457995,0.712375790424571,150,73.64946887948321,0.45,0,0,1,0,H1
+19,9,if _>=84 and _<117:||loaded_suggested_data["rate"]=2,patientG,180,N/A,0,0,150,0,0,0,,0.0, 84.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+14,8,if _>=21 and _<64:||glucose_refresh=0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 21.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,9,if _>=86 and _<117:||loaded_suggested_data["rate"]+=0.5,patientG,140,N/A,0,0,150,0,0,0,,0.0, 86.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,6,if _>=11 and _<95:||loaded_suggested_data["rate"]=0,patientG,200,row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7,50,46,79,21,25,25,0.5434782608695652,0.2403846153846154, 11.0,45.0,70.0,34.0,25.0,59.0,0.6933333333333334,0.647671568627451,0.6967156862745097,150,195.80942850038318,0,0,0,1,0,H2
+12,15,if _>=74 and _<116:||loaded_suggested_data["rate"]+=1,patientG,100,N/A,0,0,150,0,0,0,,0.0, 74.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,8,if _>=29 and _<67:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 29.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,13,if _>=74 and _<79:||loaded_suggested_data["rate"]+=1,patientG,120,N/A,0,0,150,0,0,0,,0.0, 74.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,6,if _>=19 and _<89:||rate_refresh=0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 19.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,5,if _>=19 and _<83:||rate_refresh=0,patientG,200,row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6,12,0,138,0,0,12,,0.08, 19.0,60.0,N/A,41.0,N/A,N/A,0.92,0.4791666666666667,0.9583333333333334,150,0,0,0,0,0,1,N/A
+17,3,if _>=21 and _<104:||data_to_prepend["glucose"]+=32,patientG,100,N/A,0,0,150,0,0,0,,0.0, 21.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,15,if _>=31 and _<112:||data_to_prepend["glucose"]+=64,patientG,100,row_3,1,0,149,0,0,1,,0.006666666666666667, 31.0,70.0,N/A,39.0,N/A,N/A,0.9933333333333333,0.4983277591973244,0.9966555183946489,150,0,0,0,0,0,1,N/A
+13,1,if _>=10 and _<30:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 10.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,5,if _>=12 and _<81:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 12.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,9,if _>=24 and _<117:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 24.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,1,if _>=22 and _<47:||data_to_prepend["glucose"]=175,patientG,80,N/A,0,0,150,0,0,0,,0.0, 22.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,11,if _>=24 and _<75:||data_to_prepend["glucose"]+=64,patientG,140,N/A,0,0,150,0,0,0,,0.0, 24.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,1,if _>=10 and _<30:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 10.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,7,if _>=89 and _<110:||data_to_prepend["glucose"]=175,patientG,180,N/A,0,0,150,0,0,0,,0.0, 89.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,7,if _>=86 and _<91:||loaded_suggested_data["rate"]+=0.5,patientG,140,N/A,0,0,150,0,0,0,,0.0, 86.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,1,if _>=29 and _<47:||loaded_suggested_data["rate"]=2,patientG,180,N/A,0,0,150,0,0,0,,0.0, 29.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,3,if _>=9 and _<95:||data_to_prepend["glucose"]=80,patientG,160,row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7,52,29,82,16,13,39,0.4482758620689655,0.32231404958677684, 9.0,36.0,82.0,27.0,46.0,73.0,0.6333333333333333,0.534923050904786,0.6661367608095158,150,192.59775025971757,0,0,0,1,0,H2
+17,8,if _>=86 and _<108:||data_to_prepend["glucose"]+=32,patientG,160,N/A,0,0,150,0,0,0,,0.0, 86.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,18,if _>=25 and _<118:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 25.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,2,if _>=10 and _<69:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 10.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,7,if _>=27 and _<34:||loaded_suggested_data["rate"]=0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 27.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+14,6,if _>=11 and _<108:||glucose_refresh=0,patientG,180,N/A,0,0,150,0,0,0,,0.0, 11.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,7,if _>=89 and _<110:||data_to_prepend["glucose"]=175,patientG,140,N/A,0,0,150,0,0,0,,0.0, 89.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,8,if _>=86 and _<102:||loaded_suggested_data["rate"]+=0.5,patientG,100,N/A,0,0,150,0,0,0,,0.0, 86.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,7,if _>=27 and _<34:||loaded_suggested_data["rate"]=0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 27.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,2,if _>=9 and _<50:||data_to_prepend["glucose"]=80,patientG,100,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,8,if _>=89 and _<115:||data_to_prepend["glucose"]=175,patientG,80,N/A,0,0,150,0,0,0,,0.0, 89.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,9,if _>=24 and _<117:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 24.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,9,if _>=89 and _<120:||data_to_prepend["glucose"]=175,patientG,160,N/A,0,0,150,0,0,0,,0.0, 89.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,4,if _>=47 and _<66:||data_to_prepend["glucose"]=80,patientG,140,N/A,0,0,150,0,0,0,,0.0, 47.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+14,1,if _>=7 and _<27:||glucose_refresh=0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 7.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+21,2,if _>=22 and _<55:||data_to_prepend["glucose"]=175,patientG,200,N/A,0,0,150,0,0,0,,0.0, 22.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,8,if _>=75 and _<110:||data_to_prepend["glucose"]=80,patientG,200,N/A,0,0,150,0,0,0,,0.0, 75.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,6,if _>=11 and _<95:||loaded_suggested_data["rate"]=0,patientG,180,row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7||row_7||row_7,54,43,75,21,22,32,0.5116279069767442,0.29906542056074764, 11.0,41.0,73.0,30.0,32.0,62.0,0.6466666666666666,0.5962622517901579,0.6571279603202816,150,197.40859426374408,0,0,0,1,0,H2
+9,6,if _>=19 and _<89:||rate_refresh=0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 19.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,18,if _>=25 and _<118:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,180,N/A,0,0,150,0,0,0,,0.0, 25.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+14,5,if _>=11 and _<83:||glucose_refresh=0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 11.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,8,if _>=24 and _<67:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,180,N/A,0,0,150,0,0,0,,0.0, 24.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,8,if _>=75 and _<110:||data_to_prepend["glucose"]=80,patientG,180,N/A,0,0,150,0,0,0,,0.0, 75.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,7,if _>=86 and _<91:||data_to_prepend["glucose"]+=32,patientG,140,N/A,0,0,150,0,0,0,,0.0, 86.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,12,if _>=6 and _<120:||loaded_suggested_data["rate"]+=1,patientG,100,N/A,0,0,150,0,0,0,,0.0, 6.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,17,if _>=91 and _<105:||loaded_suggested_data["rate"]+=1,patientG,120,N/A,0,0,150,0,0,0,,0.0, 91.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,10,if _>=24 and _<56:||data_to_prepend["glucose"]+=64,patientG,200,N/A,0,0,150,0,0,0,,0.0, 24.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,7,if _>=27 and _<34:||loaded_suggested_data["rate"]=0,patientG,180,N/A,0,0,150,0,0,0,,0.0, 27.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,10,if _>=9 and _<32:||data_to_prepend["glucose"]-=64||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,9,if _>=75 and _<116:||data_to_prepend["glucose"]=80,patientG,160,N/A,0,0,150,0,0,0,,0.0, 75.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,1,if _>=10 and _<30:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,100,N/A,0,0,150,0,0,0,,0.0, 10.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,9,if _>=24 and _<117:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 24.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,1,if _>=21 and _<31:||data_to_prepend["glucose"]+=32,patientG,80,N/A,0,0,150,0,0,0,,0.0, 21.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,5,if _>=33 and _<72:||loaded_suggested_data["rate"]+=0.5,patientG,120,N/A,0,0,150,0,0,0,,0.0, 33.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,5,if _>=71 and _<102:||data_to_prepend["glucose"]+=32,patientG,120,N/A,0,0,150,0,0,0,,0.0, 71.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,12,if _>=9 and _<107:||data_to_prepend["glucose"]-=64||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,9,if _>=84 and _<117:||loaded_suggested_data["rate"]=2,patientG,100,N/A,0,0,150,0,0,0,,0.0, 84.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,8,if _>=27 and _<79:||loaded_suggested_data["rate"]=0,patientG,100,row_5||row_5||row_5||row_5||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7,13,11,126,11,0,13,0.0,0.09352517985611511, 27.0,60.0,93.0,33.0,33.0,66.0,0.8399999999999999,0.45652173913043476,0.846086956521739,150,197.2034884321957,0,0,0,1,0,H2
+13,9,if _>=29 and _<100:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 29.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,3,if _>=21 and _<104:||data_to_prepend["glucose"]+=32,patientG,180,row_3,1,0,149,0,0,1,,0.006666666666666667, 21.0,68.0,N/A,47.0,N/A,N/A,0.9933333333333333,0.4983277591973244,0.9966555183946489,150,0,0,0,0,0,1,N/A
+13,11,if _>=9 and _<69:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,8,if _>=27 and _<79:||loaded_suggested_data["rate"]=0,patientG,120,row_7||row_5||row_7||row_7||row_7||row_7||row_7||row_5||row_7||row_7,10,10,130,10,0,10,0.0,0.07142857142857142, 27.0,69.0,94.0,42.0,25.0,67.0,0.8666666666666667,0.4642857142857143,0.8666666666666667,150,196.5157953514201,0,0,0,1,0,H2
+13,3,if _>=10 and _<83:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,180,N/A,0,0,150,0,0,0,,0.0, 10.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,15,if _>=31 and _<112:||data_to_prepend["glucose"]+=64,patientG,180,N/A,0,0,150,0,0,0,,0.0, 31.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,14,if _>=74 and _<102:||loaded_suggested_data["rate"]+=1,patientG,200,N/A,0,0,150,0,0,0,,0.0, 74.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,4,if _>=43 and _<58:||loaded_suggested_data["rate"]=2,patientG,160,N/A,0,0,150,0,0,0,,0.0, 43.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,5,if _>=12 and _<81:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 12.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,4,if _>=43 and _<58:||loaded_suggested_data["rate"]=2,patientG,120,N/A,0,0,150,0,0,0,,0.0, 43.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+14,4,if _>=11 and _<27:||glucose_refresh=0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 11.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,14,if _>=11 and _<68:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 11.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,3,if _>=29 and _<115:||loaded_suggested_data["rate"]=2,patientG,120,row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9||row_9,40,27,96,14,13,27,0.48148148148148145,0.21951219512195122, 29.0,61.0,102.0,32.0,41.0,73.0,0.7266666666666666,0.6060470181282429,0.7455589007750945,150,73.6862240807194,0.5925925925925926,0,0,1,0,H1
+22,9,if _>=75 and _<116:||data_to_prepend["glucose"]=80,patientG,200,N/A,0,0,150,0,0,0,,0.0, 75.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,12,if _>=24 and _<97:||data_to_prepend["glucose"]+=64,patientG,180,N/A,0,0,150,0,0,0,,0.0, 24.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+20,4,if _>=11 and _<47:||loaded_suggested_data["rate"]=0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 11.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,3,if _>=9 and _<95:||data_to_prepend["glucose"]=80,patientG,80,row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7||row_7,18,0,132,0,0,18,,0.12, 9.0,77.0,N/A,68.0,N/A,N/A,0.88,0.46808510638297873,0.9361702127659574,150,0,0,0,0,0,1,N/A
+19,2,if _>=29 and _<71:||loaded_suggested_data["rate"]=2,patientG,200,row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6,8,0,142,0,0,8,,0.05333333333333334, 29.0,61.0,N/A,32.0,N/A,N/A,0.9466666666666667,0.48630136986301364,0.9726027397260272,150,0,0,0,0,0,1,N/A
+12,4,if _>=33 and _<46:||loaded_suggested_data["rate"]+=0.5,patientG,80,N/A,0,0,150,0,0,0,,0.0, 33.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,9,if _>=23 and _<117:||rate_refresh=0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 23.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,4,if _>=33 and _<46:||loaded_suggested_data["rate"]+=0.5,patientG,100,N/A,0,0,150,0,0,0,,0.0, 33.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,13,if _>=11 and _<44:||data_to_prepend["glucose"]-=64||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,200,N/A,0,0,150,0,0,0,,0.0, 11.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,6,if _>=71 and _<105:||data_to_prepend["glucose"]+=32,patientG,160,N/A,0,0,150,0,0,0,,0.0, 71.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,3,if _>=10 and _<93:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 10.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+18,6,if _>=12 and _<91:||data_to_prepend["glucose"]-=32||if data_to_prepend["glucose"]<0:||  data_to_prepend["glucose"]= 0,patientG,140,N/A,0,0,150,0,0,0,,0.0, 12.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+9,1,if _>=6 and _<12:||rate_refresh=0,patientG,200,N/A,0,0,150,0,0,0,,0.0, 6.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+12,11,if _>=6 and _<68:||loaded_suggested_data["rate"]+=1,patientG,200,row_13,1,0,149,0,0,1,,0.006666666666666667, 6.0,38.0,N/A,32.0,N/A,N/A,0.9933333333333333,0.4983277591973244,0.9966555183946489,150,0,0,0,0,0,1,N/A
+22,9,if _>=75 and _<116:||data_to_prepend["glucose"]=80,patientG,120,N/A,0,0,150,0,0,0,,0.0, 75.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,18,if _>=25 and _<118:||loaded_suggested_data["rate"]-=1||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,160,N/A,0,0,150,0,0,0,,0.0, 25.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,12,if _>=24 and _<97:||data_to_prepend["glucose"]+=64,patientG,120,row_3,1,0,149,0,0,1,,0.006666666666666667, 24.0,63.0,N/A,39.0,N/A,N/A,0.9933333333333333,0.4983277591973244,0.9966555183946489,150,0,0,0,0,0,1,N/A
+13,5,if _>=12 and _<81:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,80,N/A,0,0,150,0,0,0,,0.0, 12.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+14,1,if _>=7 and _<27:||glucose_refresh=0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 7.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,4,if _>=12 and _<13:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,180,N/A,0,0,150,0,0,0,,0.0, 12.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+17,4,if _>=71 and _<80:||data_to_prepend["glucose"]+=32,patientG,100,N/A,0,0,150,0,0,0,,0.0, 71.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+13,3,if _>=10 and _<83:||loaded_suggested_data["rate"]-=0.5||if loaded_suggested_data["rate"]<0:||  loaded_suggested_data["rate"]= 0,patientG,100,N/A,0,0,150,0,0,0,,0.0, 10.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+19,5,if _>=43 and _<85:||loaded_suggested_data["rate"]=2,patientG,140,row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6||row_6,9,0,141,0,0,9,,0.06, 43.0,76.0,N/A,33.0,N/A,N/A,0.94,0.4845360824742268,0.9690721649484537,150,0,0,0,0,0,1,N/A
+9,7,if _>=23 and _<55:||rate_refresh=0,patientG,120,N/A,0,0,150,0,0,0,,0.0, 23.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A
+22,1,if _>=9 and _<19:||data_to_prepend["glucose"]=80,patientG,100,N/A,0,0,150,0,0,0,,0.0, 9.0,N/A,N/A,N/A,N/A,N/A,1.0,1.0,1.0,150,0,0,1,0,0,0,N/A

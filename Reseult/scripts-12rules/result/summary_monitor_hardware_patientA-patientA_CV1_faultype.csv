@@ -1,0 +1,11 @@
+Scenario, Faulttype,Total num, Hazard coverage
+9,holdrate,13,7.7%
+12,bitflip_addrate,38,0.0%
+13,bitflip_decrate,37,0.0%
+14,holdglucose,10,10.0%
+17,bitflip_addglucose,28,0.0%
+18,bitflip_decglucose,26,19.2%
+19,maximize_rate,13,0.0%
+20,minimize_rate,20,85.0%
+21,maximize_glucose,22,0.0%
+22,minimize_glucose,13,61.5%

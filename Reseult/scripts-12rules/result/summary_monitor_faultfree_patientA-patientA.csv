@@ -1,0 +1,8 @@
+Scenario,fault,faultinf,Patient,init_bg,alert,alert_num,hazard_num,sub_TN,sub_FN,sub_TP,sub_FP,sub_TPR, sub_FPR,T2,T3,Reaction time(T3-t2),f1_micro,f1_macro,f1_weighted,Iteration_number,glucose_at_T3,prediction_rate,TN,FN,TP,FP,hazard_msg
+0,0,N/A,patientA,120,N/A,0,0,300,0,0,0,,0.0,N/A,N/A,N/A,1.0, 1.0,1.0,300,0,0,1, 0,0,0,N/A
+0,0,N/A,patientA,200,N/A,0,0,300,0,0,0,,0.0,N/A,N/A,N/A,1.0, 1.0,1.0,300,0,0,1, 0,0,0,N/A
+0,0,N/A,patientA,140,N/A,0,0,300,0,0,0,,0.0,N/A,N/A,N/A,1.0, 1.0,1.0,300,0,0,1, 0,0,0,N/A
+0,0,N/A,patientA,160,N/A,0,0,300,0,0,0,,0.0,N/A,N/A,N/A,1.0, 1.0,1.0,300,0,0,1, 0,0,0,N/A
+0,0,N/A,patientA,80,N/A,0,0,300,0,0,0,,0.0,N/A,N/A,N/A,1.0, 1.0,1.0,300,0,0,1, 0,0,0,N/A
+0,0,N/A,patientA,100,N/A,0,0,300,0,0,0,,0.0,N/A,N/A,N/A,1.0, 1.0,1.0,300,0,0,1, 0,0,0,N/A
+0,0,N/A,patientA,180,N/A,0,0,300,0,0,0,,0.0,N/A,N/A,N/A,1.0, 1.0,1.0,300,0,0,1, 0,0,0,N/A
