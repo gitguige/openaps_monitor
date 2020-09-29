@@ -18,10 +18,7 @@ MITIGATION=0 #whether activate mitigation code 0:None; 1:TP; 2:FP; 3:TP+FP
 initial_glucose = [80, 100, 120, 140, 160, 180, 200]
 #initial_glucose = [80, 100]
 #initial_glucose = [80]
-if MITIGATION:
-	cmd_main = 'python '+'updated_ct_script_iob_based.py '#+sys.argv[1]
-else:
-	cmd_main = 'python '+'updated_ct_script_iob_based_mitigation_CAWT.py '#+sys.argv[1]
+cmd_main = 'python '+'updated_ct_script_iob_based.py '#change "updated_ct_script_iob_based_mitigation_CAWT" to this name before run it
 
 # cmd_main = 'python '+'updated_ct_script_iob_based_mitigation.py '#+sys.argv[1]  mitigate the unsafe action
 
