@@ -213,9 +213,9 @@ for _ in range(iteration_num):
 
     #########start to mitigate#########
     if sub_alert_flag:
-      if sub_alert_msg in ["row_3","row_4","row_6","row_9","row_13"]:#H1hazard
+      if bg<120:#H1hazard
         loaded_suggested_data["rate"]  = 0
-      elif sub_alert_msg in ["row_1","row_2","row_5","row_7"]:#H2hazard
+      else:#H2hazard
         loaded_suggested_data["rate"]  = 2.1
   #######################33End of mitigation######################################
 
