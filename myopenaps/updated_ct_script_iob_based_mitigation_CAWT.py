@@ -21,6 +21,8 @@ if Mitigation_Enable:
   #====read threshold files############
   thresholds=pd.read_csv("../Reseult/scripts-12rules/thresholds.csv")
   threshold=thresholds[threshold_col]
+  mitigate_H1_flag = False
+  mitigate_H2_flag = False
 ######################################################
 
 
@@ -168,12 +170,12 @@ for _ in range(iteration_num):
     if Monitor==0: #CAWT
       sub_alert_msg = ""
       sub_alert_flag = False
-      if bg > 150 and del_bg > 0.05: #insufficient insulin
+      if glucose > 150 and del_bg > 0.05: #insufficient insulin
         if iob <threshold[6] and loaded_suggested_data["rate"]<2 and loaded_suggested_data["rate"]+iob<1:
           sub_alert_flag = True
           sub_alert_msg = "row_7" # rule14->7
 
-      if bg > bg_target+10: #+10?  >150
+      if glucose > bg_target+10: #+10?  >150
         if del_bg > 0.3:
           if del_bg>1.5 and del_iob <= 0 and iob <threshold[4]:#-0.3: #row_10 IOB is falling 
             if del_rate == 0 and loaded_suggested_data["rate"]<1.5: #keep insulin
@@ -189,11 +191,11 @@ for _ in range(iteration_num):
               sub_alert_msg = "row_2"
 
       else:   #BG<HBGT 
-              if bg < threshold[8]:#bgLowerTh:
+              if glucose < threshold[8]:#bgLowerTh:
                 if loaded_suggested_data["rate"] != 0 and iob>-0.5:#zero insulin
                   sub_alert_flag = True
                   sub_alert_msg = "row_9"
-              elif bg < bg_target-10: #110
+              elif glucose < bg_target-10: #110
                 if del_bg < -0.3:
                   if del_iob >=0 and iob >threshold[5]+0.25:#0.3: # IOB is not falling
                     if del_rate == 0 and loaded_suggested_data["rate"]>0.05 :
@@ -202,7 +204,7 @@ for _ in range(iteration_num):
                                   
                   # checking if BG is falling more than the threshold
                   #if del_bg < thBgFall:
-                  # if bg<80: 
+                  # if glucose<80: 
                   if del_iob > 0 and iob > threshold[2]:#-0.199631233636: # row_7->3
                     if del_rate > 0.05:
                       sub_alert_flag = True
@@ -213,23 +215,36 @@ for _ in range(iteration_num):
                       sub_alert_msg = "row_4"
 
       #============extra insulin ==========================
-      if bg <150:
-        if iob+ loaded_suggested_data["rate"] > 1.5 -threshold[9]*(150-bg)/70 -threshold[10]*(bg<threshold[11]) and del_bg<-2.5+ threshold[12]*(150-bg)/70:#0.523:#
+      if glucose <150:
+        if iob+ loaded_suggested_data["rate"] > 1.5 -threshold[9]*(150-glucose)/70 -threshold[10]*(glucose<threshold[11]) and del_bg<-2.5+ threshold[12]*(150-glucose)/70:#0.523:#
           sub_alert_flag = True
           sub_alert_msg = "row_13" #rule16->10
       #########start to mitigate#########
       if sub_alert_flag:
         if sub_alert_msg in ["row_3","row_4","row_6","row_9","row_13"]:#H1hazard
-          loaded_suggested_data["rate"]  = 0
+          mitigate_H1_flag = True
         elif sub_alert_msg in ["row_1","row_2","row_5","row_7"]:#H2hazard
+          mitigate_H2_flag = True
+
+      if mitigate_H1_flag == True: 
+        if loaded_suggested_data["rate"]   < prev_rate or glucose>bg_target+40:#if fault is removed stop mitigation
+          mitigate_H1_flag = False #reset hazard flag
+        loaded_suggested_data["rate"] = 0
+
+      elif mitigate_H2_flag == True: 
+        if loaded_suggested_data["rate"]  > prev_rate or glucose<bg_target+40:#if fault is removed stop mitigation
+          mitigate_H2_flag = False
           loaded_suggested_data["rate"]  = 2.1
 
         #==========mitigation code####++==============
     elif Monitor ==1: #MPC
-      if bg <70 :#H1hazard
-          loaded_suggested_data["rate"]  = 0
-      elif bg>180:#H2hazard
-          loaded_suggested_data["rate"]  = 2.1
+      if glucose <70 :#H1hazard
+        loaded_suggested_data["rate"] = 0
+      elif glucose>180:#H2hazard
+        loaded_suggested_data["rate"]  = 2.1
+
+
+                    
   #######################33End of mitigation######################################
 
   prev_rate = loaded_suggested_data["rate"]  
