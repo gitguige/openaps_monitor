@@ -69,7 +69,7 @@ for _ in range(iteration_num):
     time.sleep(0.010)
 
   #step 2: read CGM 
-  loaded_glucose  = np.load('../simglucose/examples/glucose_output.npy')
+  loaded_glucose  = float(np.load('../simglucose/examples/glucose_output.npy'))
 
   #step 3: reset CGM ready signal
   write_to_file("../simglucose/examples/glucose_output_ready.txt",0)  #
@@ -188,7 +188,7 @@ for _ in range(iteration_num):
   list_suggested_data_to_dump.insert(0,loaded_suggested_data)
   #read the output in suggested.json and append it to list_suggested_data_to_dump list. Basically we are trying to get all the suggested data and dump make a list lf that and then dump it to all_suggested.json file    
   
-  
+
   #######################################################################
   # step4:update Action value
   np.save('../simglucose/examples/insulin_inject.npy',[loaded_suggested_data["rate"]]) #update CGM value
