@@ -31,10 +31,10 @@ unsafe_action_occurance = 0
 #Input to the algo_bw.js. algo_bw.js format all the info and send to glucosym server. An algorithm is running in glucosym server that calculated next glucose and send the value back.
 algo_input_list = {"index":0,"BGTarget":95,"sens":45,"deltat_v":20,"dia":4,"dt":5.0,"time":100000,"bioavail":6.0,"Vg":253.0,"IRss":1.3,"events":{"bolus":[{ "amt": 0.0, "start":0}],"basal":[{ "amt":0, "start":0,"length":0}],"carb":[{"amt":0.0,"start":0,"length":0},{"amt":0.0,"start":0,"length":0}]}}
 
-#write the algo_input_list to a file named algo_input.json so that algo_bw.js can read the input from that file
-with open("../glucosym/closed_loop_algorithm_samples/algo_input.json", "w") as write_algo_input_init:
-  json.dump(algo_input_list, write_algo_input_init, indent=4)
-  write_algo_input_init.close()
+# #write the algo_input_list to a file named algo_input.json so that algo_bw.js can read the input from that file
+# with open("../glucosym/closed_loop_algorithm_samples/algo_input.json", "w") as write_algo_input_init:
+#   json.dump(algo_input_list, write_algo_input_init, indent=4)
+#   write_algo_input_init.close()
 
 list_suggested_data_to_dump = []
 
@@ -45,12 +45,12 @@ for _ in range(iteration_num):
   glucose_refresh = True 
   rate_refresh = True # update the glucose reading and rate output command
  
-  with open("../glucosym/closed_loop_algorithm_samples/algo_input.json") as update_algo_input:
-    loaded_algo_input = json.load(update_algo_input)
-    update_algo_input.close()
+  # with open("../glucosym/closed_loop_algorithm_samples/algo_input.json") as update_algo_input:
+  #   loaded_algo_input = json.load(update_algo_input)
+  #   update_algo_input.close()
     
-  loaded_algo_input_copy = loaded_algo_input.copy()
-  loaded_algo_input_copy['index'] = _
+  # loaded_algo_input_copy = loaded_algo_input.copy()
+  # loaded_algo_input_copy['index'] = _
    
   with open("monitor/glucose.json") as f:
     data = json.load(f)
@@ -236,16 +236,16 @@ for _ in range(iteration_num):
         loaded_temp_basal['rate'] = loaded_suggested_data['rate']
 
 
-        ######################### Update input of glucosym based on new temp ##############
-        if loaded_suggested_data['rate'] == 0 and loaded_suggested_data['duration'] == 0:
-          loaded_algo_input_copy["events"]['basal'][0]['amt'] = loaded_suggested_data['basal']
-          loaded_algo_input_copy["events"]['basal'][0]['length'] = 30
-          loaded_algo_input_copy["events"]['basal'][0]['start'] = _*5
-        else:
+        # ######################### Update input of glucosym based on new temp ##############
+        # if loaded_suggested_data['rate'] == 0 and loaded_suggested_data['duration'] == 0:
+        #   loaded_algo_input_copy["events"]['basal'][0]['amt'] = loaded_suggested_data['basal']
+        #   loaded_algo_input_copy["events"]['basal'][0]['length'] = 30
+        #   loaded_algo_input_copy["events"]['basal'][0]['start'] = _*5
+        # else:
           
-          loaded_algo_input_copy["events"]['basal'][0]['amt'] = loaded_suggested_data['rate']
-          loaded_algo_input_copy["events"]['basal'][0]['length'] = loaded_suggested_data['duration']
-          loaded_algo_input_copy["events"]['basal'][0]['start'] = _*5
+        #   loaded_algo_input_copy["events"]['basal'][0]['amt'] = loaded_suggested_data['rate']
+        #   loaded_algo_input_copy["events"]['basal'][0]['length'] = loaded_suggested_data['duration']
+        #   loaded_algo_input_copy["events"]['basal'][0]['start'] = _*5
         
         ##################### Uppdate Pupmphistory ####################################
           
@@ -273,11 +273,11 @@ for _ in range(iteration_num):
           loaded_temp_basal['rate']=loaded_suggested_data['rate']
           loaded_temp_basal['duration']=loaded_suggested_data['duration']
 
-          ####################### Update input of glucosym based on new temp ###########
+          # ####################### Update input of glucosym based on new temp ###########
           
-          loaded_algo_input_copy["events"]['basal'][0]['amt'] = loaded_suggested_data['rate']
-          loaded_algo_input_copy["events"]['basal'][0]['length'] = loaded_suggested_data['duration']
-          loaded_algo_input_copy["events"]['basal'][0]['start'] = _*5
+          # loaded_algo_input_copy["events"]['basal'][0]['amt'] = loaded_suggested_data['rate']
+          # loaded_algo_input_copy["events"]['basal'][0]['length'] = loaded_suggested_data['duration']
+          # loaded_algo_input_copy["events"]['basal'][0]['start'] = _*5
 
           #################### Uppdate Pumphistory ############################
           
@@ -323,8 +323,8 @@ for _ in range(iteration_num):
   
   ####################### Write algo_input having the suggested output from openaps ##########################
   
-  with open("../glucosym/closed_loop_algorithm_samples/algo_input.json", "w") as write_algo_input:
-    json.dump(loaded_algo_input_copy, write_algo_input, indent=4)
+  # with open("../glucosym/closed_loop_algorithm_samples/algo_input.json", "w") as write_algo_input:
+  #   json.dump(loaded_algo_input_copy, write_algo_input, indent=4)
   
   
   # call(["node", "../glucosym/closed_loop_algorithm_samples/algo_bw.js"]);

@@ -226,41 +226,45 @@ for _ in range(iteration_num):
         elif sub_alert_msg in ["row_1","row_2","row_5","row_7"]:#H2hazard
           mitigate_H2_flag = True
 
-      if mitigate_H1_flag == True: 
-        if loaded_suggested_data["rate"]   < prev_rate or glucose>bg_target+40:#if fault is removed stop mitigation
-          mitigate_H1_flag = False #reset hazard flag
-        loaded_suggested_data["rate"] = 0
 
-        loaded_suggested_data["fault"] = "yes"
-        loaded_suggested_data["fault_reason"] = sub_alert_msg+"_Mitigation" 
-        print("\n***************************************")
-        print("********** Unsafe Action !!!!! *************")    
-
-      elif mitigate_H2_flag == True: 
-        if loaded_suggested_data["rate"]  > prev_rate or glucose<bg_target+40:#if fault is removed stop mitigation
-          mitigate_H2_flag = False
-        loaded_suggested_data["rate"]  = 2.1
-
-        loaded_suggested_data["fault"] = "yes"
-        loaded_suggested_data["fault_reason"] = sub_alert_msg+"_Mitigation" 
-        print("\n***************************************")
-        print("********** Unsafe Action !!!!! *************")    
-
-        #==========mitigation code####++==============
+    #==========mitigation code####++==============
     elif Monitor ==1: #MPC
       if glucose <70 :#H1hazard
-        loaded_suggested_data["rate"] = 0
-        loaded_suggested_data["fault"] = "yes"
-        loaded_suggested_data["fault_reason"] = sub_alert_msg+"_Mitigation" 
-        print("\n***************************************")
-        print("********** Unsafe Action !!!!! *************")    
+        # loaded_suggested_data["rate"] = 0
+        # loaded_suggested_data["fault"] = "yes"
+        # loaded_suggested_data["fault_reason"] = sub_alert_msg+"_Mitigation" 
+        # print("\n***************************************")
+        # print("********** Unsafe Action !!!!! *************")    
+        sub_alert_msg = 'H1'
+        mitigate_H1_flag = True
       elif glucose>180:#H2hazard
-        loaded_suggested_data["rate"]  = 2.1
-        loaded_suggested_data["fault"] = "yes"
-        loaded_suggested_data["fault_reason"] = sub_alert_msg+"_Mitigation" 
-        print("\n***************************************")
-        print("********** Unsafe Action !!!!! *************")    
+        # loaded_suggested_data["rate"]  = 2.1
+        # loaded_suggested_data["fault"] = "yes"
+        # loaded_suggested_data["fault_reason"] = sub_alert_msg+"_Mitigation" 
+        # print("\n***************************************")
+        # print("********** Unsafe Action !!!!! *************")    
+        sub_alert_msg = 'H2'
+        mitigate_H2_flag = True
 
+    if mitigate_H1_flag == True: 
+      if loaded_suggested_data["rate"]   < prev_rate or glucose>bg_target+10:#if fault is removed stop mitigation
+        mitigate_H1_flag = False #reset hazard flag
+      loaded_suggested_data["rate"] = 0
+
+      loaded_suggested_data["fault"] = "yes"
+      loaded_suggested_data["fault_reason"] = sub_alert_msg+"_Mitigation" 
+      print("\n***************************************")
+      print("********** Unsafe Action !!!!! *************")    
+
+    elif mitigate_H2_flag == True: 
+      if loaded_suggested_data["rate"]  > prev_rate or glucose<bg_target+40:#if fault is removed stop mitigation
+        mitigate_H2_flag = False
+      loaded_suggested_data["rate"]  = 2.1
+
+      loaded_suggested_data["fault"] = "yes"
+      loaded_suggested_data["fault_reason"] = sub_alert_msg+"_Mitigation" 
+      print("\n***************************************")
+      print("********** Unsafe Action !!!!! *************")    
 
                     
   #######################33End of mitigation######################################
