@@ -14,7 +14,7 @@ init_iob_pointer = 0
 unsafe_action_occurance = 0
 
 ##########################mitigation##################
-Monitor = 0 #0:CAWT; 1:MPC
+Monitor = argv[3]#2 #0:CAWT; 1:MPC 2:DT
 Mitigation_Enable = argv[1]
 threshold_col = argv[2]
 if Mitigation_Enable:
@@ -23,6 +23,13 @@ if Mitigation_Enable:
   threshold=thresholds[threshold_col]
   mitigate_H1_flag = False
   mitigate_H2_flag = False
+  if Monitor == 2:
+    import numpy as np
+    from sklearn.externals import joblib
+    model_name = '../Reseult/script_jupyternotebook/saved_model/DT_32bit/DT3_NoFIlabel_model_{}.sav'.format(threshold_col)
+    print("Load model {} now!".format(model_name))
+    clf = joblib.load(model_name)
+
 ######################################################
 
 
@@ -167,8 +174,8 @@ for _ in range(iteration_num):
 
   #==========mitigation code####++==============
   if Mitigation_Enable:
+    sub_alert_msg = ""
     if Monitor==0: #CAWT
-      sub_alert_msg = ""
       sub_alert_flag = False
       if glucose > 150 and del_bg > 0.05: #insufficient insulin
         if iob <threshold[6] and loaded_suggested_data["rate"]<2 and loaded_suggested_data["rate"]+iob<1:
@@ -219,7 +226,7 @@ for _ in range(iteration_num):
         if iob+ loaded_suggested_data["rate"] > 1.5 -threshold[9]*(150-glucose)/70 -threshold[10]*(glucose<threshold[11]) and del_bg<-2.5+ threshold[12]*(150-glucose)/70:#0.523:#
           sub_alert_flag = True
           sub_alert_msg = "row_13" #rule16->10
-      #########start to mitigate#########
+      
       if sub_alert_flag:
         if sub_alert_msg in ["row_3","row_4","row_6","row_9","row_13"]:#H1hazard
           mitigate_H1_flag = True
@@ -246,6 +253,17 @@ for _ in range(iteration_num):
         sub_alert_msg = 'H2'
         mitigate_H2_flag = True
 
+    elif Monitor == 2: #DT
+      predict_proba=clf.predict_proba(np.array([150,0.2222,1]).reshape(1,-1))
+      if int(np.argmax(predict_proba,axis=1)):
+        if glucose < bg_target:
+          sub_alert_msg = 'H1'
+          mitigate_H1_flag = True
+        else:#H2hazard
+          sub_alert_msg = 'H2'
+          mitigate_H2_flag = True
+
+    #########start to mitigate#########
     if mitigate_H1_flag == True: 
       if loaded_suggested_data["rate"]   < prev_rate or glucose>bg_target+10:#if fault is removed stop mitigation
         mitigate_H1_flag = False #reset hazard flag

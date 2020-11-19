@@ -13,7 +13,10 @@ from sys import argv
 
 #####################################################
 MITIGATION=0 #whether activate mitigation code 0:None; 1:TP; 2:FP; 3:TP+FP
-
+Monitor = 2 #0:CAWT; 1:MPC 2:DT
+if Monitor == 2:
+	fps = np.load('../Reseult/script_jupyternotebook/results_fordt/DT_FPs_list.npy')
+	tps = np.load('../Reseult/script_jupyternotebook/results_fordt/DT_TPs_list.npy')
 ##########################################################
 initial_glucose = [80, 100, 120, 140, 160, 180, 200]
 #initial_glucose = [80, 100]
@@ -51,16 +54,26 @@ for i in browser.find_elements_by_xpath("//*[@type='radio']"):
 		for ig in initial_glucose:
 
 			if MITIGATION>0:
-				if not ('../simulationCollection_newmodel/{}/{}/{}/data_{}_{}.csv'.format(scenario_inf,fault_num,patient,patient,ig) in file_testlist):
+				filename_test = '../simulationCollection_newmodel/{}/{}/{}/data_{}_{}.csv'.format(scenario_inf,fault_num,patient,patient,ig)
+				if not (filename_test in file_testlist):
 					continue
-				alert_num = int(datastream_test[datastream_test['init_bg']==ig]['alert_num'].tolist()[0])
-				hazard_num = int(datastream_test[datastream_test['init_bg']==ig]['hazard_num'].tolist()[0])
-				if MITIGATION ==1:
-					if hazard_num<1: #only test on hazardous cases TP
-						continue
-				elif MITIGATION ==2:
-					if alert_num<1 or hazard_num>0: #only test FP cases: alert>0 and hazard==0
-						continue
+				if Monitor == 2: #DT
+					if MITIGATION ==1: #TP
+						if not (filename_test in tps):
+							continue
+					elif MITIGATION ==2:
+						if not (filename_test in fps): #only test FP cases: alert>0 and hazard==0
+							continue
+
+				else:
+					alert_num = int(datastream_test[datastream_test['init_bg']==ig]['alert_num'].tolist()[0])
+					hazard_num = int(datastream_test[datastream_test['init_bg']==ig]['hazard_num'].tolist()[0])
+					if MITIGATION ==1:
+						if hazard_num<1: #only test on hazardous cases TP
+							continue
+					elif MITIGATION ==2:
+						if alert_num<1 or hazard_num>0: #only test FP cases: alert>0 and hazard==0
+							continue
 
 				print('initial_glucose={}'.format(ig))
 				print('alert_num={},hazard_num={}'.format(alert_num,hazard_num))
@@ -75,7 +88,7 @@ for i in browser.find_elements_by_xpath("//*[@type='radio']"):
 			input_text.send_keys(Keys.RETURN)
 			#time.sleep(1)
 			os.system(cmd_initialize)
-			os.system(cmd_main+' {} {}_CV0'.format(MITIGATION,patient))
+			os.system(cmd_main+' {} {}_CV0  {}'.format(MITIGATION,patient,Monitor))
 			
 			cmd_collect_data = 'python '+'updated_collected.py'
 			os.system(cmd_collect_data)
