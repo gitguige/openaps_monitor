@@ -1,0 +1,20 @@
+title:12_lostconnection_hold_rate
+location//updated_ct_script_iob_based.py//#rate:HOOK#
+fault 1//if _>=6 and _<36://rate_refresh=0
+fault 2//if _>=8 and _<38://rate_refresh=0
+fault 3//if _>=10 and _<40://rate_refresh=0
+fault 4//if _>=12 and _<42://rate_refresh=0
+fault 5//if _>=14 and _<44://rate_refresh=0
+fault 6//if _>=16 and _<46://rate_refresh=0
+fault 7//if _>=18 and _<48://rate_refresh=0
+fault 8//if _>=20 and _<50://rate_refresh=0
+fault 9//if _>=22 and _<52://rate_refresh=0
+fault 10//if _>=24 and _<54://rate_refresh=0
+fault 11//if _>=26 and _<56://rate_refresh=0
+fault 12//if _>=28 and _<58://rate_refresh=0
+fault 13//if _>=30 and _<60://rate_refresh=0
+fault 14//if _>=40 and _<70://rate_refresh=0
+fault 15//if _>=50 and _<80://rate_refresh=0
+fault 16//if _>=60 and _<90://rate_refresh=0
+fault 17//if _>=70 and _<100://rate_refresh=0
+Total number of fault cases: 17
