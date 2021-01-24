@@ -69,14 +69,14 @@ for i in browser.find_elements_by_xpath("//*[@type='radio']"):
 					alert_num = int(datastream_test[datastream_test['init_bg']==ig]['alert_num'].tolist()[0])
 					hazard_num = int(datastream_test[datastream_test['init_bg']==ig]['hazard_num'].tolist()[0])
 					if MITIGATION ==1:
-						if hazard_num<1: #only test on hazardous cases TP
+						if hazard_num<1: #only test on hazardous cases P:TP+FN
 							continue
 					elif MITIGATION ==2:
 						if alert_num<1 or hazard_num>0: #only test FP cases: alert>0 and hazard==0
 							continue
+					print('alert_num={},hazard_num={}'.format(alert_num,hazard_num))
 
 				print('initial_glucose={}'.format(ig))
-				print('alert_num={},hazard_num={}'.format(alert_num,hazard_num))
 
 			# output_dir = 'out/'+patient+'/'+str(ig)+'/'
 			# if os.path.isdir(output_dir) != True:

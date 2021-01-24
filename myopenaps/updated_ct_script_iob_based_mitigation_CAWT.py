@@ -254,7 +254,7 @@ for _ in range(iteration_num):
         mitigate_H2_flag = True
 
     elif Monitor == 2: #DT
-      predict_proba=clf.predict_proba(np.array([150,0.2222,1]).reshape(1,-1))
+      predict_proba=clf.predict_proba(np.array([glucose,iob,loaded_suggested_data["rate"]]).reshape(1,-1))
       if int(np.argmax(predict_proba,axis=1)):
         if glucose < bg_target:
           sub_alert_msg = 'H1'
